@@ -1,17 +1,15 @@
 <template>
 	<div class="topbar-logo">
-		<img :src="themeConfig.isDarkMode ? logo_dark : logo" class="topbar-logo-img"/>
+		<img :src="isDark ? logo_dark : logo" class="topbar-logo-img"/>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '@/stores/themeConfig';
+import { isDark } from '@/stores/themeConfig';
 import logo from '@assets/logo.png'
 import logo_dark from '@assets/logo_dark.png'
 
-const { themeConfig } = storeToRefs(useThemeConfig());
-
+// const isDark = useDark();
 
 </script>
 

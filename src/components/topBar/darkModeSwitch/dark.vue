@@ -1,5 +1,5 @@
 <template>
-	<el-icon color="#BEBEBE">
+	<el-icon color="#A8A8A8">
 		<Moon />
 	</el-icon>
 </template>

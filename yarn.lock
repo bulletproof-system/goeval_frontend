@@ -438,6 +438,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/web-bluetooth@npm:^0.0.18":
+  version: 0.0.18
+  resolution: "@types/web-bluetooth@npm:0.0.18"
+  checksum: 5ab99b3f5bf1a7c86e35a463ad57fdd7bb570a49195d94dbdcd8dedc59067f11caddcda5dfee7b144c8f2e18d85b4b2922c0d5c78f7798686d8a8795fb1393f0
+  languageName: node
+  linkType: hard
+
 "@vitejs/plugin-vue@npm:^4.2.3":
   version: 4.4.0
   resolution: "@vitejs/plugin-vue@npm:4.4.0"
@@ -625,6 +632,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vueuse/core@npm:^10.5.0":
+  version: 10.5.0
+  resolution: "@vueuse/core@npm:10.5.0"
+  dependencies:
+    "@types/web-bluetooth": ^0.0.18
+    "@vueuse/metadata": 10.5.0
+    "@vueuse/shared": 10.5.0
+    vue-demi: ">=0.14.6"
+  checksum: 9144847c7ec3e2997e324946c573f0f2da32629d7db8c1e5bfc8fd99cc0eb8e2c129691631bd8f9bc3be8c56796d1f057f151b567c7c5a56b7a85dfe6e3c75d5
+  languageName: node
+  linkType: hard
+
 "@vueuse/core@npm:^9.1.0":
   version: 9.13.0
   resolution: "@vueuse/core@npm:9.13.0"
@@ -637,10 +656,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vueuse/metadata@npm:10.5.0":
+  version: 10.5.0
+  resolution: "@vueuse/metadata@npm:10.5.0"
+  checksum: 8db966e86a7a3233d1c36c4aa46510b555f211a40899ab89cfd5f09280e6b325014722185bf0dbb9806b0ca5aff5c1217ded108aef79cd07c72800c573c4fc4a
+  languageName: node
+  linkType: hard
+
 "@vueuse/metadata@npm:9.13.0":
   version: 9.13.0
   resolution: "@vueuse/metadata@npm:9.13.0"
   checksum: 91e137bf2fb1406587b523edae26b58b315d3a59797c9f2ed5dde9cb707026aa740b86da5955ea7f9662a93ce92249d0b3af763c65449b4a843bbd0725eb67f6
+  languageName: node
+  linkType: hard
+
+"@vueuse/shared@npm:10.5.0":
+  version: 10.5.0
+  resolution: "@vueuse/shared@npm:10.5.0"
+  dependencies:
+    vue-demi: ">=0.14.6"
+  checksum: 8ec1b6e18ccdff2940efbee943539831ce54d59294bb1b1e309c82a845035807ee6b11cca29c3eca2df321e79136b13650399c54cde366212e8b2c69c4befb48
   languageName: node
   linkType: hard
 
@@ -848,7 +883,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:^3.5.3":
+"chokidar@npm:>=3.0.0 <4.0.0, chokidar@npm:^3.5.3":
   version: 3.5.3
   resolution: "chokidar@npm:3.5.3"
   dependencies:
@@ -1391,9 +1426,11 @@ __metadata:
     "@vitejs/plugin-vue": ^4.2.3
     "@vue/reactivity": ^3.3.4
     "@vue/shared": ^3.3.4
+    "@vueuse/core": ^10.5.0
     element-plus: ^2.3.14
     path: ^0.12.7
     pinia: ^2.1.6
+    sass: ^1.69.0
     typescript: ^5.0.2
     unplugin-auto-import: ^0.16.6
     unplugin-icons: ^0.17.0
@@ -1494,6 +1531,13 @@ __metadata:
   dependencies:
     safer-buffer: ">= 2.1.2 < 3.0.0"
   checksum: 3f60d47a5c8fc3313317edfd29a00a692cc87a19cac0159e2ce711d0ebc9019064108323b5e493625e25594f11c6236647d8e256fbe7a58f4a3b33b89e6d30bf
+  languageName: node
+  linkType: hard
+
+"immutable@npm:^4.0.0":
+  version: 4.3.4
+  resolution: "immutable@npm:4.3.4"
+  checksum: de3edd964c394bab83432429d3fb0b4816b42f56050f2ca913ba520bd3068ec3e504230d0800332d3abc478616e8f55d3787424a90d0952e6aba864524f1afc3
   languageName: node
   linkType: hard
 
@@ -2404,6 +2448,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sass@npm:^1.69.0":
+  version: 1.69.0
+  resolution: "sass@npm:1.69.0"
+  dependencies:
+    chokidar: ">=3.0.0 <4.0.0"
+    immutable: ^4.0.0
+    source-map-js: ">=0.6.2 <2.0.0"
+  bin:
+    sass: sass.js
+  checksum: eabea31ea3b1dd529c7eff345c8b6468afe6ab8011bd4f95caa2cffb8fb115cc055ea21de425be6197f7ed22516f5652eccb98d315d592ea152ada553f964b8a
+  languageName: node
+  linkType: hard
+
 "scule@npm:^1.0.0":
   version: 1.0.0
   resolution: "scule@npm:1.0.0"
@@ -2498,7 +2555,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-js@npm:^1.0.2":
+"source-map-js@npm:>=0.6.2 <2.0.0, source-map-js@npm:^1.0.2":
   version: 1.0.2
   resolution: "source-map-js@npm:1.0.2"
   checksum: c049a7fc4deb9a7e9b481ae3d424cc793cb4845daa690bc5a05d428bf41bf231ced49b4cf0c9e77f9d42fdb3d20d6187619fc586605f5eabe995a316da8d377c
@@ -2887,7 +2944,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-demi@npm:*, vue-demi@npm:>=0.14.5":
+"vue-demi@npm:*, vue-demi@npm:>=0.14.5, vue-demi@npm:>=0.14.6":
   version: 0.14.6
   resolution: "vue-demi@npm:0.14.6"
   peerDependencies:

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { useDark, useToggle } from '@vueuse/core'
 
 export const useThemeConfig = defineStore('themeConfig', {
 	state: (): ThemeConfigState => ({
@@ -13,3 +14,6 @@ export const useThemeConfig = defineStore('themeConfig', {
 		},
 	},
 });
+
+export const isDark = useDark({disableTransition: false});
+export const toggleDarkMode = useToggle(isDark);
