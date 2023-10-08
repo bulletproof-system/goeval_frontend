@@ -19,12 +19,16 @@ const UserMenu = defineAsyncComponent(() => import('@components/topBar/userMenu.
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .topbar-index {
 	height: 50px;
 	display: flex;
 	align-items: center;
-
+	padding-left: 20px;
+	padding-right: 20px;
+	border-bottom: 1px solid #4c4d4f;
+	background-color: var(--bg-topBar-color);
+	transition: background-color 0.2s ease;
 }
 
 .flex-grow {
