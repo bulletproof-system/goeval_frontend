@@ -1,13 +1,11 @@
 <template>
 	<div class="home">
-		<el-input
+		<el-autocomplete
 			v-model="search"
 			:placeholder="t('search.placeholder')"
+			:prefix-icon="Search"
 		>
-			<template #append>
-				<el-button :icon="Search" />
-			</template>
-		</el-input>
+		</el-autocomplete>
 	</div>
 </template>
 

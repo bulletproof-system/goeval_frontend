@@ -1,6 +1,7 @@
 <template>
 	<div class="topbar-index">
 		<Logo />
+		<NavBar />
 		<Breadcrumb />
 		<div class="flex-grow"></div>
 		<UtilsMenu />
@@ -13,6 +14,7 @@ import { defineAsyncComponent } from 'vue';
 
 // 引入组件
 const Logo = defineAsyncComponent(() => import('@components/topBar/logo.vue'));
+const NavBar = defineAsyncComponent(() => import('@components/topBar/navBar.vue'));
 const Breadcrumb = defineAsyncComponent(() => import('@components/topBar/breadcrumb.vue'));
 const UtilsMenu = defineAsyncComponent(() => import('@components/topBar/utilsMenu.vue'));
 const UserMenu = defineAsyncComponent(() => import('@components/topBar/userMenu.vue'));

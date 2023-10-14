@@ -2,15 +2,12 @@ import { defineStore } from 'pinia';
 import { useDark, useToggle } from '@vueuse/core'
 
 export const useThemeConfig = defineStore('themeConfig', {
-	state: (): ThemeConfigState => ({
-		themeConfig: {
-			isLoginScreen: false,
-			isDarkMode: false,
-		}
+	state: (): ThemeConfig => ({
+		showLoginPanel: false,
 	}),
 	actions: {
-		setThemeConfig(data: ThemeConfigState) {
-			this.themeConfig = data.themeConfig;
+		setThemeConfig(data: ThemeConfig) {
+			this.$patch(data);
 		},
 	},
 });
