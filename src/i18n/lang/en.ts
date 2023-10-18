@@ -17,6 +17,7 @@ export default {
 		forgetPassword: 'Forget Password',
 		loginBtn: 'Login',
 		loginTip: 'Dont have an account yet?',
+		error: 'Incorrect username or password',
 		rules: {
 			username: {
 				required: 'Please input your username',

@@ -17,6 +17,7 @@ export default {
 		forgetPassword: '忘记密码',
 		loginBtn: '登录',
 		loginTip: '还没有账号, 注册一个?',
+		error: '用户名或密码错误',
 		rules: {
 			username: {
 				required: '用户名不能为空',
