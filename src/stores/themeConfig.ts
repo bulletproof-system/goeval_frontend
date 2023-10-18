@@ -9,6 +9,9 @@ export const useThemeConfig = defineStore('themeConfig', {
 		setThemeConfig(data: ThemeConfig) {
 			this.$patch(data);
 		},
+		setShowLoginPanel(show: boolean) {
+			this.showLoginPanel = show;
+		}
 	},
 });
 

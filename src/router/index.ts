@@ -1,16 +1,5 @@
 import { defineAsyncComponent } from 'vue';
-import { RouteLocationNormalized, createRouter, createWebHistory  } from 'vue-router';
-import { useUserInfo } from '@/stores/userInfo';
-import { useThemeConfig } from '@/stores/themeConfig';
-
-// const userInfo = useUserInfo();
-// const themeConfig = useThemeConfig();
-
-// function checkLoginState(to: RouteLocationNormalized, from: RouteLocationNormalized) {
-// 	if (userInfo.login) return true;
-// 	themeConfig.showLoginPanel = true;
-// 	return false;
-// }
+import { createRouter, createWebHistory  } from 'vue-router';
 
 const routes = [
 	{ path: '/', redirect: '/home' },
