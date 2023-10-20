@@ -36,5 +36,11 @@ export default {
 		registerBtn: '注册',
 		registerTip: '已有账号?',
 	},
+	error: {
+		'401': {
+			title: '登录过期',
+			message: '请重新登录'
+		}
+	},
 	lang: '简体中文'
 };

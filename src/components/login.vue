@@ -35,6 +35,7 @@ import { router } from '@/router';
 import type { FormInstance, FormRules } from 'element-plus'
 import service from '@/utils/request';
 import { Local } from '@/utils/storage';
+import { UserRole, UserInfo } from '@/types/user.ts';
 
 interface LoginForm {
 	username: string;
@@ -43,14 +44,18 @@ interface LoginForm {
 interface LoginResponse {
 	success: boolean;
 	token?: string;
+	userInfo?: UserInfo;
 }
 
+const props= defineProps({
+	permission: { type: Array<UserRole>, required: true }
+});
 const { t } = useI18n();
 const userInfo = useUserInfo();
 const themeConfig = useThemeConfig();
 const isLogin = ref(true);
 const checkLogin = () => {
-	if (!userInfo.login) router.back();
+	if (!props.permission.includes(userInfo.role)) router.back();
 }
 const loginFormRef = ref<FormInstance>()
 const usernameRef = ref();
@@ -84,8 +89,8 @@ const submitLoginForm = async (formEl: FormInstance | undefined) => {
 			service.post('/api/login', loginForm).then((res) => {
 				const data: LoginResponse = res.data;
 				if (data.success == true) {
-					Local.set('Bearer', data.token);
-					userInfo.$patch({ login: true });
+					Local.set('Bearer', data.token!);
+					userInfo.$patch(data.userInfo!);
 					themeConfig.$patch({ showLoginPanel: false });
 				} else {
 					loginErrorMsg.username = ' ';

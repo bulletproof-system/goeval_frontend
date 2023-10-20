@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia';
+import { UserRole, UserInfo } from '@/types/user.ts';
 
 export const useUserInfo = defineStore('userInfo', {
 	state: (): UserInfo => ({ 
-		login: false,
-		userName: undefined,
-		avatar: undefined,
-		email: undefined,
-		permission: undefined,
+		userName: '',
+		avatar: '',
+		email: '',
+		role: UserRole.Visitor,
 	}),
+	actions: {
+	}
 });

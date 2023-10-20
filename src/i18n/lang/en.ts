@@ -36,5 +36,11 @@ export default {
 		registerBtn: 'Register',
 		registerTip: 'Already have an account?',
 	},
+	error: {
+		'401': {
+			title: 'Login expiration',
+			message: 'Please login again'
+		}
+	},
 	lang: 'English',
 };

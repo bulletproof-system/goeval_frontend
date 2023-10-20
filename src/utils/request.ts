@@ -1,3 +1,4 @@
+import { i18n } from '@/i18n/index';
 import axios, { AxiosInstance } from 'axios';
 import { Local } from '@/utils/storage';
 import { useThemeConfig } from '@/stores/themeConfig';
@@ -21,16 +22,24 @@ service.interceptors.response.use(
 	response => { return response; },
 	error => {
 		console.log(error);
-		if (error.code == "ERR_NETWORK") 
-			ElNotification({ 
-				title: '网络错误',
-				message: '请检查网络连接',
-				type: 'error',
-				duration: 3000});
+		
 		// 401 请求要求用户的身份认证 清除token信息, 显示登录界面
 		if (error.status === 401) {
 			Local.remove('Bearer');
+			ElNotification({ 
+				title: i18n.global.t('error.401.title'),
+				message: error.message,
+				type: 'error',
+				duration: 3000
+			});
 			themeConfig.setShowLoginPanel(true);
+		} else {
+			ElNotification({ 
+				title: error.code,
+				message: error.message,
+				type: 'error',
+				duration: 3000
+			});
 		}
 		return Promise.reject(error);
 	}
