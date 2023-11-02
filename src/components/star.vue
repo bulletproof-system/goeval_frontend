@@ -1,18 +1,19 @@
 <template>
 	<div>
-		<login :permission="permission" />
+		<Login :permission="permission" />
 		star
 	</div>
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { useUserInfo } from '@/stores/userInfo';
 import { useThemeConfig } from '@/stores/themeConfig';
 import { UserRole } from '@/types/user.ts';
+import Login from '@components/login.vue';
 
 const permission = [UserRole.User, UserRole.Administrator];
-const login = defineAsyncComponent(() => import('@components/login.vue'));
+// const login = defineAsyncComponent(() => import('@components/login.vue'));
 const userInfo = useUserInfo();
 const themeConfig = useThemeConfig();
 
