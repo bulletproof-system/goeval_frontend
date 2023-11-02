@@ -43,8 +43,11 @@ interface LoginForm {
 }
 interface LoginResponse {
 	success: boolean;
-	token?: string;
-	userInfo?: UserInfo;
+	info?: {
+		token: string;
+		userInfo: UserInfo;
+	}
+	reason?: string;
 }
 
 const props= defineProps({
@@ -87,14 +90,16 @@ const submitLoginForm = async (formEl: FormInstance | undefined) => {
   	formEl.validate((valid) => {
 		if (valid) {
 			service.post('/api/login', loginForm).then((res) => {
-				const data: LoginResponse = res.data;
-				if (data.success == true) {
-					Local.set('Bearer', data.token!);
-					userInfo.$patch(data.userInfo!);
+				const response: LoginResponse = res.data;
+				if (response.success == true) {
+					const info = response.info!;
+					Local.set('Bearer', info.token);
+					userInfo.$patch(info.userInfo);
 					themeConfig.$patch({ showLoginPanel: false });
 				} else {
-					loginErrorMsg.username = ' ';
-					loginErrorMsg.password = t('login.error');
+					const reason = response.reason!;
+					loginErrorMsg.username = t(`${reason}.u`);
+					loginErrorMsg.password = t(`${reason}.p`);
 				}
 			}, (error) => {
 				console.log("error: ", error);

@@ -17,7 +17,16 @@ export default {
 		forgetPassword: 'Forget Password',
 		loginBtn: 'Login',
 		loginTip: 'Dont have an account yet?',
-		error: 'Incorrect username or password',
+		error: {
+			format: {
+				u: 'Wrong Format',
+				p: ' '
+			},
+			auth: {
+				u: ' ',
+				p: 'Incorrect username or password',
+			}
+		},
 		rules: {
 			username: {
 				required: 'Please input your username',
@@ -35,6 +44,16 @@ export default {
 		title: 'Register',
 		registerBtn: 'Register',
 		registerTip: 'Already have an account?',
+		error : {
+			format: {
+				u: 'Wrong Format',
+				p: ' '
+			},
+			samename: {
+				u: 'Username already exists',
+				p: ' ' 
+			},
+		},
 	},
 	error: {
 		'401': {
