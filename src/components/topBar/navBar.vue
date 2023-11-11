@@ -7,6 +7,7 @@
 		>
 			<el-menu-item index="/home"> {{ t('topBar.home') }} </el-menu-item>
 			<el-menu-item index="/star"> {{ t('topBar.star') }} </el-menu-item>
+			<el-menu-item index="/courseInfo"> {{ t('topBar.courseInfo') }} </el-menu-item>
 		</el-menu>
 	</div>
 </template>

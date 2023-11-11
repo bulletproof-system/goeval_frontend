@@ -23,7 +23,12 @@ const routes = [
 		component: defineAsyncComponent(() => import('@components/star.vue')),
 		name: 'star',
 		// beforeEnter: [checkLoginState]
-	}
+	},
+	{
+		path:'/courseInfo',
+		component: defineAsyncComponent(() => import('@components/courseInfo.vue')),
+		name: 'courseInfo',
+	},
 ];
 
 export const router = createRouter({

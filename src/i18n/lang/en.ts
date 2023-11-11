@@ -9,6 +9,7 @@ export default {
 	topBar: {
 		home: 'Home',
 		star: 'Star',
+		courseInfo: 'Course Info',
 	},
 	login: {
 		title: 'Login',
@@ -35,6 +36,20 @@ export default {
 		title: 'Register',
 		registerBtn: 'Register',
 		registerTip: 'Already have an account?',
+	},
+	courseInfo: {
+		courseName: 'Course Name',
+		courseInstructor: 'Course Instructor',
+		operation: 'Operation',
+		detail: 'Detail',
+		courseDetail: 'Course Detail',
+		review: 'Review',
+	},
+	reviewForm: {
+		rating: 'Rating',
+		comment: 'Comment',
+		submit: 'Submit',
+		submitSuccess: 'Submit successfully',
 	},
 	lang: 'English',
 };

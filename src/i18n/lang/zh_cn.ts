@@ -9,6 +9,7 @@ export default {
 	topBar: {
 		home: '主页',
 		star: '收藏',
+		courseInfo: '课程信息',
 	},
 	login: {
 		title: '登录',
@@ -35,6 +36,20 @@ export default {
 		title: '注册',
 		registerBtn: '注册',
 		registerTip: '已有账号?',
+	},
+	courseInfo: {
+		courseName: '课程名称',
+		courseInstructor: '课程教师',
+		operation: '操作',
+		detail: '详情',
+		courseDetail: '课程详情',
+		review: '评论',
+	},
+	reviewForm: {
+		rating: '评分',
+		comment: '评论',
+		submit: '提交',
+		submitSuccess: '提交成功',
 	},
 	lang: '简体中文'
 };
