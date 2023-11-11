@@ -61,5 +61,9 @@ export default {
 			message: 'Please login again'
 		}
 	},
+	course: {
+		school: 'School',
+		teacher: 'Teacher',
+	},
 	lang: 'English',
 };

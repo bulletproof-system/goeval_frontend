@@ -61,5 +61,9 @@ export default {
 			message: '请重新登录'
 		}
 	},
+	course: {
+		school: '学校',
+		teacher: '教师',
+	},
 	lang: '简体中文'
 };

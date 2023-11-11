@@ -1,6 +1,6 @@
 <template>
-	<div v-infinite-scroll="load" style="overflow: auto">
-		<CoursePanel v-for="(item) in list" :info="item" />
+	<div class="list">
+		<CoursePanel class="panel" v-for="(item) in list" :info="item" />
 	</div>
 </template>
 
@@ -11,15 +11,31 @@ import CoursePanel from '@/components/coursePanel.vue';
 const props = defineProps({
 	list: { type: Array<CourseInfo>, required: true },
 });
-const emit = defineEmits(['more']);
-
-const load = () => {
-	emit('more');
-}
-
 
 </script>
 
 <style scoped>
+
+.list {
+	display: flex;
+	overflow: auto;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.panel {
+	width: 300px;
+	margin: 10px;
+	
+	animation-name: show;
+	animation-duration: 2s;
+
+}
+
+@keyframes show {
+	0% {opacity: 0;}
+    100% {opacity: 1;}
+}
 
 </style>
