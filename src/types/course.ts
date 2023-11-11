@@ -1,9 +1,11 @@
 export class CourseInfo {
+	id: string;
 	name: string;
 	school: string;
 	teacher: string[];
 
-	constructor(name: string, school: string, teacher: string[]) {
+	constructor(id: string, name: string, school: string, teacher: string[]) {
+		this.id = id;
 		this.name = name;
 		this.school = school;
 		this.teacher = teacher;
