@@ -8,8 +8,14 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Breadcrumb: typeof import('./components/topBar/breadcrumb.vue')['default']
+    ClassInfo: typeof import('./components/coursePanel.vue')['default']
+    ClassList: typeof import('./components/courseList.vue')['default']
+    CourseDetail: typeof import('./components/courseDetail.vue')['default']
+    CourseList: typeof import('./components/courseList.vue')['default']
+    CoursePanel: typeof import('./components/coursePanel.vue')['default']
     Dark: typeof import('./components/topBar/darkModeSwitch/dark.vue')['default']
     DarkModeSwitch: typeof import('./components/topBar/darkModeSwitch/index.vue')['default']
+    ElAffix: typeof import('element-plus/es')['ElAffix']
     ElAutocomplete: typeof import('element-plus/es')['ElAutocomplete']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
@@ -26,10 +32,12 @@ declare module 'vue' {
     ElMain: typeof import('element-plus/es')['ElMain']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     Home: typeof import('./components/home.vue')['default']
     I18nSwitch: typeof import('./components/topBar/i18nSwitch.vue')['default']
     Light: typeof import('./components/topBar/darkModeSwitch/light.vue')['default']
+    List: typeof import('./components/list.vue')['default']
     Login: typeof import('./components/login.vue')['default']
     Logo: typeof import('./components/topBar/logo.vue')['default']
     NavBar: typeof import('./components/topBar/navBar.vue')['default']
@@ -40,5 +48,8 @@ declare module 'vue' {
     User: typeof import('./components/user.vue')['default']
     UserMenu: typeof import('./components/topBar/userMenu.vue')['default']
     UtilsMenu: typeof import('./components/topBar/utilsMenu.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vInfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
   }
 }

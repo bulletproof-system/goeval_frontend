@@ -1,6 +1,6 @@
 <template>
   <el-config-provider >
-    <el-container>
+    <el-container class="full-screen">
       <el-header class="no-padding"><TopBar /></el-header>
       <el-main class="no-padding"><router-view /></el-main>
     </el-container>
@@ -22,5 +22,9 @@ const TopBar = defineAsyncComponent(() => import('@components/topBar/index.vue')
 <style scoped>
 .no-padding {
   padding: 0px;
+}
+.full-screen {
+  height: 100vh;
+  width: 100vw;
 }
 </style>
