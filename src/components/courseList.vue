@@ -8,6 +8,7 @@
 import { CourseInfo } from '@/types/course';
 import CoursePanel from '@/components/coursePanel.vue';
 
+// @ts-ignore
 const props = defineProps({
 	list: { type: Array<CourseInfo>, required: true },
 });

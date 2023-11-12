@@ -8,11 +8,19 @@
 			<el-affix class="search-container" :offset="60">
 				<el-autocomplete
 					v-model="search"
+					:fetch-suggestions="querySearchAsync"
 					:placeholder="t('search.placeholder')"
 					:prefix-icon="Search"
 					style="width: 50vw;"
 					clearable
 				>
+				<template #default="{ item }">
+					<div style="display: flex; align-items: center;"> 
+						<span>{{ item.value }}</span> 
+						<div style="flex-grow: 1;"></div>
+						<Tag :type="item.type" />
+					</div> 
+				</template>
 				</el-autocomplete>
 			</el-affix>
 			<div style="height: 30vh"></div>
@@ -29,9 +37,12 @@
 import { useI18n } from 'vue-i18n';
 import { Search } from '@element-plus/icons-vue'
 import CourseList from '@components/courseList.vue'
+import Tag from '@components/tag.vue'
 import { useCourseSet } from '@/stores/course';
 import { ElScrollbar } from 'element-plus'
 import throttle from 'lodash/throttle';
+import { post } from '@/api';
+import { CompleteResult } from '@/types/course';
 
 const { t } = useI18n();
 const search = ref('');
@@ -47,6 +58,12 @@ onMounted(() => {
 	if (courseSet.recommend.length == 0)
 		moreRecommend(500);
 });
+
+const querySearchAsync = (queryString: string, cb: (arg: any) => void) => {
+  	post<CompleteResult>('/api/autocomplete', queryString).then((results) => {
+		cb(results.data);
+	});
+}
 
 const scroll = ({ scrollTop } : { scrollTop: number }) => {
 	max.value = innerRef.value!.clientHeight;

@@ -65,5 +65,11 @@ export default {
 		school: '学校',
 		teacher: '教师',
 	},
-	lang: '简体中文'
+	lang: '简体中文',
+	tag: {
+		course: '课程',
+		school: '学校',
+		teacher: '教师',
+		tag: '标签',
+	},
 };

@@ -18,14 +18,14 @@ export interface CourseSet {
 	star: Array<CourseInfo>;
 }
 
-export enum CompleteType {
-	name,
+export enum TagType {
+	course,
 	school,
 	teacher,
 	tag,
 }
 
 export interface CompleteResult {
-	type: CompleteType,
+	type: TagType,
 	value: string,
 }

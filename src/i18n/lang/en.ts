@@ -66,4 +66,10 @@ export default {
 		teacher: 'Teacher',
 	},
 	lang: 'English',
+	tag: {
+		course: 'course',
+		school: 'school',
+		teacher: 'teacher',
+		tag: 'tag',
+	},
 };
