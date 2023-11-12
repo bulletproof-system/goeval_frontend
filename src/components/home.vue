@@ -31,6 +31,7 @@ import { Search } from '@element-plus/icons-vue'
 import CourseList from '@components/courseList.vue'
 import { useCourseSet } from '@/stores/course';
 import { ElScrollbar } from 'element-plus'
+import throttle from 'lodash/throttle';
 
 const { t } = useI18n();
 const search = ref('');
@@ -38,19 +39,20 @@ const courseSet = useCourseSet();
 const innerRef = ref<HTMLDivElement>()
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 const max = ref(0)
+const moreRecommend = throttle(courseSet.moreRecommend, 1000);
 
 onMounted(() => {
-	console.log(innerRef.value!.clientHeight);
+	console.log(innerRef.value!.clientHeight, scrollbarRef.value!.wrapRef?.clientHeight);
 	max.value = innerRef.value!.clientHeight;
 	if (courseSet.recommend.length == 0)
-		courseSet.moreRecommend(500);
+		moreRecommend(500);
 });
 
 const scroll = ({ scrollTop } : { scrollTop: number }) => {
-	if (max.value - scrollTop <= 600)
-		courseSet.moreRecommend(500);
-	console.log(scrollTop, max.value);
 	max.value = innerRef.value!.clientHeight;
+	if (max.value - scrollTop - scrollbarRef.value!.wrapRef?.clientHeight! <= 10)
+		moreRecommend(500);
+	console.log(scrollTop, max.value, scrollbarRef.value!.wrapRef?.clientHeight);
 }
 
 </script>

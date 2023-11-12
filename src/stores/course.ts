@@ -17,7 +17,7 @@ export const useCourseSet = defineStore("useCourseSet", {
 	actions: {
 		async moreRecommend(ms: number = 0) {
 			try {
-				const response = await post<CourseInfo[]>('api/recommend', 20);
+				const response = await post<CourseInfo[]>('api/recommend', 10);
 				console.log(response);
 				for (let i = 0; i < response.data.length; ++i) {
 					await sleep(ms);
