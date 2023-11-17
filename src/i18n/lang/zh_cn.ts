@@ -68,6 +68,23 @@ export default {
 		school: '学校',
 		teacher: '教师',
 	},
+	message: {
+		announcement: {
+			title: '公告',
+		},
+		notification: {
+			title: '通知',
+			star: {
+				tag: '收藏',
+				message: '课程《{0}》有新评价',
+			},
+			review: {
+				tag: '回复',
+				message: '你在课程《{0}》下的评价有新回复',
+			},
+			unread: '未读',
+		},
+	},
 	lang: '简体中文',
 	tag: {
 		course: '课程',

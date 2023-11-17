@@ -68,6 +68,23 @@ export default {
 		school: 'School',
 		teacher: 'Teacher',
 	},
+	message: {
+		announcement: {
+			'title': 'Announcement',
+		},
+		notification: {
+			'title': 'Notification',
+			star: {
+				tag: 'star',
+				message: 'The course《{0}》has a new review',
+			},
+			review: {
+				tag: 'review',
+				message: 'There is a new reply to your comment under the course《{0}》',
+			},
+			unread: 'unread',
+		}
+	},
 	lang: 'English',
 	tag: {
 		course: 'course',
