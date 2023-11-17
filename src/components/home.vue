@@ -7,10 +7,12 @@
 			<div style="height: 30vh"></div>
 			<el-affix class="search-container" :offset="60">
 				<el-autocomplete
-					v-model="search"
+					v-model="keyword"
 					:fetch-suggestions="querySearchAsync"
 					:placeholder="t('search.placeholder')"
 					:prefix-icon="Search"
+					@select="handleSearch"
+					@keyup.enter="handleSearch"
 					style="width: 50vw;"
 					clearable
 				>
@@ -23,9 +25,14 @@
 				</template>
 				</el-autocomplete>
 			</el-affix>
-			<div style="height: 30vh"></div>
+			<div style="height: 30vh" v-if="courseSet.search.length == 0"></div>
 			<div style="display: flex;">
 				<CourseList id="search result" class="course-list" v-if="courseSet.search.length != 0" :list="courseSet.search"/>
+			</div>
+			<el-divider>
+				{{ t('home.recommend') }}
+			</el-divider>
+			<div style="display: flex;">
 				<CourseList id="recommend list" :list="courseSet.recommend" />
 			</div>
 		</div>
@@ -45,12 +52,13 @@ import { post } from '@/api';
 import { CompleteResult } from '@/types/course';
 
 const { t } = useI18n();
-const search = ref('');
+const keyword = ref('');
 const courseSet = useCourseSet();
 const innerRef = ref<HTMLDivElement>()
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 const max = ref(0)
 const moreRecommend = throttle(courseSet.moreRecommend, 1000);
+const searchCourse = throttle(courseSet.searchCourse, 1000);
 
 onMounted(() => {
 	console.log(innerRef.value!.clientHeight, scrollbarRef.value!.wrapRef?.clientHeight);
@@ -60,9 +68,13 @@ onMounted(() => {
 });
 
 const querySearchAsync = (queryString: string, cb: (arg: any) => void) => {
-  	post<CompleteResult>('/api/autocomplete', queryString).then((results) => {
+  	post<CompleteResult[]>('/api/autocomplete', queryString).then((results) => {
 		cb(results.data);
 	});
+}
+
+const handleSearch = () => {
+	searchCourse(keyword.value);
 }
 
 const scroll = ({ scrollTop } : { scrollTop: number }) => {

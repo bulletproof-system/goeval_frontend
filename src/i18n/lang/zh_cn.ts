@@ -6,6 +6,9 @@ export default {
 	search: {
 		placeholder: '查询课程信息',
 	},
+	home: {
+		recommend: '推荐',
+	},
 	topBar: {
 		home: '主页',
 		star: '收藏',

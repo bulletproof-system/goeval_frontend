@@ -18,16 +18,29 @@ export const useCourseSet = defineStore("useCourseSet", {
 		async moreRecommend(ms: number = 0) {
 			try {
 				const response = await post<CourseInfo[]>('api/recommend', 10);
-				console.log(response);
 				for (let i = 0; i < response.data.length; ++i) {
 					await sleep(ms);
 					this.recommend.push(response.data[i]);
-					console.log("add", response.data[i])
 				}
 			} catch (error) {
 				console.log(error);
 			}
 			
+		},
+		clearSearch() {
+			this.search.splice(0, this.search.length);
+		},
+		async searchCourse(keyword: string, ms: number = 0) {
+			try {
+				const response = await post<CourseInfo[]>('api/search', keyword);
+				this.clearSearch();
+				for (let i = 0; i < response.data.length; ++i) {
+					await sleep(ms);
+					this.search.push(response.data[i]);
+				}
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	}
 });

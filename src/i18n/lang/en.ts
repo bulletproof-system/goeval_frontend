@@ -6,6 +6,9 @@ export default {
 	search: {
 		placeholder: 'Query course information',
 	},
+	home: {
+		recommend: 'Recommend',
+	},
 	topBar: {
 		home: 'Home',
 		star: 'Star',
