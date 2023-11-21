@@ -37,19 +37,5 @@ export default {
 		registerBtn: 'Register',
 		registerTip: 'Already have an account?',
 	},
-	courseInfo: {
-		courseName: 'Course Name',
-		courseInstructor: 'Course Instructor',
-		operation: 'Operation',
-		detail: 'Detail',
-		courseDetail: 'Course Detail',
-		review: 'Review',
-	},
-	reviewForm: {
-		rating: 'Rating',
-		comment: 'Comment',
-		submit: 'Submit',
-		submitSuccess: 'Submit successfully',
-	},
 	lang: 'English',
 };

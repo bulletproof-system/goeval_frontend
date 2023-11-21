@@ -37,19 +37,5 @@ export default {
 		registerBtn: '注册',
 		registerTip: '已有账号?',
 	},
-	courseInfo: {
-		courseName: '课程名称',
-		courseInstructor: '课程教师',
-		operation: '操作',
-		detail: '详情',
-		courseDetail: '课程详情',
-		review: '评论',
-	},
-	reviewForm: {
-		rating: '评分',
-		comment: '评论',
-		submit: '提交',
-		submitSuccess: '提交成功',
-	},
 	lang: '简体中文'
 };

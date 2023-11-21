@@ -25,9 +25,9 @@ const routes = [
 		// beforeEnter: [checkLoginState]
 	},
 	{
-		path:'/courseInfo',
-		component: defineAsyncComponent(() => import('@components/courseInfo.vue')),
-		name: 'courseInfo',
+		path:'/home/detail',
+		component: defineAsyncComponent(() => import('@components/detailPage.vue')),
+		name: 'detail',
 	},
 ];
 
