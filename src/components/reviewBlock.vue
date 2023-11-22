@@ -28,15 +28,15 @@
 </template>
   
 <script setup lang="ts">
-import { Review } from '@/types'
+import { Review } from '@/types/pinia'
 
-const review: Review = ref<Review>({
-	username: '猫🐱',
-	avatar: 'https://th.bing.com/th/id/OIP.Zte3ljd4g6kqrWWyg-8fhAHaEo?rs=1&pid=ImgDetMain',
-	datetime: '2023-11-21',
-	content: '这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 这课真好玩 ',
-	rating: 4.9,
-});
+// 定义组件接受的属性
+const props = defineProps<{
+	reviewData: Review; // reviewData 属性将传递评论数据
+}>();
+
+// 使用传递的评论数据作为组件内部的 review 数据
+const review = ref<Review>(props.reviewData);
 
 </script>
   

@@ -29,6 +29,11 @@ const routes = [
 		component: defineAsyncComponent(() => import('@components/detailPage.vue')),
 		name: 'detail',
 	},
+	{
+		path:'/temp',
+		component: defineAsyncComponent(() => import('@components/temp.vue')),
+		name: 'temp',
+	}
 ];
 
 export const router = createRouter({
