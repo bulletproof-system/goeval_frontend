@@ -1,9 +1,20 @@
 <template>
 	<div class="detail">
-		<infoBlock />
-		<!-- 使用for添加十个reviewBlock -->
-		<reviewBlock v-for="i in 10" :key="i" />
-		<el-backtop :right="100" :bottom="100"/>
+		<el-row>
+			<el-col :span="18" :offset="3">
+				<infoBlock />
+			</el-col>
+
+		</el-row>
+		<el-row :gutter="20">
+			<el-col :span="9" :offset="3">
+				<reviewBlock v-for="i in 10" :key="i" />
+			</el-col>
+			<el-col :span="9">
+				<reviewBlock v-for="i in 10" :key="i" />
+			</el-col>
+		</el-row>
+		<el-backtop :right="100" :bottom="100" />
 	</div>
 </template>
 

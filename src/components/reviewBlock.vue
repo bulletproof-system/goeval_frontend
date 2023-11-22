@@ -1,8 +1,8 @@
 <template>
 	<div class="review">
 		<el-row>
-			<el-col :span="18" :offset="3">
-				<el-card class="review-card" shadow="hover">
+			<el-col>
+				<el-card class="review-card" shadow="always">
 					<el-row>
 						<el-col :span="4" class="avatar">
 							<el-avatar :size="50" :src=review.avatar />

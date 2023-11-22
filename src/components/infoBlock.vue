@@ -1,33 +1,33 @@
 <template>
 	<div class="course-info">
 		<el-row>
-			<el-col :span="18" :offset="3">
-				<el-card shadow="hover">
-					<el-container>
-						<el-header class="course-name">
+			<el-col>
+				<el-card shadow="always">
+					<el-row class="course-name">
+						<el-col :span="24">
 							<h1>{{ courseInfo.name }}</h1>
-						</el-header>
+						</el-col>
 						<el-divider />
-						<el-row>
-							<el-col class="left" :span="4" :offset="2">
-								<p><strong>开课学校</strong></p>
-								<p>{{ courseInfo.school }}</p>
-								<p><strong>任课教师</strong></p>
-								<p>{{ courseInfo.teacher.join(', ') }}</p>
-								<p><strong>评价星级</strong></p>
-								<p><el-rate v-model="courseStar" disabled allow-half show-score></el-rate></p>
-							</el-col>
-							<el-col class="right" :span="16">
-								<p class="center-flex"><strong>课程简介</strong></p>
-								<p>{{ courseIntro }}</p>
-							</el-col>
-						</el-row>
-						<el-row class="bottom" :span="2">
-							<el-col :span="6" :offset="6" class="center-flex"><el-button color="#164863"
-									plain>收藏课程</el-button></el-col>
-							<el-col :span="6" class="center-flex"><el-button color="#3A4D39" plain>提交评价</el-button></el-col>
-						</el-row>
-					</el-container>
+					</el-row>
+					<el-row>
+						<el-col class="left" :span="4" :offset="2">
+							<p><strong>开课学校</strong></p>
+							<p>{{ courseInfo.school }}</p>
+							<p><strong>任课教师</strong></p>
+							<p>{{ courseInfo.teacher.join(', ') }}</p>
+							<p><strong>评价星级</strong></p>
+							<p><el-rate v-model="courseStar" disabled allow-half show-score></el-rate></p>
+						</el-col>
+						<el-col class="right" :span="16">
+							<p class="center-flex"><strong>课程简介</strong></p>
+							<p>{{ courseIntro }}</p>
+						</el-col>
+					</el-row>
+					<el-row class="bottom" :span="2">
+						<el-col :span="6" :offset="6" class="center-flex">
+							<el-button type="warning" primary>收藏课程</el-button></el-col>
+						<el-col :span="6" class="center-flex"><el-button type="primary" primary>提交评价</el-button></el-col>
+					</el-row>
 				</el-card>
 			</el-col>
 		</el-row>
