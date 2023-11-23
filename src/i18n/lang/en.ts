@@ -12,6 +12,7 @@ export default {
 	topBar: {
 		home: 'Home',
 		star: 'Star',
+		manage: 'Manage',
 		user: {
 			login: 'login',
 			logout: 'logout',
@@ -161,5 +162,33 @@ export default {
 			cancel: 'Cancel',
 			confirm: 'Confirm',
 		}
+	},
+	manage: {
+		user: {
+			title: 'User',
+			uid: 'User ID',
+			username: 'User Name',
+			email: 'Email',
+			role: {
+				label: 'Role',
+				0: 'Visitor',
+				1: 'User',
+				2: 'Administrator',
+			},
+			operate: {
+				title: 'Operations',
+				delete: 'Delete',
+				cancel: 'Cancel',
+				confirm: 'Confirm',
+			},
+		},
+		course: {
+			title: 'Course',
+
+		},
+		announcement: {
+			title: 'Announcement',
+			
+		},
 	},
 };

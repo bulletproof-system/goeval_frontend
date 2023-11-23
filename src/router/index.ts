@@ -20,6 +20,28 @@ const routes = [
 		// beforeEnter: [checkLoginState]
 	},
 	{
+		path: '/manage',
+		component: () => import('@/components/manage/index.vue'),
+		name: 'manage',
+		children: [
+			{
+				path: '', redirect: '/manage/user'
+			},
+			{
+				path: 'user',
+				component: () => import('@/components/manage/user.vue'),
+			},
+			{
+				path: 'course',
+				component: () => import('@/components/manage/course.vue'),
+			},
+			{
+				path: 'announcement',
+				component: () => import('@/components/manage/announcement.vue'),
+			}
+		]
+	},
+	{
 		path: '/course/:course_id/:review_id/:comment_id?',
 		component: () => import('@components/courseDetail.vue'),
 		name: 'course',

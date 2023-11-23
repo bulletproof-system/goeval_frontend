@@ -5,7 +5,11 @@
         <TopBar />
       </el-header>
       <el-main class="no-padding">
-        <router-view />
+        <router-view v-slot="{ Component }">
+          <transition name="fade">
+            <component :is="Component" />
+          </transition>
+        </router-view>
       </el-main>
     </el-container>
   </el-config-provider>
@@ -34,5 +38,15 @@ const Login = defineAsyncComponent(() => import('@components/login.vue'));
 .full-screen {
   height: 100vh;
   width: 100vw;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

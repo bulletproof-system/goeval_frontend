@@ -12,6 +12,7 @@ export default {
 	topBar: {
 		home: '主页',
 		star: '收藏',
+		manage: '管理',
 		user: {
 			login: '登录',
 			logout: '退出登录',
@@ -161,5 +162,33 @@ export default {
 			cancel: '取消',
 			confirm: '确定',
 		}
+	},
+	manage: {
+		user: {
+			title: '用户管理',
+			uid: '用户 ID',
+			username: '用户名',
+			email: '邮箱',
+			role: {
+				label: '身份',
+				0: '游客',
+				1: '用户',
+				2: '管理员',
+			},
+			operate: {
+				title: '操作',
+				delete: '删除',
+				cancel: '取消',
+				confirm: '确定',
+			},
+		},
+		course: {
+			title: '课程管理',
+
+		},
+		announcement: {
+			title: '公告管理',
+			
+		},
 	},
 };

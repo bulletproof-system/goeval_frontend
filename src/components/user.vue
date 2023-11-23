@@ -4,8 +4,7 @@
 			<el-row>
 				<el-col :span="16">
 					<el-descriptions
-						:column="1"
-					>
+						:column="1">
 						<el-descriptions-item>
 							<template #label>
 								<el-text>
@@ -64,8 +63,7 @@
 	</div>
 	<el-dialog
 		v-model="operateEmail"
-		:title="t('userInfo.operate.email.detail')"
-	>
+		:title="t('userInfo.operate.email.detail')">
 		<el-form :model="emailForm" ref="emailFormRef" :rules="emailRules" status-icon>
 			<el-form-item :label="t('userInfo.operate.email.new')" :error="emailError" prop="email">
 				<el-input v-model="emailForm.email" autocomplete="off" />
@@ -82,8 +80,7 @@
 	</el-dialog>
 	<el-dialog
 		v-model="operatePassword"
-		:title="t('userInfo.operate.password.detail')"
-	>
+		:title="t('userInfo.operate.password.detail')">
 		<el-form :model="passwordForm" ref="passwordFormRef" :rules="passwordRules" 
 			status-icon hide-required-asterisk>
 			<el-form-item :label="t('userInfo.operate.password.old')" :error="passwordError.oldPassword" prop="oldPassword">

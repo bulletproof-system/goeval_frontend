@@ -7,7 +7,9 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Announcement: typeof import('./components/manage/announcement.vue')['default']
     Breadcrumb: typeof import('./components/topBar/breadcrumb.vue')['default']
+    Course: typeof import('./components/manage/course.vue')['default']
     CourseDetail: typeof import('./components/courseDetail.vue')['default']
     CourseList: typeof import('./components/courseList.vue')['default']
     CoursePanel: typeof import('./components/coursePanel.vue')['default']
@@ -15,6 +17,7 @@ declare module 'vue' {
     DarkModeSwitch: typeof import('./components/topBar/darkModeSwitch/index.vue')['default']
     DetailPage: typeof import('./components/detailPage.vue')['default']
     ElAffix: typeof import('element-plus/es')['ElAffix']
+    ElAside: typeof import('element-plus/es')['ElAside']
     ElAutocomplete: typeof import('element-plus/es')['ElAutocomplete']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBadge: typeof import('element-plus/es')['ElBadge']
@@ -57,6 +60,8 @@ declare module 'vue' {
     Light: typeof import('./components/topBar/darkModeSwitch/light.vue')['default']
     Login: typeof import('./components/login.vue')['default']
     Logo: typeof import('./components/topBar/logo.vue')['default']
+    Manage: typeof import('./components/manage/index.vue')['default']
+    Management: typeof import('./components/manage/index.vue')['default']
     Message: typeof import('./components/topBar/messageSwitch.vue')['default']
     MessageSwitch: typeof import('./components/topBar/messageSwitch.vue')['default']
     NavBar: typeof import('./components/topBar/navBar.vue')['default']
