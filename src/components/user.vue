@@ -67,7 +67,7 @@
 		:title="t('userInfo.operate.email.detail')"
 	>
 		<el-form :model="emailForm" ref="emailFormRef" :rules="emailRules" status-icon>
-			<el-form-item :error="emailError" prop="email">
+			<el-form-item :label="t('userInfo.operate.email.new')" :error="emailError" prop="email">
 				<el-input v-model="emailForm.email" autocomplete="off" />
 			</el-form-item>
 			<el-form-item>
@@ -84,13 +84,14 @@
 		v-model="operatePassword"
 		:title="t('userInfo.operate.password.detail')"
 	>
-		<el-form :model="passwordForm" ref="passwordFormRef" :rules="passwordRules" status-icon>
-			<el-form-item :error="passwordError.oldPassword" prop="oldPassword">
+		<el-form :model="passwordForm" ref="passwordFormRef" :rules="passwordRules" 
+			status-icon hide-required-asterisk>
+			<el-form-item :label="t('userInfo.operate.password.old')" :error="passwordError.oldPassword" prop="oldPassword">
 				<el-input v-model="passwordForm.oldPassword" autocomplete="off" 
 					clearable show-password
 				/>
 			</el-form-item>
-			<el-form-item :error="passwordError.newPassword" prop="newPassword">
+			<el-form-item :label="t('userInfo.operate.password.new')" :error="passwordError.newPassword" prop="newPassword">
 				<el-input v-model="passwordForm.newPassword" autocomplete="off" 
 					clearable show-password
 				/>
@@ -179,6 +180,9 @@ const passwordForm = reactive<PasswordForm>({
 	newPassword: '',
 });
 const passwordRules = reactive<FormRules<PasswordForm>>({
+	oldPassword: [
+		{ required: true, message: t('userInfo.operate.password.required'), trigger: 'blur' },
+	],
 	newPassword: [
 		{ required: true, message: t('userInfo.operate.password.required'), trigger: 'blur' },
 		{ min: 6, message: t('userInfo.operate.password.minLength'), trigger: 'blur'},

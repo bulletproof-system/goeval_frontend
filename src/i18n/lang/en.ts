@@ -136,11 +136,14 @@ export default {
 			avatar: 'Update avatar',
 			email: {
 				detail: 'Update email',
+				new: 'new email',
 				format: 'Wrong Format',
 				success: 'Update success',
 			},
 			password: {
 				detail: 'Update password',
+				old: 'old password',
+				new: 'new password',
 				auth: {
 					old: 'Please input your current password',
 					new: ''

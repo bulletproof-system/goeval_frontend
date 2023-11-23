@@ -136,11 +136,14 @@ export default {
 			avatar: '更新头像',
 			email: {
 				detail: '更新邮箱',
+				new: '新邮箱',
 				format: '邮箱格式错误',
 				success: '邮箱修改成功',
 			},
 			password: {
 				detail: '更新密码',
+				old: '旧密码',
+				new: '新密码',
 				auth: {
 					old: '请输入正确的密码',
 					new: ''
