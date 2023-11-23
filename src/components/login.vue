@@ -15,7 +15,10 @@
 				</el-form-item>
 				<el-form-item ref="passwordRef" :label="t('login.password')" prop="password" 
 					:error="loginErrorMsg['password']" >
-					<el-input v-model="loginForm.password" clearable show-password/>
+					<el-input v-model="loginForm.password" 
+						clearable show-password
+						@keyup.enter="submitLoginForm(loginFormRef)"
+					/>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" @click="submitLoginForm(loginFormRef)">
@@ -33,9 +36,8 @@ import { useUserInfo } from '@/stores/userInfo';
 import { useThemeConfig } from '@/stores/themeConfig';
 import { router } from '@/router';
 import type { FormInstance, FormRules } from 'element-plus'
-import service from '@/utils/request';
-import { Local } from '@/utils/storage';
 import { UserRole, UserInfo } from '@/types/user.ts';
+import { post } from '@/api/index'
 
 interface LoginForm {
 	username: string;
@@ -50,15 +52,16 @@ interface LoginResponse {
 	reason?: string;
 }
 
-const props= defineProps({
-	permission: { type: Array<UserRole>, required: true }
-});
+// const props= defineProps({
+// 	permission: { type: Array<UserRole>, required: true }
+// });
 const { t } = useI18n();
 const userInfo = useUserInfo();
 const themeConfig = useThemeConfig();
 const isLogin = ref(true);
 const checkLogin = () => {
-	if (!props.permission.includes(userInfo.role)) router.back();
+	if (userInfo.role == UserRole.Visitor) 
+		router.push({ name: 'home' })
 }
 const loginFormRef = ref<FormInstance>()
 const usernameRef = ref();
@@ -89,12 +92,11 @@ const submitLoginForm = async (formEl: FormInstance | undefined) => {
 	if (loginErrorMsg.username == ' ') return; // 提示账号密码错误后未更改再次提交
   	formEl.validate((valid) => {
 		if (valid) {
-			service.post('/api/login', loginForm).then((res) => {
-				const response: LoginResponse = res.data;
+			post<LoginResponse>('/api/login', loginForm).then((res) => {
+				const response = res.data;
 				if (response.success == true) {
 					const info = response.info!;
-					Local.set('Bearer', info.token);
-					userInfo.$patch(info.userInfo);
+					userInfo.login(info.userInfo, info.token);
 					themeConfig.$patch({ showLoginPanel: false });
 				} else {
 					const reason = response.reason!;

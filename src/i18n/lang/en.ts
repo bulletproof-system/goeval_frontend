@@ -12,6 +12,11 @@ export default {
 	topBar: {
 		home: 'Home',
 		star: 'Star',
+		user: {
+			login: 'login',
+			logout: 'logout',
+			center: 'center'
+		}
 	},
 	login: {
 		title: 'Login',
@@ -91,5 +96,42 @@ export default {
 		school: 'school',
 		teacher: 'teacher',
 		tag: 'tag',
+	},
+	userInfo: {
+		userName: 'Username',
+		avatar: 'Avatar',
+		email: 'Email',
+		role: {
+			name: 'Role',
+			0: 'Visitor',
+			1: 'User',
+			2: 'Administrator',
+		},
+		operate: {
+			avatar: 'Update avatar',
+			email: {
+				detail: 'Update email',
+				format: 'Wrong Format',
+				success: 'Update success',
+			},
+			password: {
+				detail: 'Update password',
+				auth: {
+					old: 'Please input your current password',
+					new: ' '
+				},
+				format: {
+					old: ' ',
+					new: 'Wrong Format'
+				},
+				required: 'Please input your password',
+				minLength: 'Password must be at least 6 characters',
+				maxLength: 'Password must be less than 20 characters',
+				success: 'Update password successfully',
+			},
+			logout: 'Logout',
+			cancel: 'Cancel',
+			confirm: 'Confirm',
+		}
 	},
 };

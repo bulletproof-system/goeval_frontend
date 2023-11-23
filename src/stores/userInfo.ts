@@ -1,17 +1,33 @@
 import { defineStore } from 'pinia';
 import { UserRole, UserInfo, UserMessage, MessageStatus, Announcement, Notification } from '@/types/user.ts';
 import { get, post } from '@/api/index'
+import { Local } from '@/utils/storage';
+import { router } from '@/router';
 
 export const useUserInfo = defineStore('userInfo', {
 	state: (): UserInfo => {
 		return {
 			userName: '',
-			avatar: '',
+			avatar: 'http://dummyimage.com/100x100/FF0000/000000&text=Visitor',
 			email: '',
 			role: UserRole.Visitor,
-		}
+		};
 	},
 	actions: {
+		login(info: UserInfo, token: string) {
+			this.$patch(info);
+			Local.set('Bearer', token);
+		},
+		logout() {
+			this.$patch({
+				userName: '',
+				avatar: 'http://dummyimage.com/100x100/FF0000/000000&text=Visitor',
+				email: '',
+				role: UserRole.Visitor,
+			});
+			Local.remove('Bearer');
+			router.push({ name: 'home' });
+		}
 	}
 });
 

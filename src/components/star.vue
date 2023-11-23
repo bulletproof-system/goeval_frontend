@@ -1,7 +1,6 @@
 <template>
 	<div>
-		<Login :permission="permission" />
-		star
+		
 	</div>
 </template>
 
@@ -10,10 +9,8 @@ import { onMounted } from 'vue';
 import { useUserInfo } from '@/stores/userInfo';
 import { useThemeConfig } from '@/stores/themeConfig';
 import { UserRole } from '@/types/user.ts';
-import Login from '@components/login.vue';
 
 const permission = [UserRole.User, UserRole.Administrator];
-// const login = defineAsyncComponent(() => import('@components/login.vue'));
 const userInfo = useUserInfo();
 const themeConfig = useThemeConfig();
 

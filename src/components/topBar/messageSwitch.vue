@@ -93,6 +93,11 @@ const announcement: Ref<Announcement> = ref({
 } as Announcement);
 const router = useRouter();
 
+onMounted(() => {
+	message.getAnnouncements();
+	message.getNotifications();
+})
+
 watch(drawer, async (val) => {
 	if (val == true) {
 		message.getAnnouncements();
