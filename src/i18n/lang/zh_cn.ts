@@ -46,20 +46,45 @@ export default {
 				minLength: '密码至少需要 6 个字符',
 				maxLength: '密码不能超过 20 个字符',
 			}
-		}
+		},
 	},
 	register: {
 		title: '注册',
+		username: '用户名',
+		password: '密码',
+		email: '邮箱',
 		registerBtn: '注册',
 		registerTip: '已有账号?',
 		error : {
 			samename: {
 				u: '用户名已经存在',
-				p: ' ' 
+				p: '',
+				e: '',
 			},
 			format: {
-				u: '格式错误',
-				p: ' '
+				u: ' ',
+				p: '用户名或密码格式错误',
+				e: '',
+			},
+			email: {
+				u: '',
+				p: '',
+				e: '邮箱格式错误'
+			},
+		},
+		rules: {
+			username: {
+				required: '用户名不能为空',
+				minLength: '用户名至少需要 3 个字符',
+				maxLength: '用户名不能超过 20 个字符',
+			},
+			password: {
+				required: '请输入密码',
+				minLength: '密码至少需要 6 个字符',
+				maxLength: '密码不能超过 20 个字符',
+			},
+			email: {
+				format: '邮箱格式错误'
 			}
 		},
 	},
@@ -118,10 +143,10 @@ export default {
 				detail: '更新密码',
 				auth: {
 					old: '请输入正确的密码',
-					new: ' '
+					new: ''
 				},
 				format: {
-					old: ' ',
+					old: '',
 					new: '密码格式错误'
 				},
 				required: '请输入密码',

@@ -28,7 +28,7 @@ export default {
 		error: {
 			format: {
 				u: 'Wrong Format',
-				p: ' '
+				p: ' ',
 			},
 			auth: {
 				u: ' ',
@@ -45,21 +45,46 @@ export default {
 				required: 'Please input your password',
 				minLength: 'Password must be at least 6 characters',
 				maxLength: 'Password must be less than 20 characters',
-			}
-		}
+			},
+		},
 	},
 	register: {
 		title: 'Register',
+		username: 'Username',
+		password: 'Password',
+		email: 'Email',
 		registerBtn: 'Register',
 		registerTip: 'Already have an account?',
 		error : {
 			format: {
-				u: 'Wrong Format',
-				p: ' '
+				u: ' ',
+				p: 'Wrong Format',
+				e: '',
 			},
 			samename: {
 				u: 'Username already exists',
-				p: ' ' 
+				p: '',
+				e: '',
+			},
+			email: {
+				u: '',
+				p: '',
+				e: 'Email format error',
+			},
+		},
+		rules: {
+			username: {
+				required: 'Please input your username',
+				minLength: 'Username must be at least 3 characters',
+				maxLength: 'Username must be less than 20 characters',
+			},
+			password: {
+				required: 'Please input your password',
+				minLength: 'Password must be at least 6 characters',
+				maxLength: 'Password must be less than 20 characters',
+			},
+			email: {
+				format: 'Email format is incorrect',
 			},
 		},
 	},
@@ -118,10 +143,10 @@ export default {
 				detail: 'Update password',
 				auth: {
 					old: 'Please input your current password',
-					new: ' '
+					new: ''
 				},
 				format: {
-					old: ' ',
+					old: '',
 					new: 'Wrong Format'
 				},
 				required: 'Please input your password',

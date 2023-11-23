@@ -213,7 +213,7 @@ watch(passwordForm, (_newValue, _oldValue) => {
 })
 
 const operateAvatar = () => {
-
+	
 };
 
 </script>
