@@ -1,8 +1,8 @@
-declare interface ThemeConfig {
+export interface ThemeConfig {
   showLoginPanel: boolean;
 }
 
-declare interface UserInfo {
+export interface UserInfo {
   login: boolean;
   userName: string | undefined;
   avatar: string | undefined;
@@ -22,5 +22,5 @@ export interface Review {
   avatar: string;
   datetime: string;
   content: string;
-  rating: integer;
+  rating: number;
 }

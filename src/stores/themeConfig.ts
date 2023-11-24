@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { useDark, useToggle } from '@vueuse/core'
+import { ThemeConfig } from '@/types/pinia'
 
 export const useThemeConfig = defineStore('themeConfig', {
 	state: (): ThemeConfig => ({
