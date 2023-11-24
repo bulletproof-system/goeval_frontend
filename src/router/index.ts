@@ -1,28 +1,50 @@
-import { defineAsyncComponent } from 'vue';
+// import { defineAsyncComponent } from 'vue';
 import { createRouter, createWebHistory  } from 'vue-router';
 
 const routes = [
 	{ path: '/', redirect: '/home' },
 	{ 	
 		path: '/home', 
-		component: defineAsyncComponent(() => import('@components/home.vue')),
+		component: () => import('@components/home.vue'),
 		name: 'home',
 	}, 
 	{
-		path: '/user/:uid',
-		component: defineAsyncComponent(() => import('@components/user.vue')),
+		path: '/user',
+		component: () => import('@components/user.vue'),
 		name: 'user',
 	},
 	{
-		path: '/login',
-		component: defineAsyncComponent(() => import('@components/login.vue')),
-		name: 'login',
-	},
-	{
 		path: '/star',
-		component: defineAsyncComponent(() => import('@components/star.vue')),
+		component: () => import('@components/star.vue'),
 		name: 'star',
 		// beforeEnter: [checkLoginState]
+	},
+	{
+		path: '/manage',
+		component: () => import('@/components/manage/index.vue'),
+		name: 'manage',
+		children: [
+			{
+				path: '', redirect: '/manage/user'
+			},
+			{
+				path: 'user',
+				component: () => import('@/components/manage/user.vue'),
+			},
+			{
+				path: 'course',
+				component: () => import('@/components/manage/course.vue'),
+			},
+			{
+				path: 'announcement',
+				component: () => import('@/components/manage/announcement.vue'),
+			}
+		]
+	},
+	{
+		path: '/course/:course_id/:review_id/:comment_id?',
+		component: () => import('@components/courseDetail.vue'),
+		name: 'course',
 	}
 ];
 
