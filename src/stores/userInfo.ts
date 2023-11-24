@@ -56,7 +56,7 @@ export const useMessage = defineStore('userMessage', {
 		async readNotification(index: number) {
 			this.notifications[index].status = MessageStatus.read;
 			let nid = this.notifications[index].nid
-			await post('api/read', nid).then((res) => {
+			await post('api/read', {"nid" : nid}).then((res) => {
 				console.log(`read notification ${nid} ${res.data == true ? 'success' : 'fail'}`)
 			});
 		}

@@ -68,7 +68,7 @@ onMounted(() => {
 });
 
 const querySearchAsync = (queryString: string, cb: (arg: any) => void) => {
-  	post<CompleteResult[]>('/api/autocomplete', queryString).then((results) => {
+  	post<CompleteResult[]>('/api/autocomplete', {"key" : queryString}).then((results) => {
 		cb(results.data);
 	});
 }
