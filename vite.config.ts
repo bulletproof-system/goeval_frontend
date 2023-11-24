@@ -46,7 +46,10 @@ export default defineConfig({
         // Auto register Element Plus components
         // 自动导入 Element Plus 组件
         ElementPlusResolver(),
+
       ],
+      // 允许子目录作为组件的命名空间前缀。
+      directoryAsNamespace: true,
 
       dts: resolve(__dirname, 'src', 'components.d.ts'),
     }),
