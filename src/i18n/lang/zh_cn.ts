@@ -17,7 +17,8 @@ export default {
 			login: '登录',
 			logout: '退出登录',
 			center: '个人中心'
-		}
+		},
+		courseInfo: '课程信息',
 	},
 	login: {
 		title: '登录',

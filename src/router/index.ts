@@ -45,6 +45,16 @@ const routes = [
 		path: '/course/:course_id/:review_id/:comment_id?',
 		component: () => import('@components/courseDetail.vue'),
 		name: 'course',
+	},
+	{
+		path:'/home/detail',
+		component: defineAsyncComponent(() => import('@components/detailPage.vue')),
+		name: 'detail',
+	},
+	{
+		path:'/temp',
+		component: defineAsyncComponent(() => import('@components/temp.vue')),
+		name: 'temp',
 	}
 ];
 

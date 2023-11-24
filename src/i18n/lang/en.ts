@@ -17,7 +17,8 @@ export default {
 			login: 'login',
 			logout: 'logout',
 			center: 'center'
-		}
+		},
+		courseInfo: 'Course Info',
 	},
 	login: {
 		title: 'Login',
