@@ -25,7 +25,7 @@ service.interceptors.response.use(
 		console.log(error);
 		
 		// 401 请求要求用户的身份认证 清除token信息, 显示登录界面
-		if (error.status === 401) {
+		if (error.response.status === 401) {
 			Local.remove('Bearer');
 			ElNotification({ 
 				title: i18n.global.t('error.401.title'),

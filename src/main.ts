@@ -16,6 +16,8 @@ app.use(i18n);
 import { UserInfo } from '@/types/user'
 import { useUserInfo } from '@/stores/userInfo'
 import { get } from '@/api/index'
+// import { isDark } from '@/stores/themeConfig';
+// import { Local } from '@/utils/storage'
 
 const userInfo = useUserInfo(pinia);
 

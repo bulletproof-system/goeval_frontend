@@ -8,13 +8,19 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { isDark } from '@/stores/themeConfig';
+import { Local } from '@/utils/storage';
 
 const { locale, availableLocales } = useI18n();
 
 console.log(availableLocales);
 
+onMounted(() => {
+	locale.value = Local.get('locale')?.locale || 'en';
+})
+
 const handleClick = () => {
 	locale.value = locale.value == 'en' ? 'zh_cn' : 'en';
+	Local.set('locale', {'locale' : locale.value});
 }
 
 const iconColor = computed((): string => isDark.value ? '#FFFFFF' : '#000000');
