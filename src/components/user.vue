@@ -146,7 +146,7 @@ const emailForm = reactive<EmailForm>({
 });
 const emailRules = reactive<FormRules<EmailForm>>({
 	email: [
-		{ type: 'email', message: t('userInfo.operate.email.format'), trigger: 'blur'},
+		{ type: 'email', message: () => t('userInfo.operate.email.format'), trigger: 'blur'},
 	],
 });
 const emailError = ref('');
@@ -178,12 +178,12 @@ const passwordForm = reactive<PasswordForm>({
 });
 const passwordRules = reactive<FormRules<PasswordForm>>({
 	oldPassword: [
-		{ required: true, message: t('userInfo.operate.password.required'), trigger: 'blur' },
+		{ required: true, message: () => t('userInfo.operate.password.required'), trigger: 'blur' },
 	],
 	newPassword: [
-		{ required: true, message: t('userInfo.operate.password.required'), trigger: 'blur' },
-		{ min: 6, message: t('userInfo.operate.password.minLength'), trigger: 'blur'},
-		{ max: 20, message: t('userInfo.operate.password.maxLength'), trigger: 'blur'},
+		{ required: true, message: () => t('userInfo.operate.password.required'), trigger: 'blur' },
+		{ min: 6, message: () => t('userInfo.operate.password.minLength'), trigger: 'blur'},
+		{ max: 20, message: () => t('userInfo.operate.password.maxLength'), trigger: 'blur'},
 	]
 })
 const passwordError = reactive({

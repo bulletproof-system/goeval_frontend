@@ -18,6 +18,9 @@ export const useUserInfo = defineStore('userInfo', {
 			this.$patch(info);
 			if (token)
 				Local.set('Bearer', {Bearer : `Bearer ${token}`});
+			const message = useMessage();
+			message.getAnnouncements();
+			message.getNotifications();
 		},
 		logout() {
 			this.$patch({

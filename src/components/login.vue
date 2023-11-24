@@ -121,14 +121,14 @@ const loginError = reactive({
 })
 const loginRules = reactive<FormRules<LoginForm>>({
 	username: [
-		{ required: true, message: t('login.rules.username.required'), trigger: 'blur' },
-		{ min: 3, message: t('login.rules.username.minLength'), trigger: 'blur'},
-		{ max: 20, message: t('login.rules.username.maxLength'), trigger: 'blur'},
+		{ required: true, message: () => t('login.rules.username.required'), trigger: 'blur' },
+		{ min: 3, message: () => t('login.rules.username.minLength'), trigger: 'blur'},
+		{ max: 20, message: () => t('login.rules.username.maxLength'), trigger: 'blur'},
 	],
 	password: [
-		{ required: true, message: t('login.rules.password.required'), trigger: 'blur' },
-		{ min: 6, message: t('login.rules.password.minLength'), trigger: 'blur'},
-		{ max: 20, message: t('login.rules.password.maxLength'), trigger: 'blur'},
+		{ required: true, message: () => t('login.rules.password.required'), trigger: 'blur' },
+		{ min: 6, message: () => t('login.rules.password.minLength'), trigger: 'blur'},
+		{ max: 20, message: () => t('login.rules.password.maxLength'), trigger: 'blur'},
 	]
 });
 const submitLoginForm = (formEl: FormInstance | undefined) => {
@@ -173,17 +173,17 @@ const registerError = reactive({
 });
 const registerRules = reactive<FormRules<RegisterForm>>({
 	username: [
-		{required: true, message: t('register.rules.username.required'), trigger: 'blur'},
-		{min: 3, message: t('register.rules.username.minLength'), trigger: 'blur'},
-		{max: 15, message: t('register.rules.username.maxLength'), trigger: 'blur'}
+		{required: true, message: () => t('register.rules.username.required'), trigger: 'blur'},
+		{min: 3, message: () => t('register.rules.username.minLength'), trigger: 'blur'},
+		{max: 15, message: () => t('register.rules.username.maxLength'), trigger: 'blur'}
 	],
 	password: [
-		{required: true, message: t('register.rules.password.required'), trigger: 'blur'},
-		{min: 6, message: t('register.rules.password.minLength'), trigger: 'blur'},
-		{max: 20, message: t('register.rules.password.maxLength'), trigger: 'blur'}
+		{required: true, message: () => t('register.rules.password.required'), trigger: 'blur'},
+		{min: 6, message: () => t('register.rules.password.minLength'), trigger: 'blur'},
+		{max: 20, message: () => t('register.rules.password.maxLength'), trigger: 'blur'}
 	],
 	email: [
-		{type: "email", message: t('register.rules.email.format'), trigger: 'blur'}
+		{type: "email", message: () => t('register.rules.email.format'), trigger: 'blur'}
 	]
 });
 const submitRegisterForm = (formEl: FormInstance | undefined) => {
