@@ -175,11 +175,13 @@ export default {
 				1: '用户',
 				2: '管理员',
 			},
+			last_login: '上次登录时间',
 			operate: {
 				title: '操作',
 				delete: '删除',
 				cancel: '取消',
 				confirm: '确定',
+				reload: '刷新',
 			},
 		},
 		course: {

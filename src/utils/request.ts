@@ -3,8 +3,9 @@ import axios, { AxiosInstance } from 'axios';
 import { Local } from '@/utils/storage';
 import { useThemeConfig } from '@/stores/themeConfig';
 import { ElNotification } from 'element-plus'
+import pinia from '@/stores';
 
-const themeConfig = useThemeConfig();
+const themeConfig = useThemeConfig(pinia);
 const service: AxiosInstance = axios.create({
 	baseURL: import.meta.env.VITE_API_URL,
 	timeout: 10000,
@@ -12,7 +13,7 @@ const service: AxiosInstance = axios.create({
 
 service.interceptors.request.use(
 	config => {
-		config.headers['Authorization'] = `Bearer ${Local.get('Bearer')}`;
+		config.headers['Authorization'] = `${Local.get('Bearer')?.Bearer ?? ''}`;
 		return config;
 	},
 	error => { return Promise.reject(error); }

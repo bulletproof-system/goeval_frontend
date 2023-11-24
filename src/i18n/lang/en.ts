@@ -175,11 +175,13 @@ export default {
 				1: 'User',
 				2: 'Administrator',
 			},
+			last_login: 'Last login',
 			operate: {
 				title: 'Operations',
 				delete: 'Delete',
 				cancel: 'Cancel',
 				confirm: 'Confirm',
+				reload: 'Reload',
 			},
 		},
 		course: {

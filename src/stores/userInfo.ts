@@ -7,20 +7,21 @@ import { router } from '@/router';
 export const useUserInfo = defineStore('userInfo', {
 	state: (): UserInfo => {
 		return {
-			userName: '',
+			username: '',
 			avatar: 'http://dummyimage.com/100x100/FF0000/000000&text=Visitor',
 			email: '',
 			role: UserRole.Visitor,
 		};
 	},
 	actions: {
-		login(info: UserInfo, token: string) {
+		login(info: UserInfo, token?: string) {
 			this.$patch(info);
-			Local.set('Bearer', token);
+			if (token)
+				Local.set('Bearer', {Bearer : `Bearer ${token}`});
 		},
 		logout() {
 			this.$patch({
-				userName: '',
+				username: '',
 				avatar: 'http://dummyimage.com/100x100/FF0000/000000&text=Visitor',
 				email: '',
 				role: UserRole.Visitor,

@@ -13,7 +13,7 @@
 								</el-text>
 							</template>
 							<el-text>
-								{{ userInfo.userName }}
+								{{ userInfo.username }}
 							</el-text>
 						</el-descriptions-item>
 						<el-descriptions-item>

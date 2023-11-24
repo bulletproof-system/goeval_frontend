@@ -5,10 +5,19 @@ export const enum UserRole {
 }
 
 export interface UserInfo {
-	userName: string;
+	username: string;
 	avatar: string;
 	email: string | undefined;
 	role: UserRole;
+}
+
+export interface UserDetail {
+	uid: number;
+	username: string;
+	avatar: string;
+	email: string | undefined;
+	role: UserRole;
+	last_login: Date;
 }
 
 export enum MessageStatus {

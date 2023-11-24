@@ -16,7 +16,7 @@
 				</el-menu-item>
 			</el-menu>
 	  	</el-aside>
-    	<el-main>
+    	<el-main class="no-padding">
 			<router-view v-slot="{ Component }">
 				<transition name="fade">
 					<component :is="Component" />
@@ -50,10 +50,12 @@ onMounted(() => {
 
 <style scoped>
 
+.no-padding {
+  padding: 0px;
+}
 .menu {
 	height: calc(100vh - var(--el-header-height));
 }
-
 .flex-grow {
   flex-grow: 1;
 }

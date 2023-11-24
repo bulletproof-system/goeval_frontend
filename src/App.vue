@@ -27,7 +27,13 @@ import { defineAsyncComponent } from 'vue';
 const TopBar = defineAsyncComponent(() => import('@components/topBar/index.vue'));
 const Login = defineAsyncComponent(() => import('@components/login.vue'));
 // 定义变量内容
+// const userInfo = useUserInfo();
 
+onMounted(() => {
+  // get<UserInfo>('/api/getInfo').then(res => {
+  //   userInfo.login(res.data);
+  // });
+})
 
 </script>
 
