@@ -164,6 +164,11 @@ export default {
 		}
 	},
 	manage: {
+		pagination: {
+			total: '共 {0} 条, 已筛选 {1} 条',
+			jump: '跳转至',
+			page: '页',
+		},
 		user: {
 			title: '用户管理',
 			uid: '用户 ID',
@@ -178,10 +183,38 @@ export default {
 			last_login: '上次登录时间',
 			operate: {
 				title: '操作',
-				delete: '删除',
+				delete: {
+					label: '删除',
+					confirm: '确定删除该用户?',
+					success: '删除成功',
+				},
+				set: {
+					label: '设为管理',
+					confirm: '确认将该用户设为管理?',
+					success: '设置成功',
+				},
+				unset: {
+					label: '移除管理',
+					confirm: '确认将该用户移除管理?',
+					success: '移除成功',
+				},
+				email: {
+					label: '修改邮箱',
+					format: '邮箱格式错误',
+					success: '邮箱修改成功',
+				},
+				password: {
+					label: '修改密码',
+					required: '请输入密码',
+					minLength: '密码至少需要 6 个字符',
+					maxLength: '密码不能超过 20 个字符',
+					format: '密码格式错误',
+					success: '密码修改成功',
+				},
 				cancel: '取消',
 				confirm: '确定',
 				reload: '刷新',
+				invaild: '无效操作',
 			},
 		},
 		course: {

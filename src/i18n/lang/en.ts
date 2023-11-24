@@ -164,6 +164,11 @@ export default {
 		}
 	},
 	manage: {
+		pagination: {
+			total: 'Total {0}, filtered {1}',
+			jump: 'Go to',
+			page: '',
+		},
 		user: {
 			title: 'User',
 			uid: 'User ID',
@@ -173,15 +178,43 @@ export default {
 				label: 'Role',
 				0: 'Visitor',
 				1: 'User',
-				2: 'Administrator',
+				2: 'Admin',
 			},
 			last_login: 'Last login',
 			operate: {
 				title: 'Operations',
-				delete: 'Delete',
+				delete: {
+					label: 'Delete',
+					confirm: 'Are you sure to delete this user?',
+					success: 'Delete success',
+				},
+				set: {
+					label: 'Set admin',
+					confirm: 'Are you sure to set this user as admin?',
+					success: 'Set admin success',
+				},
+				unset: {
+					label: 'Unset admin',
+					confirm: 'Are you sure to unset this user as admin?',
+					success: 'Unset admin success',
+				},
+				email: {
+					label: 'Update email',
+					format: 'Wrong Format',
+					success: 'Update email success',
+				},
+				password: {
+					label: 'Update password',
+					required: 'Please input password',
+					minLength: 'Password must be at least 6 characters',
+					maxLength: 'Password must be less than 20 characters',
+					format: 'Wrong Format',
+					success: 'Update password successfully',
+				},
 				cancel: 'Cancel',
 				confirm: 'Confirm',
 				reload: 'Reload',
+				invaild: 'Invaild Operation',
 			},
 		},
 		course: {
