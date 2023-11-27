@@ -7,6 +7,7 @@ export default {
 		placeholder: '查询课程信息',
 	},
 	home: {
+		empty: '暂无数据',
 		recommend: '推荐',
 	},
 	topBar: {

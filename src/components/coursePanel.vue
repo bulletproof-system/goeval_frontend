@@ -1,5 +1,5 @@
 <template>
-	<el-card class="box-card" shadow="hover">
+	<el-card class="box-card" shadow="hover" @click="handleClick">
 		<template #header>
 			<div class="card-header">
 				<span>{{ info.name }}</span>
@@ -33,12 +33,20 @@ import { User, School } from '@element-plus/icons-vue'
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 import { CourseInfo } from '@/types/course';
+import { router } from '@/router';
 import type { PropType } from "vue"
 
 // @ts-ignore
 const props = defineProps({
 	info: { type: Object as PropType<CourseInfo>, required: true },
 });
+
+const handleClick = () => {
+	router.push({
+		name: 'course',
+		params: { course_id: props.info.id.toString() },
+	});
+};
 
 </script>
 

@@ -25,7 +25,10 @@
 				</template>
 				</el-autocomplete>
 			</el-affix>
-			<div style="height: 30vh" v-if="courseSet.search.length == 0"></div>
+			
+			<el-empty v-if="showEmpty" :description="t('home.empty')" />
+			<div style="height: 30vh" v-else-if="courseSet.search.length == 0">
+			</div>
 			<div style="display: flex;">
 				<CourseList id="search result" class="course-list" v-if="courseSet.search.length != 0" :list="courseSet.search"/>
 			</div>
@@ -58,7 +61,12 @@ const innerRef = ref<HTMLDivElement>()
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 const max = ref(0)
 const moreRecommend = throttle(courseSet.moreRecommend, 1000);
-const searchCourse = throttle(courseSet.searchCourse, 1000);
+const searchCourse = throttle(async (key: string) => {
+	showEmpty.value = false;
+	await courseSet.searchCourse(key);
+	if (courseSet.search.length == 0) showEmpty.value = true;
+}, 1000);
+const showEmpty = ref(false);
 
 onMounted(() => {
 	console.log(innerRef.value!.clientHeight, scrollbarRef.value!.wrapRef?.clientHeight);

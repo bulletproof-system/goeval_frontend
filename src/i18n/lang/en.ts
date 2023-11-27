@@ -7,6 +7,7 @@ export default {
 		placeholder: 'Query course information',
 	},
 	home: {
+		empty: 'No course information',
 		recommend: 'Recommend',
 	},
 	topBar: {
