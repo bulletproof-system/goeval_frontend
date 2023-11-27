@@ -30,7 +30,7 @@
 			<el-table-column width="50px" :label="t('manage.user.role.label')" >
 				<el-table-column prop="role">
 					<template #header>
-						<el-select v-model="request.role" size="small" @change="getUserList">
+						<el-select v-model="request.role" size="small" @change="getUserList" clearable>
 							<el-option size="small"
 								v-for="item in [1, 2]"
 								:label="t(`manage.user.role.${item}`)"
@@ -217,7 +217,7 @@ const getUserList = throttle(() => {
 	loading.value = true;
 	request.page = pagination.page;
 	request.page_size = pagination.page_size;
-	post<QueryResponse>('/api/manage/userlist', request).then(res => {
+	post<QueryResponse>('/api/manage/user/list', request).then(res => {
 		const data = res.data;
 		userlist.splice(0, data.userlist.length, ...data.userlist);
 		pagination.all = data.all;
@@ -252,7 +252,7 @@ const handleDelete = throttle((id: number) => {
 	const request: DeleteForm = {
 		uid: id,
 	}
-	post<Response>('/api/manage/delete', request).then(res => {
+	post<Response>('/api/manage/user/delete', request).then(res => {
 		const response = res.data;
 		getUserList();
 		if (response.success) {
@@ -270,7 +270,7 @@ const handleSet = throttle((id: number, role: UserRole) => {
 		uid: id,
 		role: role
 	}
-	post<Response>('/api/manage/set', request).then(res => {
+	post<Response>('/api/manage/user/set', request).then(res => {
 		const response = res.data;
 		getUserList();
 		if (response.success) {
@@ -302,7 +302,7 @@ const confirmEmail = throttle((formEl: FormInstance | undefined) => {
 	if (!formEl) return;
 	formEl.validate((valid) => {
 		if (valid) {
-			post<Response>('/api/manage/email', emailForm).then(res => {
+			post<Response>('/api/manage/user/email', emailForm).then(res => {
 				const response = res.data;
 				if (response.success) {
 					getUserList();
@@ -341,7 +341,7 @@ const confirmPassword = throttle((formEl: FormInstance | undefined) => {
 	if (!formEl) return;
 	formEl.validate((valid) => {
 		if (valid) {
-			post<Response>('/api/manage/password', passwordForm).then(res => {
+			post<Response>('/api/manage/user/password', passwordForm).then(res => {
 				const response = res.data;
 				if (response.success) {
 					getUserList();

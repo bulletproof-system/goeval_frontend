@@ -1,6 +1,6 @@
 <template>
 	<div class="panel">
-		<el-table :data="courselist" v-loading="loading" size="small">
+		<el-table :data="courselist" v-loading="loading" size="small" table-layout="auto">
 			<el-table-column :label="t('manage.course.cid')">
 				<el-table-column prop="id">
 					<template #header>
@@ -15,6 +15,14 @@
 						<el-input v-model="request.name" size="small" :suffix-icon="Search"
 							@keyup.enter="getCourseList" />
 					</template>
+					<template #default="scope">
+						<div v-if="edit != scope.row.id">
+							{{ scope.row.name }}
+						</div>
+						<div v-else>
+							<el-input v-model="form.name" size="small" />
+						</div>
+					</template>
 				</el-table-column>
 			</el-table-column>
 			<el-table-column :label="t('manage.course.school')">
@@ -23,6 +31,14 @@
 						<el-input v-model="request.school" size="small" :suffix-icon="Search"
 							@keyup.enter="getCourseList" />
 					</template>
+					<template #default="scope">
+						<div v-if="edit != scope.row.id">
+							{{ scope.row.school }}
+						</div>
+						<div v-else>
+							<el-input v-model="form.school" size="small" />
+						</div>
+					</template>
 				</el-table-column>
 			</el-table-column>
 			<el-table-column :label="t('manage.course.teacher')">
@@ -30,6 +46,28 @@
 					<template #header>
 						<el-input v-model="request.teacher" size="small" :suffix-icon="Search"
 							@keyup.enter="getCourseList" />
+					</template>
+					<template #default="scope">
+						<div v-if="edit != scope.row.id">
+							<el-tag v-for="(item) in scope.row.teacher" style="margin-right: 5px;"> {{ item }} </el-tag>
+						</div>
+						<div v-else>
+							<el-tag v-for="(item, index) in form.teacher" style="margin-right: 5px; width: 50px;"
+							closable @close="form.teacher.splice(index, 1)"> 
+								{{ item }} 
+							</el-tag>
+							<el-input
+								v-if="inputTeacher"
+								ref="InputRef"
+								v-model="inputValue"
+								size="small"
+								@keyup.enter="handleInputConfirm"
+								@blur="handleInputConfirm"
+							/>
+							<el-button v-else size="small" @click="showInput">
+								{{ t('manage.course.operate.edit.new') }}
+							</el-button>
+						</div>
 					</template>
 				</el-table-column>
 			</el-table-column>
@@ -46,8 +84,14 @@
 								</el-button>
 							</template>
 						</el-popconfirm>
-						<el-button type="warning" size="small">
+						<el-button type="warning" size="small" v-if="edit != scope.row.id" @click="handleEdit(scope.row)">
 							{{ t('manage.course.operate.edit.label') }}
+						</el-button>
+						<el-button type="info" size="small" v-if="edit == scope.row.id" @click="edit=-1">
+							{{ t('manage.cancel') }}
+						</el-button>
+						<el-button type="warning" size="small" v-if="edit == scope.row.id" @click="handleEditConfim">
+							{{ t('manage.confirm') }}
 						</el-button>
 						<el-button type="primary" size="small" @click="handleDetail(scope.row.id)">
 							{{ t('manage.course.operate.detail.label') }}
@@ -91,6 +135,7 @@ import { Search } from '@element-plus/icons-vue';
 import { throttle } from 'lodash';
 import { post } from '@/api/index';
 import { router } from '@/router';
+import { ElInput } from 'element-plus'
 
 interface QueryForm {
 	page: number;
@@ -131,7 +176,7 @@ const getCourseList = throttle(() => {
 	loading.value = true;
 	request.page = pagination.page;
 	request.page_size = pagination.page_size;
-	post<QueryResponse>('api/manage/courselist', request).then(res => {
+	post<QueryResponse>('api/manage/course/list', request).then(res => {
 		const data = res.data;
 		courselist.splice(0, data.courselist.length, ...data.courselist);
 		pagination.all = data.all;
@@ -166,7 +211,7 @@ const handleDelete = throttle((id: number) => {
 	const request: DeleteForm = {
 		cid: id,
 	}
-	post<Response>('/api/manage/delete', request).then(res => {
+	post<Response>('/api/manage/course/delete', request).then(res => {
 		const response = res.data;
 		getCourseList();
 		if (response.success) {
@@ -174,6 +219,47 @@ const handleDelete = throttle((id: number) => {
 		} else ElMessage.error(t('manage.invaild'));
 	});
 }, 500);
+
+const edit = ref(-1);
+const form = reactive<CourseInfo>({
+	id: -1,
+	name: '',
+	school: '',
+	teacher: [],
+});
+const handleEdit = throttle((info: CourseInfo) => {
+	edit.value = info.id;
+	form.id = info.id;
+	form.name = info.name;
+	form.school = info.school;
+	form.teacher = info.teacher.slice();
+}, 500);
+const handleEditConfim = throttle(() => {
+	post<Response>('/api/manage/course/edit', form).then(res => {
+		const response = res.data;
+		if (response.success) {
+			ElMessage.success(t('manage.course.operate.edit.success'));
+			getCourseList();
+		} else ElMessage.error(t('manage.invaild'));
+	});
+	edit.value = -1;
+}, 500);
+const inputValue = ref('');
+const inputTeacher = ref(false)
+const InputRef = ref<InstanceType<typeof ElInput>>()
+	const showInput = () => {
+	inputTeacher.value = true
+  nextTick(() => {
+    InputRef.value!.input!.focus()
+  })
+}
+const handleInputConfirm = () => {
+  if (inputValue.value) {
+    form.teacher.push(inputValue.value)
+  }
+  inputTeacher.value = false
+  inputValue.value = ''
+}
 
 const handleDetail = throttle((id: number) => {
 	router.push({ name: 'course', params: { course_id: id.toString() }})

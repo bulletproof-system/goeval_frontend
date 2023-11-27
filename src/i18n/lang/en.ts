@@ -226,6 +226,15 @@ export default {
 					label: 'Delete',
 					confirm: 'Are you sure to delete this course?',
 					success: 'Delete success',
+				},
+				edit: {
+					label: 'Edit',
+					new: '+ New',
+					success: 'Edit success',
+				},
+				detail: {
+					label: 'Detail',
+					success: 'Detail success',
 				}
 			}
 		},

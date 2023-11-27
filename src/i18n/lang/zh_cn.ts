@@ -229,6 +229,7 @@ export default {
 				},
 				edit: {
 					label: '编辑',
+					new: '+ 添加',
 					success: '编辑成功',
 				},
 				detail: {

@@ -1,5 +1,7 @@
 <template>
-	course detail
+	<div>
+		course detail
+	</div>
 </template>
 
 <script setup lang="ts">

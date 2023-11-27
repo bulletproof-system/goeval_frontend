@@ -32,7 +32,6 @@ const routes = [
 	{
 		path: '/manage',
 		component: () => import('@/components/manage/index.vue'),
-		name: 'manage',
 		children: [
 			{
 				path: '', redirect: '/manage/user'

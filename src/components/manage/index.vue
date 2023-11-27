@@ -1,16 +1,16 @@
 <template>
 	<el-container style="height: 100%;">
 		<el-aside width="70px" style="height: 100%;">
-			<el-menu collapse style="height: 100%;" router default-active="1">
-				<el-menu-item index="1" route="/manage/user">
+			<el-menu collapse style="height: 100%;" router :default-active="router.currentRoute.value.path">
+				<el-menu-item index="/manage/user" route="/manage/user">
 					<el-icon><User /></el-icon>
 					<template #title> {{ t('manage.user.title') }} </template>
 				</el-menu-item>
-				<el-menu-item index="2" route="/manage/course">
+				<el-menu-item index="/manage/course" route="/manage/course">
 					<el-icon><Collection /></el-icon>
 					<template #title> {{ t('manage.course.title') }} </template>
 				</el-menu-item>
-				<el-menu-item index="3" route="/manage/announcement">
+				<el-menu-item index="/manage/announcement" route="/manage/announcement">
 					<el-icon><Bell /></el-icon>
 					<template #title> {{ t('manage.announcement.title') }} </template>
 				</el-menu-item>
@@ -34,6 +34,7 @@ import { useUserInfo } from '@/stores/userInfo';
 import { useThemeConfig } from '@/stores/themeConfig';
 import { UserRole } from '@/types/user.ts';
 import { User, Collection, Bell } from '@element-plus/icons-vue';
+import { router } from '@/router';
 
 const permission = [UserRole.Administrator];
 const { t } = useI18n();
