@@ -1,7 +1,7 @@
 <template>
 	<div class="panel">
 		<el-table :data="userlist" v-loading="loading" class="table"
-			size="small"
+			size="small" table-layout="auto"
 			>
 			<el-table-column :label="t('manage.user.uid')" >
 				<el-table-column prop="uid">
@@ -27,7 +27,7 @@
 					</template>
 				</el-table-column>
 			</el-table-column>
-			<el-table-column width="50px" :label="t('manage.user.role.label')" >
+			<el-table-column :label="t('manage.user.role.label')" >
 				<el-table-column prop="role">
 					<template #header>
 						<el-select v-model="request.role" size="small" @change="getUserList" clearable>

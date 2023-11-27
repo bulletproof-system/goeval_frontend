@@ -240,6 +240,10 @@ export default {
 		},
 		announcement: {
 			title: 'Announcement',
+			aid: 'Announcement ID',
+			title_: 'Title',
+			content: 'Content',
+			datetime: 'Create Time',
 			operate: {
 				title: 'Operations',
 				delete: {
@@ -253,6 +257,10 @@ export default {
 				},
 				detail: {
 					label: 'Detail',
+				},
+				add: {
+					label: 'Add',
+					success: 'Add success',
 				}
 			}
 		},

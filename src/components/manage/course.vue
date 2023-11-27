@@ -192,7 +192,6 @@ const handleCurrentChange = (page: number) => {
 	pagination.page = page;
 	getCourseList();
 }
-
 const handleJump = (force: boolean) => {
 	if (pagination.page != jump.value || force) {
 		pagination.page = jump.value;

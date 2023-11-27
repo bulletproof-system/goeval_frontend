@@ -239,6 +239,10 @@ export default {
 		},
 		announcement: {
 			title: '公告管理',
+			aid: '公告 ID',
+			title_: '标题',
+			content: '内容',
+			datetime: '发布时间',
 			operate: {
 				title: '操作',
 				delete: {
@@ -249,6 +253,10 @@ export default {
 				edit: {
 					label: '编辑',
 					success: '编辑成功',
+				},
+				add: {
+					label: '添加',
+					success: '添加成功',
 				}
 			}
 		},

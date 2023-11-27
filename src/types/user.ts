@@ -31,18 +31,18 @@ export enum NotificationType {
 }
 
 export interface Announcement {
-	aid: Number;
+	aid: number;
 	title: string;
 	content: string;
 	datetime: Date;
 }
 
 export interface Notification {
-	nid: Number;
-	course_id: Number;
+	nid: number;
+	course_id: number;
 	course_name: string;
-	review_id: Number;
-	comment_id?: Number;
+	review_id: number;
+	comment_id?: number;
 	datetime: Date;
 	status: MessageStatus;
 	ntype: NotificationType;
