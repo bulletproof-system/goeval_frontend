@@ -16,13 +16,16 @@ app.use(i18n);
 import { UserInfo } from '@/types/user'
 import { useUserInfo } from '@/stores/userInfo'
 import { get } from '@/api/index'
-// import { isDark } from '@/stores/themeConfig';
-// import { Local } from '@/utils/storage'
+import { useThemeConfig } from './stores/themeConfig';
 
 const userInfo = useUserInfo(pinia);
+const themeConfig = useThemeConfig();
 
 get<UserInfo>('/api/getInfo').then(res => {
 	userInfo.login(res.data);
+	// @ts-ignore
+	if (router.currentRoute.value.meta.permission.includes(userInfo.role))
+		themeConfig.showLoginPanel = false;
 });
 
 app.mount('#app');

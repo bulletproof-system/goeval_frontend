@@ -70,7 +70,7 @@
 import { useI18n } from 'vue-i18n';
 import { useUserInfo } from '@/stores/userInfo';
 import { useThemeConfig } from '@/stores/themeConfig';
-import { router, useRoute } from '@/router';
+import { router } from '@/router';
 import type { FormInstance, FormRules } from 'element-plus'
 import { UserRole, UserInfo } from '@/types/user.ts';
 import { post } from '@/api/index'
@@ -105,15 +105,10 @@ const { t } = useI18n();
 const userInfo = useUserInfo();
 const themeConfig = useThemeConfig();
 const isLogin = ref(true);
-const route = useRoute();
 const checkLogin = () => {
 	if (userInfo.role == UserRole.Visitor) 
 		router.push({ name: 'home' })
 }
-watch(userInfo, (_, newVal) => {
-	if (route.meta.permisson.includes(newVal.role))
-		isLogin.value = false;
-})
 
 const loginFormRef = ref<FormInstance>()
 const loginForm = reactive<LoginForm>({
