@@ -212,19 +212,44 @@ export default {
 					format: 'Wrong Format',
 					success: 'Update password successfully',
 				},
-				cancel: 'Cancel',
-				confirm: 'Confirm',
-				reload: 'Reload',
-				invaild: 'Invaild Operation',
 			},
 		},
 		course: {
 			title: 'Course',
-
+			cid: 'Course ID',
+			name: 'Course Name',
+			school: 'School',
+			teacher: 'Teacher',
+			operate: {
+				title: 'Operations',
+				delete: {
+					label: 'Delete',
+					confirm: 'Are you sure to delete this course?',
+					success: 'Delete success',
+				}
+			}
 		},
 		announcement: {
 			title: 'Announcement',
-			
+			operate: {
+				title: 'Operations',
+				delete: {
+					label: 'Delete',
+					confirm: 'Are you sure to delete this announcement?',
+					success: 'Delete success',
+				},
+				edit: {
+					label: 'Edit',
+					success: 'Edit success',
+				},
+				detail: {
+					label: 'Detail',
+				}
+			}
 		},
+		cancel: 'Cancel',
+		confirm: 'Confirm',
+		reload: 'Reload',
+		invaild: 'Invaild Operation',
 	},
 };

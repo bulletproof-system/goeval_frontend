@@ -61,7 +61,7 @@ const routes = [
 		]
 	},
 	{
-		path: '/course/:course_id/:review_id/:comment_id?',
+		path: '/course/:course_id/:review_id?/:comment_id?',
 		component: () => import('@components/courseDetail.vue'),
 		name: 'course',
 		meta: {

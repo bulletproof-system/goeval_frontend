@@ -27,7 +27,7 @@
 					</template>
 				</el-table-column>
 			</el-table-column>
-			<el-table-column width="80px" :label="t('manage.user.role.label')" >
+			<el-table-column width="50px" :label="t('manage.user.role.label')" >
 				<el-table-column prop="role">
 					<template #header>
 						<el-select v-model="request.role" size="small" @change="getUserList">
@@ -55,8 +55,8 @@
 				<template #default="scope">
 					<el-button-group>
 						<el-popconfirm :width="200" :title="t('manage.user.operate.delete.confirm')"
-							:cancel-button-text="t('manage.user.operate.cancel')"
-							:confirm-button-text="t('manage.user.operate.confirm')"
+							:cancel-button-text="t('manage.cancel')"
+							:confirm-button-text="t('manage.confirm')"
 							@confirm="handleDelete(scope.row.uid)">
 							<template #reference>
 								<el-button type="danger" size="small">
@@ -65,8 +65,8 @@
 							</template>
 						</el-popconfirm>
 						<el-popconfirm :width="200" :title="t('manage.user.operate.set.confirm')" v-if="scope.row.role == UserRole.User"
-							:cancel-button-text="t('manage.user.operate.cancel')"
-							:confirm-button-text="t('manage.user.operate.confirm')"
+							:cancel-button-text="t('manage.cancel')"
+							:confirm-button-text="t('manage.confirm')"
 							@confirm="handleSet(scope.row.uid, UserRole.Administrator)">
 							<template #reference>
 								<el-button type="warning" size="small">
@@ -75,8 +75,8 @@
 							</template>
 						</el-popconfirm>
 						<el-popconfirm :width="200" :title="t('manage.user.operate.unset.confirm')" v-if="scope.row.role == UserRole.Administrator"
-							:cancel-button-text="t('manage.user.operate.cancel')"
-							:confirm-button-text="t('manage.user.operate.confirm')"
+							:cancel-button-text="t('manage.cancel')"
+							:confirm-button-text="t('manage.confirm')"
 							@confirm="handleSet(scope.row.uid, UserRole.User)">
 							<template #reference>
 								<el-button type="warning" size="small">
@@ -96,7 +96,7 @@
 		</el-table>
 		<el-divider />
 		<div style="display: flex;">
-			<el-button type="primary" @click="getUserList"> {{ t('manage.user.operate.reload') }}  </el-button>
+			<el-button type="primary" @click="getUserList"> {{ t('manage.reload') }}  </el-button>
 			<div style="flex: 1;"></div>
 			<div class="pagination">
 				<el-text>
@@ -129,10 +129,10 @@
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" @click="operateEmail = false" text>
-						{{ t('manage.user.operate.cancel') }}
+						{{ t('manage.cancel') }}
 					</el-button>
 					<el-button type="primary" @click="confirmEmail(emailFormRef)" text bg>
-						{{ t('manage.user.operate.confirm') }}
+						{{ t('manage.confirm') }}
 					</el-button>
 				</el-form-item>
 			</el-form>
@@ -150,10 +150,10 @@
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" @click="operatePassword = false" text>
-						{{ t('manage.user.operate.cancel') }}
+						{{ t('manage.cancel') }}
 					</el-button>
 					<el-button type="primary" @click="confirmPassword(passwordFormRef)" text bg>
-						{{ t('manage.user.operate.confirm') }}
+						{{ t('manage.confirm') }}
 					</el-button>
 				</el-form-item>
 			</el-form>
@@ -257,7 +257,7 @@ const handleDelete = throttle((id: number) => {
 		getUserList();
 		if (response.success) {
 			ElMessage.success(t('manage.user.operate.delete.success'));
-		} else ElMessage.error(t('manage.user.operate.invaild'));
+		} else ElMessage.error(t('manage.invaild'));
 	});
 }, 500);
 
@@ -278,7 +278,7 @@ const handleSet = throttle((id: number, role: UserRole) => {
 				ElMessage.success(t('manage.user.operate.set.success'));
 			else if (role == UserRole.User)
 				ElMessage.success(t('manage.user.operate.unset.success'));
-		} else ElMessage.error(t('manage.user.operate.invaild'));
+		} else ElMessage.error(t('manage.invaild'));
 	})
 }, 500);
 

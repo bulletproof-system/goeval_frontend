@@ -212,19 +212,48 @@ export default {
 					format: '密码格式错误',
 					success: '密码修改成功',
 				},
-				cancel: '取消',
-				confirm: '确定',
-				reload: '刷新',
-				invaild: '无效操作',
 			},
 		},
 		course: {
 			title: '课程管理',
-
+			cid: '课程 ID',
+			name: '课程名称',
+			school: '学校',
+			teacher: '教师',
+			operate: {
+				title: '操作',
+				delete: {
+					label: '删除',
+					confirm: '确定删除该课程?',
+					success: '删除成功',
+				},
+				edit: {
+					label: '编辑',
+					success: '编辑成功',
+				},
+				detail: {
+					label: '查看',
+				}
+			}
 		},
 		announcement: {
 			title: '公告管理',
-			
+			operate: {
+				title: '操作',
+				delete: {
+					label: '删除',
+					confirm: '确定删除该公告?',
+					success: '删除成功',
+				},
+				edit: {
+					label: '编辑',
+					success: '编辑成功',
+				}
+			}
 		},
+		cancel: '取消',
+		confirm: '确定',
+		reload: '刷新',
+		invaild: '无效操作',
 	},
 };
