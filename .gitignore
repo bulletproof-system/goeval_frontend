@@ -29,3 +29,7 @@ dist-ssr
 .yarnrc.yml 
 
 .VSCodeCounter
+
+# auto import
+src/auto-imports.d.ts
+src/components.d.ts
