@@ -32,8 +32,8 @@ export const useCourseSet = defineStore("useCourseSet", {
 		},
 		async searchCourse(keyword: string, ms: number = 0) {
 			try {
-				const response = await post<CourseInfo[]>('api/search', {"key" : keyword});
 				this.clearSearch();
+				const response = await post<CourseInfo[]>('api/search', {"key" : keyword});
 				for (let i = 0; i < response.data.length; ++i) {
 					await sleep(ms);
 					this.search.push(response.data[i]);
