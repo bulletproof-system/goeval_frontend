@@ -10,6 +10,9 @@ export default {
 		empty: '暂无数据',
 		recommend: '推荐',
 	},
+	star: {
+		empty: '暂无数据'
+	},
 	topBar: {
 		home: '主页',
 		star: '收藏',

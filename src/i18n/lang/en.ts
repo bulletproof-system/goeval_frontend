@@ -10,6 +10,9 @@ export default {
 		empty: 'No course information',
 		recommend: 'Recommend',
 	},
+	star: {
+		empty: 'No course information'
+	},
 	topBar: {
 		home: 'Home',
 		star: 'Star',
