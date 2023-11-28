@@ -2,20 +2,20 @@
 	<div class="detail">
 		<el-row>
 			<el-col :span="18" :offset="3" v-if="courseInfo">
-				<infoBlock class="animate" :_courseInfo="courseInfo" :_courseStar="courseStar"/>
+				<infoBlock class="animate" :_courseInfo="courseInfo" :_courseStar="courseStar" />
 			</el-col>
 		</el-row>
 		<el-row :gutter="20">
 			<!-- 使用两列布局展示评论 -->
 			<!-- 左列 -->
 			<el-col :span="9" :offset="3">
-				<div v-for="(comment, index) in leftReviews" :key="index">
+				<div v-for="(comment, index) in leftReviews" :key="index" :id="`${comment.id}`">
 					<reviewBlock class="animate" :reviewData="comment" />
 				</div>
 			</el-col>
 			<!-- 右列 -->
 			<el-col :span="9">
-				<div v-for="(comment, index) in rightReviews" :key="index">
+				<div v-for="(comment, index) in rightReviews" :key="index" :id="`${comment.id}`">
 					<reviewBlock class="animate" :reviewData="comment" />
 				</div>
 			</el-col>
@@ -58,6 +58,18 @@ onMounted(async () => {
 			description: response.data.description,
 		}
 		reviews.value = response.data.reviews;
+
+		// 接受路由参数reviewId以便定位
+		const reviewId = Number(router.currentRoute.value.params.review_id);
+		if (reviewId) {
+			console.log("target reviewId:", reviewId.toString())
+			// 页面滚动到指定评论
+			const review = document.getElementById(reviewId.toString());
+			console.log("got: ", review)
+			if (review) {
+				review.scrollIntoView();
+			}
+		}
 	} catch (error) {
 		console.error('Error fetching reviews:', error);
 	}
@@ -100,4 +112,5 @@ const rightReviews = computed(() => reviews.value.slice(Math.ceil(reviews.value.
 	100% {
 		opacity: 1;
 	}
-}</style>
+}
+</style>
