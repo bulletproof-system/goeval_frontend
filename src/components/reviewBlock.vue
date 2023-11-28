@@ -28,7 +28,7 @@
 </template>
   
 <script setup lang="ts">
-import { Review } from '@/types/pinia'
+import { Review } from '@/types/course.ts';
 
 // 定义组件接受的属性
 const props = defineProps<{

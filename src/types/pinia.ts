@@ -9,18 +9,3 @@ export interface UserInfo {
   email: string | undefined;
   permission: [string] | undefined;
 }
-
-export interface CourseInfo {
-  id: string;
-  name: string;
-  school: string;
-  teacher: Array<string>;
-}
-
-export interface Review {
-  username: string;
-  avatar: string;
-  datetime: string;
-  content: string;
-  rating: number;
-}

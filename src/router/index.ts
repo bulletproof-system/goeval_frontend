@@ -61,16 +61,8 @@ const routes = [
 	},
 	{
 		path: '/course/:course_id/:review_id?/:comment_id?',
-		component: () => import('@components/courseDetail.vue'),
+		component: () => import('@components/detailPage.vue'),
 		name: 'course',
-		meta: {
-			permission: [UserRole.Visitor, UserRole.User, UserRole.Administrator]
-		}
-	},
-	{
-		path:'/home/detail',
-		component: defineAsyncComponent(() => import('@components/detailPage.vue')),
-		name: 'detail',
 		meta: {
 			permission: [UserRole.Visitor, UserRole.User, UserRole.Administrator]
 		}
