@@ -228,6 +228,7 @@ export default {
 			school: 'School',
 			teacher: 'Teacher',
 			tag: 'Tag',
+			description: 'Description',
 			operate: {
 				title: 'Operations',
 				delete: {

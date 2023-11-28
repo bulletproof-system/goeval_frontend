@@ -228,6 +228,7 @@ export default {
 			school: '学校',
 			teacher: '教师',
 			tag: '标签',
+			description: '课程描述',
 			operate: {
 				title: '操作',
 				delete: {
