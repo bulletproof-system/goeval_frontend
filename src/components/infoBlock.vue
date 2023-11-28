@@ -6,6 +6,7 @@
 					<el-row class="course-name">
 						<el-col :span="24">
 							<h1>{{ courseInfo.name }}</h1>
+							<el-tag v-for="(item) in courseInfo.tag" effect="dark" round style="margin-right: 3px;"> {{ item }} </el-tag>
 						</el-col>
 						<el-divider />
 					</el-row>
