@@ -11,8 +11,7 @@
 		:with-header="false"
 		direction="rtl"
 		:size="500"
-		style="height: calc(100vh); top: auto;"
-	>
+		style="height: calc(100vh); top: auto;">
 		<template #default>
 			<el-tabs stretch style="height: 100%;">
 				<el-tab-pane style="height: 100%;">
@@ -25,9 +24,11 @@
 					<template #default>
 						<el-scrollbar style="height: 100%;">
 							<div v-for="(item) in message.announcements" @click.native="showAnnouncementDetail(item)">
-								<el-text tag="b">{{ item.title }} <br/> </el-text>
-								<el-text truncated > {{ item.content }} </el-text>
-								<el-text> {{ item.datetime }} </el-text>
+								<el-space direction="vertical" alignment="normal">
+									<el-text tag="b">{{ item.title }} <br/> </el-text>
+									<el-text truncated > {{ item.content }} </el-text>
+									<el-text> {{ item.datetime }} </el-text>
+								</el-space>
 								<el-divider />
 							</div>
 						</el-scrollbar>
