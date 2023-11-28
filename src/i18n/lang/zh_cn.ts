@@ -58,7 +58,7 @@ export default {
 		email: '邮箱',
 		registerBtn: '注册',
 		registerTip: '已有账号?',
-		error : {
+		error: {
 			samename: {
 				u: '用户名已经存在',
 				p: '',
@@ -274,4 +274,36 @@ export default {
 		reload: '刷新',
 		invaild: '无效操作',
 	},
+	reviewBlock: {
+		title: "评论区",
+		datetime: "日期和时间",
+		reply: "回复",
+		comments: "评论",
+		textarea: "写下你的内容...",
+		confirmClose:  "你的评论还未提交，确认关闭？",
+		emptyContent: "评论内容不能为空",
+		replySuccess: "回复成功",
+		replyFail: "回复失败",
+		cancel: '取消',
+		confirm: '确定',
+	},
+	infoBlock: {
+		school: '开课学校',
+		teacher: '任课教师',
+		star: '评价星级',
+		content: '评价内容',
+		description: '课程简介',
+		starCourse: '收藏课程',
+		submitReview: '提交评价',
+		textarea: '写下你的内容...',
+		starSuccess: '收藏成功',
+		starCancel: '取消收藏',
+		confirmClose:  "你的评论还未提交，确认关闭？",
+		emptyContent: "评论内容不能为空",
+		emptyStar: "评价星级不能为空",
+		reviewSuccess: "评价成功",
+		reviewFail: "你已经提交过评价了",
+		cancel: '取消',
+		confirm: '确定',
+	}
 };

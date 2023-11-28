@@ -23,14 +23,15 @@
 					<p></p>
 					<el-row>
 						<el-col :span="2" :offset="22">
-							<el-button type="primary" size="small" @click="addComment">回复</el-button>
+							<el-button type="primary" size="small" @click="addComment">{{ t('reviewBlock.reply')
+							}}</el-button>
 						</el-col>
 					</el-row>
 					<p></p>
 					<el-row>
 						<el-col :span="23" :offset="1">
 							<el-collapse>
-								<el-collapse-item title="评论区" name="1" @click="fetchComments">
+								<el-collapse-item :title="t('reviewBlock.title')" name="1" @click="fetchComments">
 									<commentBlock v-for="(comment, index) in comments" :key="index"
 										:commentData="comment" />
 								</el-collapse-item>
@@ -42,18 +43,18 @@
 		</el-row>
 
 		<!-- 评论表单弹窗 -->
-		<el-dialog v-model="replyFormVisible" title="回复评价" width="40%" :before-close="handleClose">
+		<el-dialog v-model="replyFormVisible" :title="t('reviewBlock.reply')" width="40%" :before-close="handleClose">
 			<span>
 				<el-form label-width="20%">
-					<el-form-item label="内容">
-						<el-input v-model="replyPost.content" type="textarea" :rows="10" placeholder="请输入回复内容"></el-input>
+					<el-form-item :label="t('reviewBlock.reply')">
+						<el-input v-model="replyPost.content" type="textarea" :rows="10" :placeholder="t('reviewBlock.textarea')"></el-input>
 					</el-form-item>
 				</el-form>
 			</span>
 			<template #footer>
 				<span class="dialog-footer">
-					<el-button @click="replyFormVisible = false">取消</el-button>
-					<el-button type="primary" @click="submitReply">提交</el-button>
+					<el-button @click="replyFormVisible = false">{{ t('reviewBlock.cancel') }}</el-button>
+					<el-button type="primary" @click="submitReply">{{ t('reviewBlock.confirm') }}</el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -64,6 +65,9 @@
 import { Review, Comment } from '@/types/course.ts';
 import { post, get } from '@/api';
 import { UserInfo } from '@/types/user'
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 interface commentPost {
 	reviewId: number;
@@ -138,7 +142,7 @@ async function addComment() {
 // 关闭评论表单
 const handleClose = (done: () => void) => {
 	// 提醒是否确认
-	ElMessageBox.confirm('确认关闭? ')
+	ElMessageBox.confirm(t('reviewBlock.confirmClose'))
 		.then(() => {
 			done()
 		})
@@ -154,7 +158,7 @@ async function submitReply() {
 	// 前端检查内容是否为空
 	if (replyPost.content == '') {
 		ElMessage({
-			message: '回复内容不能为空',
+			message: t('reviewBlock.emptyContent'),
 			type: 'error',
 		});
 		return;
@@ -166,7 +170,7 @@ async function submitReply() {
 	// 根据后端返回的数据，弹出不同的提示
 	if (response.data.ret == 1) {
 		ElMessage({
-			message: '评论成功',
+			message: t('reviewBlock.replySuccess'),
 			type: 'success',
 		});
 		comments.push({
@@ -179,7 +183,7 @@ async function submitReply() {
 		replyFormVisible.value = false;
 	} else {
 		ElMessage({
-			message: '评论失败',
+			message: t('reviewBlock.replyFail'),
 			type: 'error',
 		});
 	}
