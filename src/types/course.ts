@@ -3,6 +3,7 @@ export interface CourseInfo {
 	name: string;
 	school: string;
 	teacher: string[];
+	tag: string[];
 }
 
 export interface CourseSet {

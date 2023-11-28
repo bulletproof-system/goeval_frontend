@@ -25,6 +25,7 @@
 				<div class="singe-line">{{ info.teacher.join(',') }} </div>
 			</el-descriptions-item>
 		</el-descriptions>
+		<el-tag v-for="(item) in info.tag" effect="light" round style="margin-right: 3px;"> {{ item }} </el-tag>
 	</el-card>
 </template>
 

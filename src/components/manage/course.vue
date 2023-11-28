@@ -7,6 +7,10 @@
 						<el-input v-model="request.cid" size="small" :suffix-icon="Search"
 							@keyup.enter="getCourseList" />
 					</template>
+					<template #default="scope">
+						<div v-if="scope.row.id != 0"> {{ scope.row.id }} </div>
+						<div v-else></div>
+					</template>
 				</el-table-column>
 			</el-table-column>
 			<el-table-column :label="t('manage.course.name')">
@@ -16,12 +20,15 @@
 							@keyup.enter="getCourseList" />
 					</template>
 					<template #default="scope">
-						<div v-if="edit != scope.row.id">
-							{{ scope.row.name }}
+						<div v-if="scope.row.id != 0">
+							<div v-if="edit != scope.row.id">
+								{{ scope.row.name }}
+							</div>
+							<div v-else>
+								<el-input v-model="form.name" size="small" />
+							</div>
 						</div>
-						<div v-else>
-							<el-input v-model="form.name" size="small" />
-						</div>
+						<div v-else> <el-input v-model="newForm.name" size="small" /> </div>
 					</template>
 				</el-table-column>
 			</el-table-column>
@@ -32,12 +39,15 @@
 							@keyup.enter="getCourseList" />
 					</template>
 					<template #default="scope">
-						<div v-if="edit != scope.row.id">
-							{{ scope.row.school }}
+						<div v-if="scope.row.id != 0">
+							<div v-if="edit != scope.row.id">
+								{{ scope.row.school }}
+							</div>
+							<div v-else>
+								<el-input v-model="form.school" size="small" />
+							</div>
 						</div>
-						<div v-else>
-							<el-input v-model="form.school" size="small" />
-						</div>
+						<div v-else> <el-input v-model="newForm.school" size="small" /> </div>
 					</template>
 				</el-table-column>
 			</el-table-column>
@@ -48,32 +58,36 @@
 							@keyup.enter="getCourseList" />
 					</template>
 					<template #default="scope">
-						<div v-if="edit != scope.row.id">
-							<el-tag v-for="(item) in scope.row.teacher" style="margin-right: 5px;"> {{ item }} </el-tag>
+						<div v-if="scope.row.id != 0">
+							<div v-if="edit != scope.row.id">
+								<el-tag v-for="(item) in scope.row.teacher" style="margin-right: 5px;"> {{ item }} </el-tag>
+							</div>
+							<div v-else><TagList v-model:list="form.teacher" /></div>
 						</div>
-						<div v-else>
-							<el-tag v-for="(item, index) in form.teacher" style="margin-right: 5px; width: 50px;"
-							closable @close="form.teacher.splice(index, 1)"> 
-								{{ item }} 
-							</el-tag>
-							<el-input
-								v-if="inputTeacher"
-								ref="InputRef"
-								v-model="inputValue"
-								size="small"
-								@keyup.enter="handleInputConfirm"
-								@blur="handleInputConfirm"
-							/>
-							<el-button v-else size="small" @click="showInput">
-								{{ t('manage.course.operate.edit.new') }}
-							</el-button>
+						<div v-else> <TagList v-model:list="newForm.teacher"/> </div>
+					</template>
+				</el-table-column>
+			</el-table-column>
+			<el-table-column :label="t('manage.course.tag')">
+				<el-table-column prop="tag">
+					<template #header>
+						<el-input v-model="request.tag" size="small" :suffix-icon="Search"
+							@keyup.enter="getCourseList" />
+					</template>
+					<template #default="scope">
+						<div v-if="scope.row.id != 0">
+							<div v-if="edit != scope.row.id">
+								<el-tag v-for="(item) in scope.row.tag" style="margin-right: 5px;"> {{ item }} </el-tag>
+							</div>
+							<div v-else><TagList v-model:list="form.tag" /></div>
 						</div>
+						<div v-else> <TagList v-model:list="newForm.tag"/> </div>
 					</template>
 				</el-table-column>
 			</el-table-column>
 			<el-table-column prop="operate" width="400px" :label="t('manage.course.operate.title')" fixed="right" >
 				<template #default="scope">
-					<el-button-group>
+					<el-button-group v-if="scope.row.id != 0">
 						<el-popconfirm :width="200" :title="t('manage.course.operate.delete.confirm')"
 							:cancel-button-text="t('manage.cancel')"
 							:confirm-button-text="t('manage.confirm')"
@@ -95,6 +109,11 @@
 						</el-button>
 						<el-button type="primary" size="small" @click="handleDetail(scope.row.id)">
 							{{ t('manage.course.operate.detail.label') }}
+						</el-button>
+					</el-button-group>
+					<el-button-group v-else>
+						<el-button type="primary" size="small" @click="handleAdd">
+							{{ t('manage.course.operate.add.label') }}
 						</el-button>
 					</el-button-group>
 				</template>
@@ -136,6 +155,7 @@ import { throttle } from 'lodash';
 import { post } from '@/api/index';
 import { router } from '@/router';
 import { ElInput } from 'element-plus'
+import TagList from '@/components/manage/taglist.vue'
 
 interface QueryForm {
 	page: number;
@@ -144,6 +164,7 @@ interface QueryForm {
 	name?: string;
 	school?: string;
 	teacher?: string;
+	tag?: string;
 }
 interface QueryResponse {
 	all: number;
@@ -170,7 +191,8 @@ const request = reactive<QueryForm>({
 	cid: undefined,
 	name: undefined,
 	school: undefined,
-	teacher: undefined
+	teacher: undefined,
+	tag: undefined
 })
 const getCourseList = throttle(() => {
 	loading.value = true;
@@ -178,13 +200,19 @@ const getCourseList = throttle(() => {
 	request.page_size = pagination.page_size;
 	post<QueryResponse>('api/manage/course/list', request).then(res => {
 		const data = res.data;
+		data.courselist.push({
+			id: 0,
+			name: '',
+			school: '',
+			teacher: [],
+			tag: []
+		});
 		courselist.splice(0, data.courselist.length, ...data.courselist);
 		pagination.all = data.all;
 		pagination.total = data.total;
 		pagination.page_total = data.page_total;
 		pagination.page = data.page;
 		loading.value = false;
-
 		jump.value = pagination.page;
 	})
 }, 3000);
@@ -225,6 +253,7 @@ const form = reactive<CourseInfo>({
 	name: '',
 	school: '',
 	teacher: [],
+	tag: [],
 });
 const handleEdit = throttle((info: CourseInfo) => {
 	edit.value = info.id;
@@ -232,6 +261,7 @@ const handleEdit = throttle((info: CourseInfo) => {
 	form.name = info.name;
 	form.school = info.school;
 	form.teacher = info.teacher.slice();
+	form.tag = info.tag.slice();
 }, 500);
 const handleEditConfim = throttle(() => {
 	post<Response>('/api/manage/course/edit', form).then(res => {
@@ -243,26 +273,30 @@ const handleEditConfim = throttle(() => {
 	});
 	edit.value = -1;
 }, 500);
-const inputValue = ref('');
-const inputTeacher = ref(false)
-const InputRef = ref<InstanceType<typeof ElInput>>()
-	const showInput = () => {
-	inputTeacher.value = true
-  nextTick(() => {
-    InputRef.value!.input!.focus()
-  })
-}
-const handleInputConfirm = () => {
-  if (inputValue.value) {
-    form.teacher.push(inputValue.value)
-  }
-  inputTeacher.value = false
-  inputValue.value = ''
-}
 
 const handleDetail = throttle((id: number) => {
 	router.push({ name: 'course', params: { course_id: id.toString() }})
 }, 500)
+
+const newForm = reactive({
+	name: '',
+	school: '',
+	teacher: [],
+	tag: [],
+});
+const handleAdd = throttle(() => {
+	post<Response>('/api/manage/course/add', newForm).then(res => {
+		const response = res.data;
+		if (response.success) {
+			ElMessage.success(t('manage.course.operate.add.success'));
+			newForm.name = '';
+			newForm.school = '';
+			newForm.teacher = [];
+			newForm.tag = [];
+			getCourseList();
+		} else ElMessage.error(t('manage.invaild'));
+	});
+}, 5000);
 
 onMounted(() => {
 	getCourseList();

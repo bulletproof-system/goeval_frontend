@@ -61,6 +61,7 @@ declare module 'vue' {
     Manage: typeof import('./components/manage/index.vue')['default']
     ManageAnnouncement: typeof import('./components/manage/announcement.vue')['default']
     ManageCourse: typeof import('./components/manage/course.vue')['default']
+    ManageTaglist: typeof import('./components/manage/taglist.vue')['default']
     ManageUser: typeof import('./components/manage/user.vue')['default']
     ReviewBlock: typeof import('./components/reviewBlock.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

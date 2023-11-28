@@ -221,6 +221,7 @@ export default {
 			name: '课程名称',
 			school: '学校',
 			teacher: '教师',
+			tag: '标签',
 			operate: {
 				title: '操作',
 				delete: {
@@ -235,7 +236,11 @@ export default {
 				},
 				detail: {
 					label: '查看',
-				}
+				},
+				add: {
+					label: '添加',
+					success: '添加成功',
+				},
 			}
 		},
 		announcement: {

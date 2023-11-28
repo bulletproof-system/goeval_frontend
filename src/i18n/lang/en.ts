@@ -221,6 +221,7 @@ export default {
 			name: 'Course Name',
 			school: 'School',
 			teacher: 'Teacher',
+			tag: 'Tag',
 			operate: {
 				title: 'Operations',
 				delete: {
@@ -236,7 +237,11 @@ export default {
 				detail: {
 					label: 'Detail',
 					success: 'Detail success',
-				}
+				},
+				add: {
+					label: 'Add',
+					success: 'Add success',
+				},
 			}
 		},
 		announcement: {
