@@ -22,3 +22,19 @@ export interface CompleteResult {
 	type: TagType,
 	value: string,
 }
+
+export interface Review {
+	username: string;
+	avatar: string;
+	datetime: string;
+	content: string;
+	rating: number;
+}
+
+export interface CourseDetail {
+	id: number;
+	name: string;
+	school: string;
+	teacher: string[];
+	reviews: Array<Review>;
+}

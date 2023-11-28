@@ -51,7 +51,7 @@
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="reviewFormVisible = false">取消</el-button>
-					<el-button type="primary" @click="reviewFormVisible = false">提交</el-button>
+					<el-button type="primary" @click="submitReview">提交</el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -60,7 +60,35 @@
   
 <script setup lang="ts">
 import { ref } from 'vue'
-import { CourseInfo } from '@/types/pinia'
+import { CourseInfo } from '@/types/course.ts'
+import { post } from '@/api';
+
+interface CollectResponse {
+	ret: number;
+}
+
+interface CollectPost {
+	username: string;
+	id: number;
+}
+
+interface ReviewPost {
+	username: string;
+	id: number;
+	rating: number;
+	content: string;
+}
+
+const collectPost = reactive<CollectPost>({
+	username: '',
+	id: 0,
+})
+
+onMounted(() => {
+	// TODO: 如何获取用户名?
+	collectPost.username = 'test';
+	collectPost.id = courseInfo.value.id;
+})
 
 // 定义组件接受的属性
 const props = defineProps<{
@@ -77,11 +105,22 @@ const courseIntro = ref<string>(props._courseIntro);
 const reviewFormVisible = ref(false);
 
 // 处理收藏课程
-const collectCourse = () => {
-    ElMessage({
-    message: '收藏成功',
-    type: 'success',
-  })
+const collectCourse = async () => {
+	// 向后端发送收藏课程的请求
+	const response = await post<CollectResponse>('/api/collect', { collectPost });
+
+	// 根据后端返回的数据，弹出不同的提示
+	if (response.data.ret == 1) {
+		ElMessage({
+			message: '成功收藏',
+			type: 'success',
+		});
+	} else {
+		ElMessage({
+			message: '取消收藏',
+			type: 'warning',
+		});
+	}
 };
 
 
@@ -102,8 +141,27 @@ const handleClose = (done: () => void) => {
 		})
 }
 
+// 提交评价
+const submitReview = async () => {
+	// 向后端发送评价的请求
+	const response = await post<CollectResponse>('/api/review', { form });
+
+	// 根据后端返回的数据，弹出不同的提示
+	if (response.data.ret == 1) {
+		ElMessage({
+			message: '评价成功',
+			type: 'success',
+		});
+	} else {
+		ElMessage({
+			message: '评价失败',
+			type: 'warning',
+		});
+	}
+};
+
 const form = reactive({
-  content: '',
+	content: '',
 })
 
 
