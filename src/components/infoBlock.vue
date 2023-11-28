@@ -20,7 +20,7 @@
 						</el-col>
 						<el-col class="right" :span="16">
 							<p class="center-flex"><strong>课程简介</strong></p>
-							<p>{{ courseIntro }}</p>
+							<p>{{ courseInfo.description }}</p>
 						</el-col>
 					</el-row>
 					<el-row class="bottom" :span="2">
@@ -41,10 +41,10 @@
 				<el-form label-width="20%">
 					<!-- 评价星级 -->
 					<el-form-item label="评分">
-						<el-rate allow-half show-score></el-rate>
+						<el-rate allow-half show-score v-model="reviewPost.rating"></el-rate>
 					</el-form-item>
 					<el-form-item label="内容">
-						<el-input v-model="form.content" type="textarea" :rows="10" placeholder="请输入评价内容"></el-input>
+						<el-input v-model="reviewPost.content" type="textarea" :rows="10" placeholder="请输入评价内容"></el-input>
 					</el-form-item>
 				</el-form>
 			</span>
@@ -84,23 +84,30 @@ const collectPost = reactive<CollectPost>({
 	id: 0,
 })
 
+const reviewPost = reactive<ReviewPost>({
+	username: '',
+	id: 0,
+	rating: 0,
+	content: '',
+})
+
 onMounted(() => {
 	// TODO: 如何获取用户名?
 	collectPost.username = 'test';
+	reviewPost.username = 'test';
 	collectPost.id = courseInfo.value.id;
+	reviewPost.id = courseInfo.value.id;
 })
 
 // 定义组件接受的属性
 const props = defineProps<{
 	_courseInfo: CourseInfo;
 	_courseStar: number;
-	_courseIntro: string;
 }>();
 
 // 使用传递的课程数据作为组件内部的课程数据
 const courseInfo = ref<CourseInfo>(props._courseInfo);
 const courseStar = ref<number>(props._courseStar);
-const courseIntro = ref<string>(props._courseIntro);
 
 const reviewFormVisible = ref(false);
 
@@ -144,7 +151,7 @@ const handleClose = (done: () => void) => {
 // 提交评价
 const submitReview = async () => {
 	// 向后端发送评价的请求
-	const response = await post<CollectResponse>('/api/review', { form });
+	const response = await post<CollectResponse>('/api/review', { reviewPost });
 
 	// 根据后端返回的数据，弹出不同的提示
 	if (response.data.ret == 1) {
@@ -154,15 +161,11 @@ const submitReview = async () => {
 		});
 	} else {
 		ElMessage({
-			message: '评价失败',
-			type: 'warning',
+			message: '你已经提交过评价了',
+			type: 'error',
 		});
 	}
 };
-
-const form = reactive({
-	content: '',
-})
 
 
 </script>

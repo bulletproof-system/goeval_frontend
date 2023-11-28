@@ -2,8 +2,7 @@
 	<div class="detail">
 		<el-row>
 			<el-col :span="18" :offset="3" v-if="courseInfo">
-				<infoBlock class="panel" :_courseInfo="courseInfo" :_courseStar="courseStar"
-					:_courseIntro="courseIntro" />
+				<infoBlock class="animate" :_courseInfo="courseInfo" :_courseStar="courseStar"/>
 			</el-col>
 		</el-row>
 		<el-row :gutter="20">
@@ -11,13 +10,13 @@
 			<!-- 左列 -->
 			<el-col :span="9" :offset="3">
 				<div v-for="(comment, index) in leftReviews" :key="index">
-					<reviewBlock class="panel" :reviewData="comment" />
+					<reviewBlock class="animate" :reviewData="comment" />
 				</div>
 			</el-col>
 			<!-- 右列 -->
 			<el-col :span="9">
 				<div v-for="(comment, index) in rightReviews" :key="index">
-					<reviewBlock class="panel" :reviewData="comment" />
+					<reviewBlock class="animate" :reviewData="comment" />
 				</div>
 			</el-col>
 		</el-row>
@@ -55,6 +54,8 @@ onMounted(async () => {
 			name: response.data.name,
 			school: response.data.school,
 			teacher: response.data.teacher,
+			tag: response.data.tag,
+			description: response.data.description,
 		}
 		reviews.value = response.data.reviews;
 	} catch (error) {
@@ -74,8 +75,6 @@ const courseStar = computed(() => {
 	return Math.round(sum * 10) / 10;
 });
 
-const courseIntro = ref('该课程暂无课程介绍');
-
 // 将评论数据分为左右两列
 const leftReviews = computed(() => reviews.value.slice(0, Math.ceil(reviews.value.length / 2)));
 const rightReviews = computed(() => reviews.value.slice(Math.ceil(reviews.value.length / 2)));
@@ -88,7 +87,7 @@ const rightReviews = computed(() => reviews.value.slice(Math.ceil(reviews.value.
 	padding-right: 200px;
 }
 
-.panel {
+.animate {
 	animation-name: show;
 	animation-duration: 2s;
 }

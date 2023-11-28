@@ -39,4 +39,6 @@ export interface CourseDetail {
 	school: string;
 	teacher: string[];
 	reviews: Array<Review>;
+	tag: string[];
+	description: string;
 }
