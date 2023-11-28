@@ -328,6 +328,9 @@ const handleAdd = throttle(() => {
 onMounted(() => {
 	getCourseList();
 });
+onUnmounted(() => {
+	courselist.splice(0, courselist.length);
+})
 </script>
 
 <style scoped>

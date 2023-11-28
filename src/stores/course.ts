@@ -15,6 +15,9 @@ export const useCourseSet = defineStore("useCourseSet", {
 		}
 	},
 	actions: {
+		clearRecommend() {
+			this.recommend.splice(0, this.recommend.length);
+		},
 		async moreRecommend(ms: number = 0) {
 			try {
 				const response = await post<CourseInfo[]>('api/recommend', {"num" : 10});
@@ -42,10 +45,13 @@ export const useCourseSet = defineStore("useCourseSet", {
 				console.log(error);
 			}
 		},
+		clearStar() {
+			this.star.splice(0, this.star.length);
+		},
 		async getStarList(ms: number = 0) {
 			try {
 				const response = await get<CourseInfo[]>('api/starlist');
-				this.star.splice(0, this.star.length);
+				this.clearStar();
 				for (let i = 0; i < response.data.length; ++i) {
 					await sleep(ms);
 					this.star.push(response.data[i]);

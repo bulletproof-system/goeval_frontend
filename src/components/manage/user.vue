@@ -363,6 +363,9 @@ watch(passwordForm, (_newValue, _oldValue) => {
 onMounted(() => {
 	getUserList();
 });
+onUnmounted(() => {
+	userlist.splice(0, userlist.length);
+})
 
 </script>
 

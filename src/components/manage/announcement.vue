@@ -259,6 +259,9 @@ const handleAdd = throttle(() => {
 onMounted(() => {
 	getAnnouncementList();
 });
+onUnmounted(() => {
+	announcementlist.splice(0, announcementlist.length);
+})
 </script>
 
 <style scoped>

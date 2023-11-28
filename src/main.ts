@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import App from '@/App.vue';
-import '@/styles/gobal.scss'
 import 'element-plus/theme-chalk/dark/css-vars.css'
+import '@/styles/gobal.scss'
 
 import { router } from '@/router/index';
 import pinia from '@/stores/index';

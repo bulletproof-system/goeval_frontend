@@ -28,6 +28,9 @@ onMounted(() => {
 	if (!permission.includes(userInfo.role)) themeConfig.showLoginPanel = true;
 	getStarList(100);
 })
+onUnmounted(() => {
+	courseSet.clearStar();
+})
 
 watch(userInfo, (_, newVal) => {
 	if (permission.includes(newVal.role)) getStarList(100);
