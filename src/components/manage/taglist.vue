@@ -12,7 +12,7 @@
 		@blur="handleInputConfirm"
 	/>
 	<el-button v-else size="small" @click="showInput">
-		{{ t('manage.course.operate.edit.new') }}
+		{{ t('manage.taglist.new') }}
 	</el-button>
 </template>
 <script setup lang="ts">

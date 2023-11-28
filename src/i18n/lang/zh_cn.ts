@@ -171,6 +171,9 @@ export default {
 			jump: '跳转至',
 			page: '页',
 		},
+		taglist: {
+			new: '+ 添加'
+		},
 		user: {
 			title: '用户管理',
 			uid: '用户 ID',

@@ -171,6 +171,9 @@ export default {
 			jump: 'Go to',
 			page: '',
 		},
+		taglist: {
+			new: '+ New'
+		},
 		user: {
 			title: 'User',
 			uid: 'User ID',
