@@ -4,6 +4,7 @@ export interface CourseInfo {
 	school: string;
 	teacher: string[];
 	tag: string[];
+	description: string;
 }
 
 export interface CourseSet {
