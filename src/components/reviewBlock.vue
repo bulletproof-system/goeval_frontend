@@ -22,6 +22,12 @@
 					</el-row>
 					<p></p>
 					<el-row>
+						<el-col :span="2" :offset="22">
+							<el-button type="primary" size="small" @click="addComment">回复</el-button>
+						</el-col>
+					</el-row>
+					<p></p>
+					<el-row>
 						<el-col :span="23" :offset="1">
 							<el-collapse>
 								<el-collapse-item title="评论区" name="1" @click="fetchComments">
@@ -35,12 +41,29 @@
 			</el-col>
 		</el-row>
 
+		<!-- 评论表单弹窗 -->
+		<el-dialog v-model="replyFormVisible" title="回复评价" width="40%" :before-close="handleClose">
+			<span>
+				<el-form label-width="20%">
+					<el-form-item label="内容">
+						<el-input v-model="replyPost.content" type="textarea" :rows="10" placeholder="请输入回复内容"></el-input>
+					</el-form-item>
+				</el-form>
+			</span>
+			<template #footer>
+				<span class="dialog-footer">
+					<el-button @click="replyFormVisible = false">取消</el-button>
+					<el-button type="primary" @click="submitReply">提交</el-button>
+				</span>
+			</template>
+		</el-dialog>
 	</div>
 </template>
   
 <script setup lang="ts">
 import { Review, Comment } from '@/types/course.ts';
-import { post } from '@/api';
+import { post, get } from '@/api';
+import { UserInfo } from '@/types/user'
 
 interface commentPost {
 	reviewId: number;
@@ -61,11 +84,16 @@ const commentPost = reactive<commentPost>({
 	reviewId: 0,
 });
 
-onMounted(() => {
+onMounted(async () => {
 	review.value = props.reviewData;
 	commentPost.reviewId = review.value.id;
+	const response = await get<UserInfo>('/api/getInfo');
+	replyPost.username = response.data.username;
+	replyPost.id = review.value.id;
+	replyPost.avatar = response.data.avatar;
 });
 
+// 获取评论区
 const isFirstClick = ref(true);
 async function fetchComments() {
 	if (isFirstClick.value) {
@@ -83,6 +111,79 @@ async function fetchComments() {
 }
 
 
+interface ReplyPost {
+	id: number;
+	username: string;
+	content: string;
+	avatar: string;	// 头像不会发送到后端，只是用来临时显示
+}
+
+interface ReplyResponse {
+	ret: number;
+}
+
+const replyFormVisible = ref(false);
+const replyPost = reactive<ReplyPost>({
+	id: 0,
+	username: '',
+	content: '',
+	avatar: '',
+});
+
+// 显示评论表单
+async function addComment() {
+	replyFormVisible.value = true;
+}
+
+// 关闭评论表单
+const handleClose = (done: () => void) => {
+	// 提醒是否确认
+	ElMessageBox.confirm('确认关闭? ')
+		.then(() => {
+			done()
+		})
+		.catch(() => {
+			// catch error
+		})
+}
+
+// 提交评论
+async function submitReply() {
+	console.log('replyPost: ', replyPost);
+
+	// 前端检查内容是否为空
+	if (replyPost.content == '') {
+		ElMessage({
+			message: '回复内容不能为空',
+			type: 'error',
+		});
+		return;
+	}
+
+	// 向后端发送评论的请求
+	const response = await post<ReplyResponse>('/api/reply', replyPost);
+
+	// 根据后端返回的数据，弹出不同的提示
+	if (response.data.ret == 1) {
+		ElMessage({
+			message: '评论成功',
+			type: 'success',
+		});
+		comments.push({
+			id: replyPost.id,
+			username: replyPost.username,
+			content: replyPost.content,
+			datetime: new Date().toLocaleString(),
+			avatar: replyPost.avatar,
+		});
+		replyFormVisible.value = false;
+	} else {
+		ElMessage({
+			message: '评论失败',
+			type: 'error',
+		});
+	}
+}
 
 </script>
   

@@ -62,7 +62,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { CourseInfo } from '@/types/course.ts'
-import { post } from '@/api';
+import { post, get } from '@/api';
+import { UserInfo } from '@/types/user'
 
 interface CollectResponse {
 	ret: number;
@@ -92,10 +93,10 @@ const reviewPost = reactive<ReviewPost>({
 	content: '',
 })
 
-onMounted(() => {
-	// TODO: 如何获取用户名?
-	collectPost.username = 'test';
-	reviewPost.username = 'test';
+onMounted(async () => {
+	const response = await get<UserInfo>('/api/getInfo');
+	collectPost.username = response.data.username;
+	reviewPost.username = response.data.username;
 	collectPost.id = courseInfo.value.id;
 	reviewPost.id = courseInfo.value.id;
 })
@@ -114,6 +115,8 @@ const reviewFormVisible = ref(false);
 
 // 处理收藏课程
 const collectCourse = async () => {
+	console.log('collectPost: ', collectPost);
+
 	// 向后端发送收藏课程的请求
 	const response = await post<CollectResponse>('/api/collect', { collectPost });
 
@@ -151,6 +154,24 @@ const handleClose = (done: () => void) => {
 
 // 提交评价
 const submitReview = async () => {
+	console.log('reviewPost: ', reviewPost);
+	
+	// 前端检查内容是否为空
+	if (reviewPost.content == '') {
+		ElMessage({
+			message: '评价内容不能为空',
+			type: 'error',
+		});
+		return;
+	}
+	if (reviewPost.rating == 0) {
+		ElMessage({
+			message: '评价星级不能为空',
+			type: 'error',
+		});
+		return;
+	}
+
 	// 向后端发送评价的请求
 	const response = await post<CollectResponse>('/api/review', { reviewPost });
 
