@@ -1,22 +1,22 @@
 <template>
 	<div class="detail">
 		<el-row>
-			<el-col :span="18" :offset="3" v-if="courseInfo">
-				<infoBlock class="animate" :_courseInfo="courseInfo" :_courseStar="courseStar" />
+			<el-col :span="18" :offset="3" v-if="courseInfo && userInfo">
+				<infoBlock class="animate" :_courseInfo="courseInfo" :_courseStar="courseStar" :_userInfo="userInfo" />
 			</el-col>
 		</el-row>
 		<el-row :gutter="20">
 			<!-- 使用两列布局展示评论 -->
 			<!-- 左列 -->
-			<el-col :span="9" :offset="3">
+			<el-col :span="9" :offset="3" v-if="userInfo">
 				<div v-for="(comment, index) in leftReviews" :key="index" :id="`${comment.id}`">
-					<reviewBlock class="animate" :reviewData="comment" />
+					<reviewBlock class="animate" :reviewData="comment" :userInfo="userInfo" />
 				</div>
 			</el-col>
 			<!-- 右列 -->
-			<el-col :span="9">
+			<el-col :span="9" v-if="userInfo">
 				<div v-for="(comment, index) in rightReviews" :key="index" :id="`${comment.id}`">
-					<reviewBlock class="animate" :reviewData="comment" />
+					<reviewBlock class="animate" :reviewData="comment" :userInfo="userInfo" />
 				</div>
 			</el-col>
 		</el-row>
@@ -27,20 +27,20 @@
 <script setup lang="ts">
 import infoBlock from './infoBlock.vue';
 import reviewBlock from './reviewBlock.vue';
-import { post } from '@/api';
+import { post, get } from '@/api';
 import { CourseDetail, CourseInfo, Review } from '@/types/course.ts';
 import { router } from '@/router';
+import { UserInfo } from '@/types/user';
 
 const courseId = ref<Number>(0);
 const courseDetail = ref<CourseDetail>();
 const courseInfo = ref<CourseInfo>();
 const reviews = ref<Review[]>([]);
+const userInfo = ref<UserInfo>();
 onMounted(async () => {
 	try {
 		// 接受路由参数courseId
 		courseId.value = Number(router.currentRoute.value.params.course_id);
-		// 控制台打印courseId以便调试
-		console.log('courseId:', courseId.value);
 
 		const response = await post<CourseDetail>('/api/detail', {
 			id: courseId,
@@ -58,6 +58,9 @@ onMounted(async () => {
 			description: response.data.description,
 		}
 		reviews.value = response.data.reviews;
+
+		const response2 = await get<UserInfo>('/api/getInfo');
+		userInfo.value = response2.data;
 
 		// 接受路由参数reviewId以便定位
 		const reviewId = Number(router.currentRoute.value.params.review_id);

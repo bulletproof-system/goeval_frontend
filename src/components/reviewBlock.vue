@@ -63,7 +63,7 @@
   
 <script setup lang="ts">
 import { Review, Comment } from '@/types/course.ts';
-import { post, get } from '@/api';
+import { post } from '@/api';
 import { UserInfo } from '@/types/user'
 import { useI18n } from 'vue-i18n';
 
@@ -80,6 +80,7 @@ interface commentResponse {
 // 定义组件接受的属性
 const props = defineProps<{
 	reviewData: Review;
+	userInfo: UserInfo;
 }>();
 
 const review = ref<Review>();
@@ -91,10 +92,9 @@ const commentPost = reactive<commentPost>({
 onMounted(async () => {
 	review.value = props.reviewData;
 	commentPost.reviewId = review.value.id;
-	const response = await get<UserInfo>('/api/getInfo');
-	replyPost.username = response.data.username;
+	replyPost.username = props.userInfo.username;
 	replyPost.id = review.value.id;
-	replyPost.avatar = response.data.avatar;
+	replyPost.avatar = props.userInfo.avatar;
 });
 
 // 获取评论区

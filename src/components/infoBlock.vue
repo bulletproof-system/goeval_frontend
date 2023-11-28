@@ -63,7 +63,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { CourseInfo } from '@/types/course.ts'
-import { post, get } from '@/api';
+import { post } from '@/api';
 import { UserInfo } from '@/types/user'
 import { useI18n } from 'vue-i18n';
 
@@ -98,9 +98,8 @@ const reviewPost = reactive<ReviewPost>({
 })
 
 onMounted(async () => {
-	const response = await get<UserInfo>('/api/getInfo');
-	collectPost.username = response.data.username;
-	reviewPost.username = response.data.username;
+	collectPost.username = props._userInfo.username;
+	reviewPost.username = props._userInfo.username;
 	collectPost.id = courseInfo.value.id;
 	reviewPost.id = courseInfo.value.id;
 })
@@ -109,6 +108,7 @@ onMounted(async () => {
 const props = defineProps<{
 	_courseInfo: CourseInfo;
 	_courseStar: number;
+	_userInfo: UserInfo;
 }>();
 
 // 使用传递的课程数据作为组件内部的课程数据
