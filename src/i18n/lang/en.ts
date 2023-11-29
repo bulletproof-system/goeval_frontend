@@ -139,7 +139,12 @@ export default {
 			2: 'Administrator',
 		},
 		operate: {
-			avatar: 'Update avatar',
+			avatar: {
+				detail: 'Update avatar',
+				success: 'Update success',
+				type: 'Avatar picture must be jpeg, png, gif format!',
+				size: 'Avatar picture size can not exceed 2MB!'
+			},
 			email: {
 				detail: 'Update email',
 				new: 'new email',

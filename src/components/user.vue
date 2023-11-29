@@ -42,7 +42,8 @@
 						</el-descriptions>
 					</el-col>
 					<el-col :span="8">
-						<el-avatar :size="100" :src="userInfo.avatar" />
+						<!-- <el-avatar :size="100" :src="userInfo.avatar" /> -->
+						<Avatar ref="uploadRef"/>
 					</el-col>
 				</el-row>
 				<el-divider />
@@ -51,7 +52,7 @@
 						{{ t('userInfo.operate.email.detail') }}
 					</el-button>
 					<el-button type="primary" text bg @click="operateAvatar">
-						{{ t('userInfo.operate.avatar') }}
+						{{ t('userInfo.operate.avatar.detail') }}
 					</el-button>
 					<el-button type="danger" text bg @click="operatePassword = true">
 						{{ t('userInfo.operate.password.detail') }}
@@ -115,6 +116,7 @@ import { UserRole } from '@/types/user.ts';
 import { User, Message, Key } from '@element-plus/icons-vue';
 import type { FormInstance, FormRules } from 'element-plus'
 import { post } from '@/api/index'
+import Avatar from './avatar.vue';
 
 interface EmailForm {
 	email: string;
@@ -215,8 +217,9 @@ watch(passwordForm, (_newValue, _oldValue) => {
 	passwordError.newPassword = '';
 })
 
+const uploadRef = ref();
 const operateAvatar = () => {
-	
+	uploadRef.value!.upload();
 };
 
 </script>

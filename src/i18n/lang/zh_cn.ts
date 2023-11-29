@@ -139,7 +139,12 @@ export default {
 			2: '管理员',
 		},
 		operate: {
-			avatar: '更新头像',
+			avatar: {
+				detail: '更新头像',
+				success: '头像修改成功',
+				type: '头像格式限制: jpeg, png, gif',
+				size: '头像大小限制: 2M',
+			},
 			email: {
 				detail: '更新邮箱',
 				new: '新邮箱',
