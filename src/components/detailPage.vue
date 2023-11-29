@@ -64,13 +64,14 @@ onMounted(async () => {
 
 		// 接受路由参数reviewId以便定位
 		const reviewId = Number(router.currentRoute.value.params.review_id);
+		await nextTick();
 		if (reviewId) {
 			console.log("target reviewId:", reviewId.toString())
 			// 页面滚动到指定评论
 			const review = document.getElementById(reviewId.toString());
 			console.log("got: ", review)
 			if (review) {
-				review.scrollIntoView();
+				review.scrollIntoView({ behavior: 'smooth' });
 			}
 		}
 	} catch (error) {
