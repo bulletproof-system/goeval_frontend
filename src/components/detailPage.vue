@@ -37,16 +37,31 @@ const courseDetail = ref<CourseDetail>();
 const courseInfo = ref<CourseInfo>();
 const reviews = ref<Review[]>([]);
 const userInfo = ref<UserInfo>();
-onMounted(async () => {
+onMounted(
+	() => {loadPage();}
+);
+
+watch(
+	// 检测路由两个参数的变化
+	() => [router.currentRoute.value.params.course_id, router.currentRoute.value.params.review_id],
+	() => {
+		// 控制台输出
+		console.log("route changed");
+		// 刷新页面
+		// loadPage();
+		location.reload();
+	}
+);
+
+const loadPage = async () => {
 	try {
 		// 接受路由参数courseId
 		courseId.value = Number(router.currentRoute.value.params.course_id);
+		console.log("courseId:", courseId.value);
 
 		const response = await post<CourseDetail>('/api/detail', {
 			id: courseId,
 		});
-		// 控制台打印response以便调试
-		console.log('response:', response);
 
 		courseDetail.value = response.data;
 		courseInfo.value = {
@@ -77,7 +92,7 @@ onMounted(async () => {
 	} catch (error) {
 		console.error('Error fetching reviews:', error);
 	}
-});
+}
 
 // 计算平均评分
 const courseStar = computed(() => {
