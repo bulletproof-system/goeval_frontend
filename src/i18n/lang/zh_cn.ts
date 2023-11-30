@@ -295,6 +295,8 @@ export default {
 		replyFail: "回复失败",
 		cancel: '取消',
 		confirm: '确定',
+		success: '操作成功',
+		fail: '操作失败',
 	},
 	infoBlock: {
 		school: '开课学校',
@@ -314,5 +316,6 @@ export default {
 		reviewFail: "你已经提交过评价了",
 		cancel: '取消',
 		confirm: '确定',
+		cancelStar: '取消收藏',
 	}
 };

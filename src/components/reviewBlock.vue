@@ -21,8 +21,17 @@
 						<el-col :span="23" :offset="1">{{ review.content }}</el-col>
 					</el-row>
 					<p></p>
+					<!-- 增加col间距 -->
 					<el-row>
-						<el-col :span="2" :offset="22">
+						<el-col :span="3" :offset="17">
+							<el-button type='' text size="small" @click="toggleLike">
+								<img v-if="liked" src="../assets/thumbs-up-solid.svg" alt="SVG Image">
+								<img v-else src="../assets/thumbs-up-solid-gray.svg" alt="SVG Image">
+								&nbsp;
+								{{ likeCnt }}
+							</el-button>
+						</el-col>
+						<el-col :span="3">
 							<el-button type="primary" size="small" @click="addComment">{{ t('reviewBlock.reply')
 							}}</el-button>
 						</el-col>
@@ -47,7 +56,8 @@
 			<span>
 				<el-form label-width="20%">
 					<el-form-item :label="t('reviewBlock.reply')">
-						<el-input v-model="replyPost.content" type="textarea" :rows="10" :placeholder="t('reviewBlock.textarea')"></el-input>
+						<el-input v-model="replyPost.content" type="textarea" :rows="10"
+							:placeholder="t('reviewBlock.textarea')"></el-input>
 					</el-form-item>
 				</el-form>
 			</span>
@@ -62,10 +72,16 @@
 </template>
   
 <script setup lang="ts">
-import { Review, Comment } from '@/types/course.ts';
+import { ReviewExtended, Comment } from '@/types/course.ts';
 import { post } from '@/api';
-import { UserInfo } from '@/types/user'
 import { useI18n } from 'vue-i18n';
+import { useUserInfo } from '@/stores/userInfo';
+import { useThemeConfig } from '@/stores/themeConfig';
+import { UserRole } from '@/types/user.ts';
+// 权限控制
+const permission = [UserRole.User, UserRole.Administrator];
+const userInfo = useUserInfo();
+const themeConfig = useThemeConfig();
 
 const { t } = useI18n();
 
@@ -79,22 +95,23 @@ interface commentResponse {
 
 // 定义组件接受的属性
 const props = defineProps<{
-	reviewData: Review;
-	userInfo: UserInfo;
+	reviewData: ReviewExtended;
 }>();
 
-const review = ref<Review>();
+const review = ref<ReviewExtended>();
 const comments = reactive<Comment[]>([]);
 const commentPost = reactive<commentPost>({
 	reviewId: 0,
 });
+const liked = ref(false);
+const likeCnt = ref(0);
 
 onMounted(async () => {
 	review.value = props.reviewData;
 	commentPost.reviewId = review.value.id;
-	replyPost.username = props.userInfo.username;
+	liked.value = review.value.liked;
+	likeCnt.value = review.value.count;
 	replyPost.id = review.value.id;
-	replyPost.avatar = props.userInfo.avatar;
 });
 
 // 获取评论区
@@ -117,9 +134,7 @@ async function fetchComments() {
 
 interface ReplyPost {
 	id: number;
-	username: string;
 	content: string;
-	avatar: string;	// 头像不会发送到后端，只是用来临时显示
 }
 
 interface ReplyResponse {
@@ -129,14 +144,16 @@ interface ReplyResponse {
 const replyFormVisible = ref(false);
 const replyPost = reactive<ReplyPost>({
 	id: 0,
-	username: '',
 	content: '',
-	avatar: '',
 });
 
 // 显示评论表单
 async function addComment() {
-	replyFormVisible.value = true;
+	if (!permission.includes(userInfo.role)) {
+		themeConfig.showLoginPanel = true;
+		return;
+	}
+	else replyFormVisible.value = true;
 }
 
 // 关闭评论表单
@@ -173,13 +190,10 @@ async function submitReply() {
 			message: t('reviewBlock.replySuccess'),
 			type: 'success',
 		});
-		comments.push({
-			id: replyPost.id,
-			username: replyPost.username,
-			content: replyPost.content,
-			datetime: new Date().toLocaleString(),
-			avatar: replyPost.avatar,
-		});
+		// 清空commments
+		comments.splice(0, comments.length);
+		const response = await post<commentResponse>('/api/comments', commentPost);
+		comments.push(...response.data.comments);
 		replyFormVisible.value = false;
 	} else {
 		ElMessage({
@@ -187,6 +201,33 @@ async function submitReply() {
 			type: 'error',
 		});
 	}
+}
+
+async function toggleLike() {
+	if (!permission.includes(userInfo.role)) {
+		themeConfig.showLoginPanel = true;
+		return;
+	}
+	await post('/api/like', { "id": review.value?.id }).then((res) => {
+		console.log(res.data);
+		if ((res.data as any).success == true) {
+			liked.value = !liked.value;
+			if (liked.value) {
+				likeCnt.value++;
+			} else {
+				likeCnt.value--;
+			}
+			ElMessage({
+				message: t('reviewBlock.success'),
+				type: 'success',
+			});
+		} else {
+			ElMessage({
+				message: t('reviewBlock.fail'),
+				type: 'error',
+			});
+		}
+	});
 }
 
 </script>

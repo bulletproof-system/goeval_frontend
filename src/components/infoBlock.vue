@@ -27,7 +27,8 @@
 					</el-row>
 					<el-row class="bottom" :span="2">
 						<el-col :span="6" :offset="6" class="center-flex">
-							<el-button type="warning" size="large" primary @click="collectCourse">{{ t('infoBlock.starCourse') }}</el-button>
+							<el-button v-if="collected" type="warning" size="large" primary @click="collectCourse">{{ t('infoBlock.starCourse') }}</el-button>
+							<el-button v-else type="info" size="large" primary @click="collectCourse">{{ t('infoBlock.cancelStar') }}</el-button>
 						</el-col>
 						<el-col :span="6" class="center-flex">
 							<el-button type="primary" size="large" primary @click="showReviewForm">{{ t('infoBlock.submitReview') }}</el-button>
@@ -64,8 +65,14 @@
 import { ref } from 'vue'
 import { CourseInfo } from '@/types/course.ts'
 import { post } from '@/api';
-import { UserInfo } from '@/types/user'
 import { useI18n } from 'vue-i18n';
+import { useUserInfo } from '@/stores/userInfo';
+import { useThemeConfig } from '@/stores/themeConfig';
+import { UserRole } from '@/types/user.ts';
+// 权限控制
+const permission = [UserRole.User, UserRole.Administrator];
+const userInfo = useUserInfo();
+const themeConfig = useThemeConfig();
 
 const { t } = useI18n();
 
@@ -74,32 +81,26 @@ interface CollectResponse {
 }
 
 interface CollectPost {
-	username: string;
 	id: number;
 }
 
 interface ReviewPost {
-	username: string;
 	id: number;
 	rating: number;
 	content: string;
 }
 
 const collectPost = reactive<CollectPost>({
-	username: '',
 	id: 0,
 })
 
 const reviewPost = reactive<ReviewPost>({
-	username: '',
 	id: 0,
 	rating: 0,
 	content: '',
 })
 
 onMounted(async () => {
-	collectPost.username = props._userInfo.username;
-	reviewPost.username = props._userInfo.username;
 	collectPost.id = courseInfo.value.id;
 	reviewPost.id = courseInfo.value.id;
 })
@@ -108,7 +109,7 @@ onMounted(async () => {
 const props = defineProps<{
 	_courseInfo: CourseInfo;
 	_courseStar: number;
-	_userInfo: UserInfo;
+	_collected: boolean;
 }>();
 
 // 使用传递的课程数据作为组件内部的课程数据
@@ -117,8 +118,14 @@ const courseStar = ref<number>(props._courseStar);
 
 const reviewFormVisible = ref(false);
 
+
+const collected = ref<boolean>(props._collected);
 // 处理收藏课程
 const collectCourse = async () => {
+	if (!permission.includes(userInfo.role)) {
+		themeConfig.showLoginPanel = true;
+		return;
+	}
 	console.log('collectPost: ', collectPost);
 
 	// 向后端发送收藏课程的请求
@@ -126,11 +133,13 @@ const collectCourse = async () => {
 
 	// 根据后端返回的数据，弹出不同的提示
 	if (response.data.ret == 1) {
+		collected.value = false;
 		ElMessage({
 			message: t('infoBlock.starSuccess'),
 			type: 'success',
 		});
 	} else {
+		collected.value = true;
 		ElMessage({
 			message: t('infoBlock.starCancel'),
 			type: 'warning',
@@ -141,6 +150,10 @@ const collectCourse = async () => {
 
 // 显示评价表单
 const showReviewForm = () => {
+	if (!permission.includes(userInfo.role)) {
+		themeConfig.showLoginPanel = true;
+		return;
+	}
 	reviewFormVisible.value = true;
 };
 
@@ -185,6 +198,8 @@ const submitReview = async () => {
 			message: t('infoBlock.reviewSuccess'),
 			type: 'success',
 		});
+		// 刷新页面
+		location.reload();
 	} else {
 		ElMessage({
 			message: t('infoBlock.reviewFail'),

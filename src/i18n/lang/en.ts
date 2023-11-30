@@ -299,6 +299,8 @@ export default {
 		replyFail: "Reply failed",
 		cancel: 'Cancel',
 		confirm: 'Confirm',
+		success: 'operation success',
+		fail: 'operation failed',
 	},
 	infoBlock: {
 		school: 'School',
@@ -318,5 +320,6 @@ export default {
 		reviewFail: 'You have already submitted a review',
 		cancel: 'Cancel',
 		confirm: 'Confirm',
+		cancelStar: 'Canceled Star',
 	}
 };

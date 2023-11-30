@@ -34,14 +34,26 @@ export interface Review {
 	rating: number;
 }
 
+export interface ReviewExtended {
+	id: number;
+	username: string;
+	avatar: string;
+	datetime: string;
+	content: string;
+	rating: number;
+	count: number;
+	liked: boolean;
+}
+
 export interface CourseDetail {
 	id: number;
 	name: string;
 	school: string;
 	teacher: string[];
-	reviews: Array<Review>;
+	reviews: Array<ReviewExtended>;
 	tag: string[];
 	description: string;
+	collected: boolean;
 }
 
 export interface Comment {
