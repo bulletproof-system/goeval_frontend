@@ -63,9 +63,9 @@
 								<div v-if="edit != scope.row.id">
 									<el-tag v-for="(item) in scope.row.teacher" style="margin-right: 5px;"> {{ item }} </el-tag>
 								</div>
-								<div v-else><TagList v-model:list="form.teacher" /></div>
+								<div v-else><TagList v-model:list="form.teacher" :allow="teacherlist"/></div>
 							</div>
-							<div v-else> <TagList v-model:list="newForm.teacher"/> </div>
+							<div v-else> <TagList v-model:list="newForm.teacher" :allow="teacherlist"/> </div>
 						</template>
 					</el-table-column>
 				</el-table-column>
@@ -80,9 +80,9 @@
 								<div v-if="edit != scope.row.id">
 									<el-tag v-for="(item) in scope.row.tag" style="margin-right: 5px;"> {{ item }} </el-tag>
 								</div>
-								<div v-else><TagList v-model:list="form.tag" /></div>
+								<div v-else><TagList v-model:list="form.tag" :allow="taglist" /></div>
 							</div>
-							<div v-else> <TagList v-model:list="newForm.tag"/> </div>
+							<div v-else> <TagList v-model:list="newForm.tag" :allow="taglist"/> </div>
 						</template>
 					</el-table-column>
 				</el-table-column>
@@ -174,7 +174,7 @@ import { useI18n } from 'vue-i18n';
 import { CourseInfo } from '@/types/course.ts'
 import { Search } from '@element-plus/icons-vue';
 import { throttle } from 'lodash';
-import { post } from '@/api/index';
+import { post, get } from '@/api/index';
 import { router } from '@/router';
 import { ElInput } from 'element-plus'
 import TagList from '@/components/manage/taglist.vue'
@@ -199,6 +199,8 @@ interface QueryResponse {
 const { t } = useI18n();
 const loading = ref(false);
 const courselist = reactive<CourseInfo[]>([]);
+const teacherlist = reactive<string[]>([]);
+const taglist = reactive<string[]>([]);
 const jump = ref(1);
 const pagination = reactive({
 	all: 0,
@@ -239,6 +241,17 @@ const getCourseList = throttle(() => {
 		jump.value = pagination.page;
 	})
 });
+const getTeacherList = throttle(() => {
+	get<string[]>('/api/manage/course/teacherlist').then(res => {
+		teacherlist.splice(0, teacherlist.length, ...res.data);
+	})
+})
+const getTagList = throttle(() => {
+	get<string[]>('/api/manage/course/taglist').then(res => {
+		taglist.splice(0, taglist.length, ...res.data);
+	})
+});
+
 const handleCurrentChange = (page: number) => {
 	pagination.page = page;
 	getCourseList();
@@ -280,6 +293,8 @@ const form = reactive<CourseInfo>({
 	description: ''
 });
 const handleEdit = throttle((info: CourseInfo) => {
+	getTeacherList();
+	getTagList();
 	edit.value = info.id;
 	form.id = info.id;
 	form.name = info.name;

@@ -3,14 +3,17 @@
 	closable @close="list.splice(index, 1)"> 
 		{{ item }} 
 	</el-tag>
-	<el-input
+	<!-- <el-input
 		v-if="input"
 		ref="InputRef"
 		v-model="inputValue"
 		size="small"
 		@keyup.enter="handleInputConfirm"
 		@blur="handleInputConfirm"
-	/>
+	/> -->
+	<el-select v-if="input" v-model="inputValue" filterable @change="handleInputConfirm" @blur="inputValue=''; input=false">
+		<el-option v-for="item in allow" :value="item" />
+	</el-select>
 	<el-button v-else size="small" @click="showInput">
 		{{ t('manage.taglist.new') }}
 	</el-button>
@@ -20,7 +23,8 @@ import { useI18n } from 'vue-i18n';
 import { ElInput } from 'element-plus'
 
 const props = defineProps({
-	list: { type: Array<string>, required: true }
+	list: { type: Array<string>, required: true },
+	allow: { type: Array<string>, default: []}
 })
 const emits = defineEmits(['update:list'])
 const { t } = useI18n()
