@@ -122,7 +122,7 @@ const collectCourse = async () => {
 	console.log('collectPost: ', collectPost);
 
 	// 向后端发送收藏课程的请求
-	const response = await post<CollectResponse>('/api/collect', { collectPost });
+	const response = await post<CollectResponse>('/api/collect', collectPost);
 
 	// 根据后端返回的数据，弹出不同的提示
 	if (response.data.ret == 1) {
@@ -177,7 +177,7 @@ const submitReview = async () => {
 	}
 
 	// 向后端发送评价的请求
-	const response = await post<CollectResponse>('/api/review', { reviewPost });
+	const response = await post<CollectResponse>('/api/review', reviewPost);
 
 	// 根据后端返回的数据，弹出不同的提示
 	if (response.data.ret == 1) {

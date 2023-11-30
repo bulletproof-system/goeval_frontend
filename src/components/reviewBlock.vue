@@ -1,5 +1,5 @@
 <template>
-	<div class="review">
+	<div class="review" ref="reviewRef">
 		<el-row>
 			<el-col>
 				<el-card class="review-card" shadow="always" v-if="review">
@@ -30,9 +30,9 @@
 					<p></p>
 					<el-row>
 						<el-col :span="23" :offset="1">
-							<el-collapse>
+							<el-collapse v-model="activeNames">
 								<el-collapse-item :title="t('reviewBlock.title')" name="1" @click="fetchComments">
-									<commentBlock v-for="(comment, index) in comments" :key="index"
+									<CommentBlock v-for="(comment, index) in comments" :key="index" :ref="(el) => { reviewRefs[comment.id] = el }"
 										:commentData="comment" />
 								</el-collapse-item>
 							</el-collapse>
@@ -66,6 +66,7 @@ import { Review, Comment } from '@/types/course.ts';
 import { post } from '@/api';
 import { UserInfo } from '@/types/user'
 import { useI18n } from 'vue-i18n';
+import CommentBlock from './commentBlock.vue';
 
 const { t } = useI18n();
 
@@ -83,11 +84,31 @@ const props = defineProps<{
 	userInfo: UserInfo;
 }>();
 
+const activeNames = reactive<string[]>([]);
+const reviewRefs = reactive<{ [key: number]: any }>({});
+
 const review = ref<Review>();
+const reviewRef = ref();
 const comments = reactive<Comment[]>([]);
 const commentPost = reactive<commentPost>({
 	reviewId: 0,
 });
+const srcollTo = async (id?: number) => {
+	if (!id) {
+		reviewRef.value?.scrollIntoView({ behavior: 'smooth' });
+	} else {
+		await fetchComments();
+		const commentRef = reviewRefs[id];
+		if (commentRef) {
+			if (!activeNames.includes("1")) activeNames.push("1");
+			commentRef.value?.scrollIntoView({ behavior: 'smooth' });
+		}
+	}
+	
+}
+defineExpose({
+	srcollTo,
+})
 
 onMounted(async () => {
 	review.value = props.reviewData;
