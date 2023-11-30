@@ -198,6 +198,8 @@ const submitReview = async () => {
 			message: t('infoBlock.reviewSuccess'),
 			type: 'success',
 		});
+		// 刷新页面
+		location.reload();
 	} else {
 		ElMessage({
 			message: t('infoBlock.reviewFail'),
