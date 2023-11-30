@@ -31,6 +31,9 @@ export const useUserInfo = defineStore('userInfo', {
 			});
 			Local.remove('Bearer');
 			router.push({ name: 'home' });
+		},
+		setAvatar(avatar: string) {
+			this.avatar = avatar;
 		}
 	}
 });

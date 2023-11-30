@@ -88,6 +88,11 @@ onMounted(() => {
 		moreRecommend(500);
 });
 
+onUnmounted(() => {
+	courseSet.clearSearch();
+	courseSet.clearRecommend();
+})
+
 const querySearchAsync = (queryString: string, cb: (arg: any) => void) => {
   	post<CompleteResult[]>('/api/autocomplete', {"key" : queryString}).then((results) => {
 		cb(results.data);
@@ -123,6 +128,10 @@ const scroll = ({ scrollTop } : { scrollTop: number }) => {
 	justify-content: center;
 	align-items: center;
 	text-align: center;
+}
+
+:deep(.el-input__wrapper) {
+	background-color: var(--bg-topBar-color);
 }
 
 .center-element {

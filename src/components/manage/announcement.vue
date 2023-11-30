@@ -1,125 +1,130 @@
 <template>
-	<div class="panel">
-		<el-table :data="announcementlist" v-loading="loading" size="small" table-layout="auto">
-			<el-table-column :label="t('manage.announcement.aid')">
-				<el-table-column prop="aid">
-					<template #header>
-						<el-input v-model="request.aid" size="small" :suffix-icon="Search"
-								@keyup.enter="getAnnouncementList" />
-					</template>
-					<template #default="scope">
-						<div v-if="scope.row.aid != 0">
-							{{ scope.row.aid }}
-						</div>
-						<div v-else> </div>
-					</template>
+	<el-container class="panel">
+		<el-main class="no-padding">
+			<el-table :data="announcementlist" v-loading="loading" size="small" table-layout="auto" height="100%">
+				<el-table-column :label="t('manage.announcement.aid')">
+					<el-table-column prop="aid">
+						<template #header>
+							<el-input v-model="request.aid" size="small" :suffix-icon="Search"
+									@keyup.enter="getAnnouncementList" />
+						</template>
+						<template #default="scope">
+							<div v-if="scope.row.aid != 0">
+								{{ scope.row.aid }}
+							</div>
+							<div v-else> </div>
+						</template>
+					</el-table-column>
 				</el-table-column>
-			</el-table-column>
-			<el-table-column :label="t('manage.announcement.title_')">
-				<el-table-column prop="title">
-					<template #header>
-						<el-input v-model="request.title" size="small" :suffix-icon="Search"
-								@keyup.enter="getAnnouncementList" />
-					</template>
-					<template #default="scope">
-						<div v-if="scope.row.aid != 0">
-							<div v-if="edit != scope.row.aid">
-								{{ scope.row.title }}
+				<el-table-column :label="t('manage.announcement.title_')">
+					<el-table-column prop="title">
+						<template #header>
+							<el-input v-model="request.title" size="small" :suffix-icon="Search"
+									@keyup.enter="getAnnouncementList" />
+						</template>
+						<template #default="scope">
+							<div v-if="scope.row.aid != 0">
+								<div v-if="edit != scope.row.aid">
+									{{ scope.row.title }}
+								</div>
+								<div v-else>
+									<el-input v-model="form.title" size="small" />
+								</div>
 							</div>
 							<div v-else>
-								<el-input v-model="form.title" size="small" />
+								<el-input v-model="newForm.title" size="small" />
 							</div>
-						</div>
-						<div v-else>
-							<el-input v-model="newForm.title" size="small" />
-						</div>
-					</template>
+						</template>
+					</el-table-column>
 				</el-table-column>
-			</el-table-column>
-			<el-table-column :label="t('manage.announcement.content')">
-				<el-table-column prop="content">
-					<template #header>
-						<el-input v-model="request.content" size="small" :suffix-icon="Search"
-								@keyup.enter="getAnnouncementList" />
-					</template>
-					<template #default="scope">
-						<div v-if="scope.row.aid != 0">
-							<div v-if="edit != scope.row.aid">
-								{{ scope.row.content }}
+				<el-table-column :label="t('manage.announcement.content')">
+					<el-table-column prop="content" :width="500">
+						<template #header>
+							<el-input v-model="request.content" size="small" :suffix-icon="Search"
+									@keyup.enter="getAnnouncementList" />
+						</template>
+						<template #default="scope">
+							<div v-if="scope.row.aid != 0">
+								<div v-if="edit != scope.row.aid">
+									<el-text line-clamp="2" style="width: 500px;" size="small">
+										{{ scope.row.content }}
+									</el-text>
+								</div>
+								<div v-else>
+									<el-input v-model="form.content" size="small" type="textarea" autosize/>
+								</div>
 							</div>
 							<div v-else>
-								<el-input v-model="form.content" size="small" type="textarea" autosize/>
+								<el-input v-model="newForm.content" size="small" type="textarea" autosize/>
 							</div>
-						</div>
-						<div v-else>
-							<el-input v-model="newForm.content" size="small" type="textarea" autosize/>
-						</div>
+						</template>
+					</el-table-column>
+				</el-table-column>
+				<el-table-column :label="t('manage.announcement.datetime')" prop="datetime">
+					<template #default="scope">
+						<div v-if="scope.row.aid != 0"> {{ scope.row.datetime }} </div>
+						<div v-else></div>
 					</template>
 				</el-table-column>
-			</el-table-column>
-			<el-table-column :label="t('manage.announcement.datetime')" prop="datetime">
-				<template #default="scope">
-					<div v-if="scope.row.aid != 0"> {{ scope.row.datetime }} </div>
-					<div v-else></div>
-				</template>
-			</el-table-column>
-			<el-table-column prop="operate" width="400px" :label="t('manage.announcement.operate.title')" fixed="right" >
-				<template #default="scope">
-					<el-button-group v-if="scope.row.aid != 0">
-						<el-popconfirm :width="200" :title="t('manage.announcement.operate.delete.confirm')"
-							:cancel-button-text="t('manage.cancel')"
-							:confirm-button-text="t('manage.confirm')"
-							@confirm="handleDelete(scope.row.id)">
-							<template #reference>
-								<el-button type="danger" size="small">
-									{{ t('manage.announcement.operate.delete.label') }}
-								</el-button>
-							</template>
-						</el-popconfirm>
-						<el-button type="warning" size="small" v-if="edit != scope.row.aid" @click="handleEdit(scope.row)">
-							{{ t('manage.announcement.operate.edit.label') }}
-						</el-button>
-						<el-button type="info" size="small" v-if="edit == scope.row.aid" @click="edit=-1">
-							{{ t('manage.cancel') }}
-						</el-button>
-						<el-button type="warning" size="small" v-if="edit == scope.row.aid" @click="handleEditConfim">
-							{{ t('manage.confirm') }}
-						</el-button>
-					</el-button-group>
-					<el-button-group v-else>
-						<el-button type="primary" size="small" @click="handleAdd">
-							{{ t('manage.announcement.operate.add.label') }}
-						</el-button>
-					</el-button-group>
-				</template>
-			</el-table-column>
-		</el-table>
-		<el-divider />
-		<div style="display: flex;">
-			<el-button type="primary" @click="getAnnouncementList"> {{ t('manage.reload') }}  </el-button>
-			<div style="flex: 1;"></div>
-			<div class="pagination">
-				<el-text>
-					{{ t('manage.pagination.total', [pagination.all, pagination.total]) }}
-				</el-text>
-				<el-pagination style="margin-left: 5px; margin-right: 5px;"
-					:current-page="pagination.page"
-					:page-size="pagination.page_size"
-					:page-count="pagination.page_total"
-					:total="pagination.total"
-					background
-					layout="prev, pager, next"
-					@current-change="handleCurrentChange"/>
-				<el-text>{{ t('manage.pagination.jump') }}</el-text>
-				<el-input-number style="width: 40px; margin-left: 5px; margin-right: 5px;" 
-					:controls="false"
-					:min="1" :max="pagination.page_total" v-model="jump"
-					:value-on-clear="pagination.page" size="small"
-					@blur="handleJump(false)" @keyup.enter="handleJump(true)"/>
-				<el-text>{{ t('manage.pagination.page') }}</el-text>
+				<el-table-column prop="operate" width="260px" :label="t('manage.announcement.operate.title')" fixed="right" >
+					<template #default="scope">
+						<el-button-group v-if="scope.row.aid != 0">
+							<el-popconfirm :width="200" :title="t('manage.announcement.operate.delete.confirm')"
+								:cancel-button-text="t('manage.cancel')"
+								:confirm-button-text="t('manage.confirm')"
+								@confirm="handleDelete(scope.row.id)">
+								<template #reference>
+									<el-button type="danger" size="small">
+										{{ t('manage.announcement.operate.delete.label') }}
+									</el-button>
+								</template>
+							</el-popconfirm>
+							<el-button type="warning" size="small" v-if="edit != scope.row.aid" @click="handleEdit(scope.row)">
+								{{ t('manage.announcement.operate.edit.label') }}
+							</el-button>
+							<el-button type="info" size="small" v-if="edit == scope.row.aid" @click="edit=-1">
+								{{ t('manage.cancel') }}
+							</el-button>
+							<el-button type="warning" size="small" v-if="edit == scope.row.aid" @click="handleEditConfim">
+								{{ t('manage.confirm') }}
+							</el-button>
+						</el-button-group>
+						<el-button-group v-else>
+							<el-button type="primary" size="small" @click="handleAdd">
+								{{ t('manage.announcement.operate.add.label') }}
+							</el-button>
+						</el-button-group>
+					</template>
+				</el-table-column>
+			</el-table>
+		</el-main>
+		<el-footer class="no-padding" style="margin-top: 10px;">
+			<div style="display: flex;">
+				<el-button type="primary" @click="getAnnouncementList"> {{ t('manage.reload') }}  </el-button>
+				<div style="flex: 1;"></div>
+				<div class="pagination">
+					<el-text>
+						{{ t('manage.pagination.total', [pagination.all, pagination.total]) }}
+					</el-text>
+					<el-pagination style="margin-left: 5px; margin-right: 5px;"
+						:current-page="pagination.page"
+						:page-size="pagination.page_size"
+						:page-count="pagination.page_total"
+						:total="pagination.total"
+						background
+						layout="prev, pager, next"
+						@current-change="handleCurrentChange"/>
+					<el-text>{{ t('manage.pagination.jump') }}</el-text>
+					<el-input-number style="width: 40px; margin-left: 5px; margin-right: 5px;" 
+						:controls="false"
+						:min="1" :max="pagination.page_total" v-model="jump"
+						:value-on-clear="pagination.page" size="small"
+						@blur="handleJump(false)" @keyup.enter="handleJump(true)"/>
+					<el-text>{{ t('manage.pagination.page') }}</el-text>
+				</div>
 			</div>
-		</div>
-	</div>
+		</el-footer>
+	</el-container>
 </template>
 
 <script setup lang="ts">
@@ -174,16 +179,15 @@ const getAnnouncementList = throttle(() => {
 			content: '',
 			datetime: new Date()
 		})
-		announcementlist.splice(0, data.announcementlist.length, ...data.announcementlist);
+		announcementlist.splice(0, announcementlist.length, ...data.announcementlist)
 		pagination.all = data.all;
 		pagination.total = data.total;
 		pagination.page_total = data.page_total;
 		pagination.page = data.page;
 		loading.value = false;
-
 		jump.value = pagination.page;
 	})
-}, 3000);
+});
 const handleCurrentChange = (page: number) => {
 	pagination.page = page;
 	getAnnouncementList();
@@ -255,6 +259,9 @@ const handleAdd = throttle(() => {
 onMounted(() => {
 	getAnnouncementList();
 });
+onUnmounted(() => {
+	announcementlist.splice(0, announcementlist.length);
+})
 </script>
 
 <style scoped>
@@ -267,5 +274,9 @@ onMounted(() => {
 	display: flex; 
 	flex-direction: row;
 	margin-right: 10px;
+}
+
+.no-padding {
+  padding: 0px;
 }
 </style>
