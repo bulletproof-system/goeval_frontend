@@ -74,7 +74,6 @@
 <script setup lang="ts">
 import { ReviewExtended, Comment } from '@/types/course.ts';
 import { post } from '@/api';
-import { UserInfo } from '@/types/user'
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
@@ -90,7 +89,6 @@ interface commentResponse {
 // 定义组件接受的属性
 const props = defineProps<{
 	reviewData: ReviewExtended;
-	userInfo: UserInfo;
 }>();
 
 const review = ref<ReviewExtended>();
@@ -106,9 +104,7 @@ onMounted(async () => {
 	commentPost.reviewId = review.value.id;
 	liked.value = review.value.liked;
 	likeCnt.value = review.value.count;
-	replyPost.username = props.userInfo.username;
 	replyPost.id = review.value.id;
-	replyPost.avatar = props.userInfo.avatar;
 });
 
 // 获取评论区
@@ -131,9 +127,7 @@ async function fetchComments() {
 
 interface ReplyPost {
 	id: number;
-	username: string;
 	content: string;
-	avatar: string;	// 头像不会发送到后端，只是用来临时显示
 }
 
 interface ReplyResponse {
@@ -143,9 +137,7 @@ interface ReplyResponse {
 const replyFormVisible = ref(false);
 const replyPost = reactive<ReplyPost>({
 	id: 0,
-	username: '',
 	content: '',
-	avatar: '',
 });
 
 // 显示评论表单
@@ -187,13 +179,10 @@ async function submitReply() {
 			message: t('reviewBlock.replySuccess'),
 			type: 'success',
 		});
-		comments.push({
-			id: replyPost.id,
-			username: replyPost.username,
-			content: replyPost.content,
-			datetime: new Date().toLocaleString(),
-			avatar: replyPost.avatar,
-		});
+		// 清空commments
+		comments.splice(0, comments.length);
+		const response = await post<commentResponse>('/api/comments', commentPost);
+		comments.push(...response.data.comments);
 		replyFormVisible.value = false;
 	} else {
 		ElMessage({

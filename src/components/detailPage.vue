@@ -1,24 +1,23 @@
 <template>
 	<div class="detail">
 		<el-row>
-			<el-col :span="18" :offset="3" v-if="courseInfo && userInfo">
+			<el-col :span="18" :offset="3" v-if="courseInfo">
 				<infoBlock class="animate" :_courseInfo="courseInfo" 
-				:_courseStar="courseStar" :_userInfo="userInfo" 
-				:_collected="collected" />
+				:_courseStar="courseStar" :_collected="collected" />
 			</el-col>
 		</el-row>
 		<el-row :gutter="20">
 			<!-- 使用两列布局展示评论 -->
 			<!-- 左列 -->
-			<el-col :span="9" :offset="3" v-if="userInfo">
+			<el-col :span="9" :offset="3">
 				<div v-for="(comment, index) in leftReviews" :key="index" :id="`${comment.id}`">
-					<reviewBlock class="animate" :reviewData="comment" :userInfo="userInfo" />
+					<reviewBlock class="animate" :reviewData="comment" />
 				</div>
 			</el-col>
 			<!-- 右列 -->
-			<el-col :span="9" v-if="userInfo">
+			<el-col :span="9">
 				<div v-for="(comment, index) in rightReviews" :key="index" :id="`${comment.id}`">
-					<reviewBlock class="animate" :reviewData="comment" :userInfo="userInfo" />
+					<reviewBlock class="animate" :reviewData="comment" />
 				</div>
 			</el-col>
 		</el-row>
@@ -29,16 +28,14 @@
 <script setup lang="ts">
 import infoBlock from './infoBlock.vue';
 import reviewBlock from './reviewBlock.vue';
-import { post, get } from '@/api';
+import { post } from '@/api';
 import { CourseDetail, CourseInfo, ReviewExtended } from '@/types/course.ts';
 import { router } from '@/router';
-import { UserInfo } from '@/types/user';
 
 const courseId = ref<Number>(0);
 const courseDetail = ref<CourseDetail>();
 const courseInfo = ref<CourseInfo>();
 const reviews = ref<ReviewExtended[]>([]);
-const userInfo = ref<UserInfo>();
 const collected = ref<boolean>(false);
 onMounted(
 	() => {loadPage();}
@@ -77,9 +74,6 @@ const loadPage = async () => {
 		}
 		collected.value = response.data.collected;
 		reviews.value = response.data.reviews;
-
-		const response2 = await get<UserInfo>('/api/getInfo');
-		userInfo.value = response2.data;
 
 		// 接受路由参数reviewId以便定位
 		const reviewId = Number(router.currentRoute.value.params.review_id);

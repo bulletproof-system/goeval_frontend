@@ -65,7 +65,6 @@
 import { ref } from 'vue'
 import { CourseInfo } from '@/types/course.ts'
 import { post } from '@/api';
-import { UserInfo } from '@/types/user'
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
@@ -75,32 +74,26 @@ interface CollectResponse {
 }
 
 interface CollectPost {
-	username: string;
 	id: number;
 }
 
 interface ReviewPost {
-	username: string;
 	id: number;
 	rating: number;
 	content: string;
 }
 
 const collectPost = reactive<CollectPost>({
-	username: '',
 	id: 0,
 })
 
 const reviewPost = reactive<ReviewPost>({
-	username: '',
 	id: 0,
 	rating: 0,
 	content: '',
 })
 
 onMounted(async () => {
-	collectPost.username = props._userInfo.username;
-	reviewPost.username = props._userInfo.username;
 	collectPost.id = courseInfo.value.id;
 	reviewPost.id = courseInfo.value.id;
 })
@@ -109,7 +102,6 @@ onMounted(async () => {
 const props = defineProps<{
 	_courseInfo: CourseInfo;
 	_courseStar: number;
-	_userInfo: UserInfo;
 	_collected: boolean;
 }>();
 
