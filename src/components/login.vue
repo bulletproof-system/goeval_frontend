@@ -72,7 +72,7 @@ import { useUserInfo } from '@/stores/userInfo';
 import { useThemeConfig } from '@/stores/themeConfig';
 import { router } from '@/router';
 import type { FormInstance, FormRules } from 'element-plus'
-import { UserRole, UserInfo } from '@/types/user.ts';
+import { UserInfo } from '@/types/user.ts';
 import { post } from '@/api/index'
 
 interface LoginForm {
@@ -106,7 +106,7 @@ const userInfo = useUserInfo();
 const themeConfig = useThemeConfig();
 const isLogin = ref(true);
 const checkLogin = () => {
-	if (userInfo.role == UserRole.Visitor) 
+	if (!router.currentRoute.value.meta.permission.includes(userInfo.role)) 
 		router.push({ name: 'home' })
 }
 
