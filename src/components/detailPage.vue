@@ -28,14 +28,14 @@
 import infoBlock from './infoBlock.vue';
 import reviewBlock from './reviewBlock.vue';
 import { post, get } from '@/api';
-import { CourseDetail, CourseInfo, Review } from '@/types/course.ts';
+import { CourseDetail, CourseInfo, ReviewExtended } from '@/types/course.ts';
 import { router } from '@/router';
 import { UserInfo } from '@/types/user';
 
 const courseId = ref<Number>(0);
 const courseDetail = ref<CourseDetail>();
 const courseInfo = ref<CourseInfo>();
-const reviews = ref<Review[]>([]);
+const reviews = ref<ReviewExtended[]>([]);
 const userInfo = ref<UserInfo>();
 onMounted(
 	() => {loadPage();}

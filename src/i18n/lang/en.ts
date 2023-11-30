@@ -290,6 +290,8 @@ export default {
 		replyFail: "Reply failed",
 		cancel: 'Cancel',
 		confirm: 'Confirm',
+		success: 'operation success',
+		fail: 'operation failed',
 	},
 	infoBlock: {
 		school: 'School',

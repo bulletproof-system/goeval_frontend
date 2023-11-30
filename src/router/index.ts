@@ -66,6 +66,10 @@ const routes = [
 		meta: {
 			permission: [UserRole.Visitor, UserRole.User, UserRole.Administrator]
 		}
+	},
+	{
+		path: '/temp123321',
+		component: () => import('@components/test.vue'),
 	}
 ];
 
