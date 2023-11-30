@@ -4,6 +4,7 @@ import { Local } from '@/utils/storage';
 import { useThemeConfig } from '@/stores/themeConfig';
 import { ElNotification } from 'element-plus'
 import pinia from '@/stores';
+import { useUserInfo } from '@/stores/userInfo';
 
 const themeConfig = useThemeConfig(pinia);
 const service: AxiosInstance = axios.create({
@@ -24,9 +25,10 @@ service.interceptors.response.use(
 	error => {
 		console.log(error);
 		
+		const userInfo = useUserInfo(pinia);
 		// 401 请求要求用户的身份认证 清除token信息, 显示登录界面
 		if (error.response.status === 401) {
-			Local.remove('Bearer');
+			userInfo.logout();
 			ElNotification({ 
 				title: i18n.global.t('error.401.title'),
 				message: error.message,

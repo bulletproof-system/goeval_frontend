@@ -11,13 +11,13 @@
 			<!-- 左列 -->
 			<el-col :span="9" :offset="3">
 				<div v-for="(comment, index) in leftReviews" :key="index" :id="`${comment.id}`">
-					<reviewBlock class="animate" :reviewData="comment" />
+					<reviewBlock class="animate" :reviewData="comment" :ref="(el) => ReviewRefs[comment.id] = el"/>
 				</div>
 			</el-col>
 			<!-- 右列 -->
 			<el-col :span="9">
 				<div v-for="(comment, index) in rightReviews" :key="index" :id="`${comment.id}`">
-					<reviewBlock class="animate" :reviewData="comment" />
+					<reviewBlock class="animate" :reviewData="comment" :ref="(el) => ReviewRefs[comment.id] = el"/>
 				</div>
 			</el-col>
 		</el-row>
@@ -37,6 +37,7 @@ const courseDetail = ref<CourseDetail>();
 const courseInfo = ref<CourseInfo>();
 const reviews = ref<ReviewExtended[]>([]);
 const collected = ref<boolean>(false);
+const ReviewRefs = reactive<{ [key: number]: any }>({});
 onMounted(
 	() => {loadPage();}
 );
@@ -48,8 +49,8 @@ watch(
 		// 控制台输出
 		console.log("route changed");
 		// 刷新页面
-		// loadPage();
-		location.reload();
+		loadPage();
+		// location.reload();
 	}
 );
 
@@ -60,7 +61,7 @@ const loadPage = async () => {
 		console.log("courseId:", courseId.value);
 
 		const response = await post<CourseDetail>('/api/detail', {
-			id: courseId,
+			id: courseId.value,
 		});
 
 		courseDetail.value = response.data;
@@ -77,16 +78,26 @@ const loadPage = async () => {
 
 		// 接受路由参数reviewId以便定位
 		const reviewId = Number(router.currentRoute.value.params.review_id);
+		const commentId = Number(router.currentRoute.value.params.comment_id);
 		await nextTick();
-		if (reviewId) {
-			console.log("target reviewId:", reviewId.toString())
-			// 页面滚动到指定评论
-			const review = document.getElementById(reviewId.toString());
-			console.log("got: ", review)
-			if (review) {
-				review.scrollIntoView({ behavior: 'smooth' });
-			}
-		}
+		const reviewRef = ReviewRefs[reviewId];
+		reviewRef!.srcollTo(commentId);
+		// if (commentId) {
+		// 	const reviewRef = ReviewRefs[reviewId];
+		// 	if (reviewRef)
+		// 		reviewRef.value!.srcollTo(commentId);
+		// }
+		// else if (reviewId) {
+		// 	console.log("target reviewId:", reviewId.toString())
+		// 	// 页面滚动到指定评论
+		// 	const reviewRef = ReviewRefs[reviewId];
+		// 	reviewRef?.value?.scrollIntoView({behavior: "smooth", block: "start"});
+		// 	// const review = document.getElementById(reviewId.toString());
+		// 	// console.log("got: ", review)
+		// 	// if (review) {
+		// 	// 	review.scrollIntoView({ behavior: 'smooth' });
+		// 	// }
+		// }
 	} catch (error) {
 		console.error('Error fetching reviews:', error);
 	}
