@@ -1,8 +1,8 @@
 <template>
-	<div class="review" ref="reviewRef">
+	<div ref="reviewRef">
 		<el-row>
 			<el-col>
-				<el-card class="review-card" shadow="always" v-if="review">
+				<el-card  :class="[{ highlight : isActive }, 'review-card']" shadow="always" v-if="review">
 					<el-row>
 						<el-col :span="4" class="avatar">
 							<el-avatar :size="50" :src=review.avatar />
@@ -22,16 +22,19 @@
 					</el-row>
 					<p></p>
 					<!-- 增加col间距 -->
-					<el-row>
+					<el-row :gutter="5">
 						<el-col :span="3" :offset="17">
 							<el-button type='' text size="small" @click="toggleLike">
-								<img v-if="liked" src="../assets/thumbs-up-solid.svg" alt="SVG Image">
-								<img v-else src="../assets/thumbs-up-solid-gray.svg" alt="SVG Image">
-								&nbsp;
-								{{ likeCnt }}
+								<el-text>
+									<el-icon>
+										<img v-if="liked" src="../assets/thumbs-up-solid.svg" alt="SVG Image">
+										<img v-else src="../assets/thumbs-up-solid-gray.svg" alt="SVG Image">
+									</el-icon>
+									{{ likeCnt }}
+								</el-text>
 							</el-button>
 						</el-col>
-						<el-col :span="3">
+						<el-col :span="4">
 							<el-button type="primary" size="small" @click="addComment">{{ t('reviewBlock.reply')
 							}}</el-button>
 						</el-col>
@@ -41,7 +44,7 @@
 						<el-col :span="23" :offset="1">
 							<el-collapse v-model="activeNames">
 								<el-collapse-item :title="t('reviewBlock.title')" name="1" @click="fetchComments">
-									<CommentBlock v-for="(comment, index) in comments" :key="index" :ref="(el) => { reviewRefs[comment.id] = el }"
+									<CommentBlock v-for="(comment, index) in comments" :key="index" :ref="(el) => { CommentRefs[comment.id] = el }" 
 										:commentData="comment" />
 								</el-collapse-item>
 							</el-collapse>
@@ -100,7 +103,7 @@ const props = defineProps<{
 }>();
 
 const activeNames = reactive<string[]>([]);
-const reviewRefs = reactive<{ [key: number]: any }>({});
+const CommentRefs = reactive<{ [key: number]: any }>({});
 
 const review = ref<ReviewExtended>();
 const reviewRef = ref();
@@ -108,16 +111,20 @@ const comments = reactive<Comment[]>([]);
 const commentPost = reactive<commentPost>({
 	reviewId: 0,
 });
+const isActive = ref(false)
 const srcollTo = async (id?: number) => {
 	if (!id) {
 		reviewRef.value?.scrollIntoView({ behavior: 'smooth' });
+		setTimeout(() => {
+			isActive.value = true;
+		}, 1500);
 	} else {
 		await fetchComments();
-		const commentRef = reviewRefs[id];
-		if (commentRef) {
-			if (!activeNames.includes("1")) activeNames.push("1");
-			commentRef.value?.scrollIntoView({ behavior: 'smooth' });
-		}
+		if (!activeNames.includes("1")) activeNames.push("1");
+		setTimeout(() => {
+			const commentRef = CommentRefs[id];
+			commentRef?.scrollTo();
+		}, 1000);
 	}
 	
 }
@@ -135,21 +142,11 @@ onMounted(async () => {
 	replyPost.id = review.value.id;
 });
 
+
 // 获取评论区
-const isFirstClick = ref(true);
 async function fetchComments() {
-	if (isFirstClick.value) {
-		isFirstClick.value = false;
-		try {
-			console.log('fetchComments for review:', commentPost.reviewId);
-			const response = await post<commentResponse>('/api/comments', commentPost);
-			comments.push(...response.data.comments);
-		} catch (error) {
-			console.error('Failed to fetch comments:', error);
-		}
-	} else {
-		return;
-	}
+	const response = await post<commentResponse>('/api/comments', commentPost);
+	comments.splice(0, comments.length, ...response.data.comments);
 }
 
 
@@ -269,4 +266,24 @@ async function toggleLike() {
 	flex-direction: column;
 	line-height: 0.1;
 }
+
+/* 定义高亮动画 */
+@keyframes ani {
+ from {
+	background-color: var(--el-card-bg-color);
+ }
+ 50% {
+	background-color: darkorange;
+ }
+ to {
+	background-color: var(--el-card-bg-color);
+ }
+}
+
+.highlight {
+
+ /* 设置高亮动画 */
+ animation: ani 1s forwards;
+}
+
 </style>

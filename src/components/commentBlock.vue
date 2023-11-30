@@ -1,5 +1,5 @@
 <template>
-	<div class="comment">
+	<div :class="[{highlight: isActive}, 'comment']" ref="commentRef">
 		<el-row>
 			<el-col>
 				<el-row>
@@ -27,6 +27,18 @@ const props = defineProps<{
 }>();
 
 const comment = ref<Comment>(props.commentData);
+const commentRef = ref<HTMLElement | null>(null);
+const isActive = ref(false);
+
+const scrollTo = () => {
+	commentRef.value?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+	setTimeout(() => { isActive.value = true; }, 1500);
+}
+
+defineExpose({
+	scrollTo
+})
+
 </script>
   
 <style scoped>
@@ -44,5 +56,23 @@ const comment = ref<Comment>(props.commentData);
 	display: flex;
 	flex-direction: column;
 	line-height: 0.1;
+}
+
+@keyframes ani {
+ from {
+	background-color: var(--el-card-bg-color);
+ }
+ 50% {
+	background-color: darkorange;
+ }
+ to {
+	background-color: var(--el-card-bg-color);
+ }
+}
+
+.highlight {
+
+ /* 设置高亮动画 */
+ animation: ani 1s forwards;
 }
 </style>

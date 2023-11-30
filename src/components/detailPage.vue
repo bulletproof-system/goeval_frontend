@@ -1,5 +1,5 @@
 <template>
-	<div class="detail">
+	<div class="detail" v-loading="loading">
 		<el-row>
 			<el-col :span="18" :offset="3" v-if="courseInfo">
 				<infoBlock class="animate" :_courseInfo="courseInfo" 
@@ -38,9 +38,16 @@ const courseInfo = ref<CourseInfo>();
 const reviews = ref<ReviewExtended[]>([]);
 const collected = ref<boolean>(false);
 const ReviewRefs = reactive<{ [key: number]: any }>({});
+const loading = ref(false);
 onMounted(
 	() => {loadPage();}
 );
+onUnmounted(() => {
+	courseDetail.value = undefined;
+	courseInfo.value = undefined;
+	reviews.value = [];
+	collected.value = false;
+})
 
 watch(
 	// 检测路由两个参数的变化
@@ -55,6 +62,7 @@ watch(
 );
 
 const loadPage = async () => {
+	loading.value = true;
 	try {
 		// 接受路由参数courseId
 		courseId.value = Number(router.currentRoute.value.params.course_id);
@@ -80,26 +88,13 @@ const loadPage = async () => {
 		const reviewId = Number(router.currentRoute.value.params.review_id);
 		const commentId = Number(router.currentRoute.value.params.comment_id);
 		await nextTick();
+		await nextTick();
 		const reviewRef = ReviewRefs[reviewId];
-		reviewRef!.srcollTo(commentId);
-		// if (commentId) {
-		// 	const reviewRef = ReviewRefs[reviewId];
-		// 	if (reviewRef)
-		// 		reviewRef.value!.srcollTo(commentId);
-		// }
-		// else if (reviewId) {
-		// 	console.log("target reviewId:", reviewId.toString())
-		// 	// 页面滚动到指定评论
-		// 	const reviewRef = ReviewRefs[reviewId];
-		// 	reviewRef?.value?.scrollIntoView({behavior: "smooth", block: "start"});
-		// 	// const review = document.getElementById(reviewId.toString());
-		// 	// console.log("got: ", review)
-		// 	// if (review) {
-		// 	// 	review.scrollIntoView({ behavior: 'smooth' });
-		// 	// }
-		// }
+		reviewRef?.srcollTo(commentId);
 	} catch (error) {
 		console.error('Error fetching reviews:', error);
+	} finally {
+		loading.value = false;
 	}
 }
 
@@ -122,6 +117,10 @@ const rightReviews = computed(() => reviews.value.slice(Math.ceil(reviews.value.
 </script>
 
 <style scoped>
+.detail {
+	height: inherit;
+}
+
 .home {
 	padding-left: 200px;
 	padding-right: 200px;
@@ -129,7 +128,7 @@ const rightReviews = computed(() => reviews.value.slice(Math.ceil(reviews.value.
 
 .animate {
 	animation-name: show;
-	animation-duration: 2s;
+	animation-duration: 0s;
 }
 
 @keyframes show {
