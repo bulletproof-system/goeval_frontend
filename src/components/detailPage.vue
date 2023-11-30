@@ -2,7 +2,9 @@
 	<div class="detail">
 		<el-row>
 			<el-col :span="18" :offset="3" v-if="courseInfo && userInfo">
-				<infoBlock class="animate" :_courseInfo="courseInfo" :_courseStar="courseStar" :_userInfo="userInfo" />
+				<infoBlock class="animate" :_courseInfo="courseInfo" 
+				:_courseStar="courseStar" :_userInfo="userInfo" 
+				:_collected="collected" />
 			</el-col>
 		</el-row>
 		<el-row :gutter="20">
@@ -37,6 +39,7 @@ const courseDetail = ref<CourseDetail>();
 const courseInfo = ref<CourseInfo>();
 const reviews = ref<ReviewExtended[]>([]);
 const userInfo = ref<UserInfo>();
+const collected = ref<boolean>(false);
 onMounted(
 	() => {loadPage();}
 );
@@ -72,6 +75,7 @@ const loadPage = async () => {
 			tag: response.data.tag,
 			description: response.data.description,
 		}
+		collected.value = response.data.collected;
 		reviews.value = response.data.reviews;
 
 		const response2 = await get<UserInfo>('/api/getInfo');

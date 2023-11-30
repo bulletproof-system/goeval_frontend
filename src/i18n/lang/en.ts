@@ -311,5 +311,6 @@ export default {
 		reviewFail: 'You have already submitted a review',
 		cancel: 'Cancel',
 		confirm: 'Confirm',
+		cancelStar: 'Canceled Star',
 	}
 };

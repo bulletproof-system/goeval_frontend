@@ -27,7 +27,8 @@
 					</el-row>
 					<el-row class="bottom" :span="2">
 						<el-col :span="6" :offset="6" class="center-flex">
-							<el-button type="warning" size="large" primary @click="collectCourse">{{ t('infoBlock.starCourse') }}</el-button>
+							<el-button v-if="collected" type="warning" size="large" primary @click="collectCourse">{{ t('infoBlock.starCourse') }}</el-button>
+							<el-button v-else type="info" size="large" primary @click="collectCourse">{{ t('infoBlock.cancelStar') }}</el-button>
 						</el-col>
 						<el-col :span="6" class="center-flex">
 							<el-button type="primary" size="large" primary @click="showReviewForm">{{ t('infoBlock.submitReview') }}</el-button>
@@ -109,6 +110,7 @@ const props = defineProps<{
 	_courseInfo: CourseInfo;
 	_courseStar: number;
 	_userInfo: UserInfo;
+	_collected: boolean;
 }>();
 
 // 使用传递的课程数据作为组件内部的课程数据
@@ -117,6 +119,8 @@ const courseStar = ref<number>(props._courseStar);
 
 const reviewFormVisible = ref(false);
 
+
+const collected = ref<boolean>(props._collected);
 // 处理收藏课程
 const collectCourse = async () => {
 	console.log('collectPost: ', collectPost);
@@ -126,11 +130,13 @@ const collectCourse = async () => {
 
 	// 根据后端返回的数据，弹出不同的提示
 	if (response.data.ret == 1) {
+		collected.value = false;
 		ElMessage({
 			message: t('infoBlock.starSuccess'),
 			type: 'success',
 		});
 	} else {
+		collected.value = true;
 		ElMessage({
 			message: t('infoBlock.starCancel'),
 			type: 'warning',

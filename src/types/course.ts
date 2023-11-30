@@ -53,6 +53,7 @@ export interface CourseDetail {
 	reviews: Array<ReviewExtended>;
 	tag: string[];
 	description: string;
+	collected: boolean;
 }
 
 export interface Comment {

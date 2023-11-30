@@ -307,5 +307,6 @@ export default {
 		reviewFail: "你已经提交过评价了",
 		cancel: '取消',
 		confirm: '确定',
+		cancelStar: '取消收藏',
 	}
 };
