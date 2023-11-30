@@ -26,6 +26,7 @@ export interface CompleteResult {
 }
 
 export interface Review {
+	id: number;
 	username: string;
 	avatar: string;
 	datetime: string;
@@ -39,4 +40,14 @@ export interface CourseDetail {
 	school: string;
 	teacher: string[];
 	reviews: Array<Review>;
+	tag: string[];
+	description: string;
+}
+
+export interface Comment {
+	id: number;
+	username: string;
+	avatar: string;
+	datetime: string;
+	content: string;
 }

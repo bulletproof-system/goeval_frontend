@@ -1,23 +1,22 @@
 <template>
 	<div class="detail">
 		<el-row>
-			<el-col :span="18" :offset="3" v-if="courseInfo">
-				<infoBlock class="panel" :_courseInfo="courseInfo" :_courseStar="courseStar"
-					:_courseIntro="courseIntro" />
+			<el-col :span="18" :offset="3" v-if="courseInfo && userInfo">
+				<infoBlock class="animate" :_courseInfo="courseInfo" :_courseStar="courseStar" :_userInfo="userInfo" />
 			</el-col>
 		</el-row>
 		<el-row :gutter="20">
 			<!-- 使用两列布局展示评论 -->
 			<!-- 左列 -->
-			<el-col :span="9" :offset="3">
-				<div v-for="(comment, index) in leftReviews" :key="index">
-					<reviewBlock class="panel" :reviewData="comment" />
+			<el-col :span="9" :offset="3" v-if="userInfo">
+				<div v-for="(comment, index) in leftReviews" :key="index" :id="`${comment.id}`">
+					<reviewBlock class="animate" :reviewData="comment" :userInfo="userInfo" />
 				</div>
 			</el-col>
 			<!-- 右列 -->
-			<el-col :span="9">
-				<div v-for="(comment, index) in rightReviews" :key="index">
-					<reviewBlock class="panel" :reviewData="comment" />
+			<el-col :span="9" v-if="userInfo">
+				<div v-for="(comment, index) in rightReviews" :key="index" :id="`${comment.id}`">
+					<reviewBlock class="animate" :reviewData="comment" :userInfo="userInfo" />
 				</div>
 			</el-col>
 		</el-row>
@@ -28,26 +27,41 @@
 <script setup lang="ts">
 import infoBlock from './infoBlock.vue';
 import reviewBlock from './reviewBlock.vue';
-import { post } from '@/api';
+import { post, get } from '@/api';
 import { CourseDetail, CourseInfo, Review } from '@/types/course.ts';
 import { router } from '@/router';
+import { UserInfo } from '@/types/user';
 
 const courseId = ref<Number>(0);
 const courseDetail = ref<CourseDetail>();
 const courseInfo = ref<CourseInfo>();
 const reviews = ref<Review[]>([]);
-onMounted(async () => {
+const userInfo = ref<UserInfo>();
+onMounted(
+	() => {loadPage();}
+);
+
+watch(
+	// 检测路由两个参数的变化
+	() => [router.currentRoute.value.params.course_id, router.currentRoute.value.params.review_id],
+	() => {
+		// 控制台输出
+		console.log("route changed");
+		// 刷新页面
+		// loadPage();
+		location.reload();
+	}
+);
+
+const loadPage = async () => {
 	try {
 		// 接受路由参数courseId
 		courseId.value = Number(router.currentRoute.value.params.course_id);
-		// 控制台打印courseId以便调试
-		console.log('courseId:', courseId.value);
+		console.log("courseId:", courseId.value);
 
 		const response = await post<CourseDetail>('/api/detail', {
 			id: courseId,
 		});
-		// 控制台打印response以便调试
-		console.log('response:', response);
 
 		courseDetail.value = response.data;
 		courseInfo.value = {
@@ -55,12 +69,30 @@ onMounted(async () => {
 			name: response.data.name,
 			school: response.data.school,
 			teacher: response.data.teacher,
+			tag: response.data.tag,
+			description: response.data.description,
 		}
 		reviews.value = response.data.reviews;
+
+		const response2 = await get<UserInfo>('/api/getInfo');
+		userInfo.value = response2.data;
+
+		// 接受路由参数reviewId以便定位
+		const reviewId = Number(router.currentRoute.value.params.review_id);
+		await nextTick();
+		if (reviewId) {
+			console.log("target reviewId:", reviewId.toString())
+			// 页面滚动到指定评论
+			const review = document.getElementById(reviewId.toString());
+			console.log("got: ", review)
+			if (review) {
+				review.scrollIntoView({ behavior: 'smooth' });
+			}
+		}
 	} catch (error) {
 		console.error('Error fetching reviews:', error);
 	}
-});
+}
 
 // 计算平均评分
 const courseStar = computed(() => {
@@ -74,8 +106,6 @@ const courseStar = computed(() => {
 	return Math.round(sum * 10) / 10;
 });
 
-const courseIntro = ref('该课程暂无课程介绍');
-
 // 将评论数据分为左右两列
 const leftReviews = computed(() => reviews.value.slice(0, Math.ceil(reviews.value.length / 2)));
 const rightReviews = computed(() => reviews.value.slice(Math.ceil(reviews.value.length / 2)));
@@ -88,7 +118,7 @@ const rightReviews = computed(() => reviews.value.slice(Math.ceil(reviews.value.
 	padding-right: 200px;
 }
 
-.panel {
+.animate {
 	animation-name: show;
 	animation-duration: 2s;
 }
@@ -101,4 +131,5 @@ const rightReviews = computed(() => reviews.value.slice(Math.ceil(reviews.value.
 	100% {
 		opacity: 1;
 	}
-}</style>
+}
+</style>

@@ -61,7 +61,7 @@ export default {
 		email: 'Email',
 		registerBtn: 'Register',
 		registerTip: 'Already have an account?',
-		error : {
+		error: {
 			format: {
 				u: ' ',
 				p: 'Wrong Format',
@@ -287,4 +287,36 @@ export default {
 		reload: 'Reload',
 		invaild: 'Invaild Operation',
 	},
+	reviewBlock: {
+		title: "Review",
+		datetime: "Date and Time",
+		reply: "Reply",
+		comments: "Comments",
+		textarea: "Write your content here...",
+		confirmClose: "Your comment has not been submitted yet, confirm to close?",
+		emptyContent: "Comment content cannot be empty",
+		replySuccess: "Reply successfully",
+		replyFail: "Reply failed",
+		cancel: 'Cancel',
+		confirm: 'Confirm',
+	},
+	infoBlock: {
+		school: 'School',
+		teacher: 'Teacher',
+		star: 'Star',
+		content: 'Content',
+		description: 'Course Description',
+		starCourse: 'Star Course',
+		submitReview: 'Submit Review',
+		textarea: 'Write your content...',
+		starSuccess: 'Starred Successfully',
+		starCancel: 'Cancel Star',
+		confirmClose: 'Your review has not been submitted, confirm closing?',
+		emptyContent: 'Review content cannot be empty',
+		emptyStar: 'Star rating cannot be empty',
+		reviewSuccess: 'Review submitted successfully',
+		reviewFail: 'You have already submitted a review',
+		cancel: 'Cancel',
+		confirm: 'Confirm',
+	}
 };
