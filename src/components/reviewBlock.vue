@@ -22,18 +22,18 @@
 					</el-row>
 					<p></p>
 					<!-- 增加col间距 -->
-					<el-row :gutter="5">
+					<el-row>
 						<el-col :span="3" :offset="17">
-							<el-button type="primary" size="small" @click="addComment">{{ t('reviewBlock.reply')
-							}}</el-button>
-						</el-col>
-						<el-col :span="3">
 							<el-button type='' text size="small" @click="toggleLike">
 								<img v-if="liked" src="../assets/thumbs-up-solid.svg" alt="SVG Image">
 								<img v-else src="../assets/thumbs-up-solid-gray.svg" alt="SVG Image">
 								&nbsp;
 								{{ likeCnt }}
 							</el-button>
+						</el-col>
+						<el-col :span="3">
+							<el-button type="primary" size="small" @click="addComment">{{ t('reviewBlock.reply')
+							}}</el-button>
 						</el-col>
 					</el-row>
 					<p></p>
@@ -75,6 +75,13 @@
 import { ReviewExtended, Comment } from '@/types/course.ts';
 import { post } from '@/api';
 import { useI18n } from 'vue-i18n';
+import { useUserInfo } from '@/stores/userInfo';
+import { useThemeConfig } from '@/stores/themeConfig';
+import { UserRole } from '@/types/user.ts';
+// 权限控制
+const permission = [UserRole.User, UserRole.Administrator];
+const userInfo = useUserInfo();
+const themeConfig = useThemeConfig();
 
 const { t } = useI18n();
 
@@ -142,7 +149,11 @@ const replyPost = reactive<ReplyPost>({
 
 // 显示评论表单
 async function addComment() {
-	replyFormVisible.value = true;
+	if (!permission.includes(userInfo.role)) {
+		themeConfig.showLoginPanel = true;
+		return;
+	}
+	else replyFormVisible.value = true;
 }
 
 // 关闭评论表单
@@ -193,6 +204,10 @@ async function submitReply() {
 }
 
 async function toggleLike() {
+	if (!permission.includes(userInfo.role)) {
+		themeConfig.showLoginPanel = true;
+		return;
+	}
 	await post('/api/like', { "id": review.value?.id }).then((res) => {
 		console.log(res.data);
 		if ((res.data as any).success == true) {

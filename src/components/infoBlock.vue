@@ -66,6 +66,13 @@ import { ref } from 'vue'
 import { CourseInfo } from '@/types/course.ts'
 import { post } from '@/api';
 import { useI18n } from 'vue-i18n';
+import { useUserInfo } from '@/stores/userInfo';
+import { useThemeConfig } from '@/stores/themeConfig';
+import { UserRole } from '@/types/user.ts';
+// 权限控制
+const permission = [UserRole.User, UserRole.Administrator];
+const userInfo = useUserInfo();
+const themeConfig = useThemeConfig();
 
 const { t } = useI18n();
 
@@ -115,6 +122,10 @@ const reviewFormVisible = ref(false);
 const collected = ref<boolean>(props._collected);
 // 处理收藏课程
 const collectCourse = async () => {
+	if (!permission.includes(userInfo.role)) {
+		themeConfig.showLoginPanel = true;
+		return;
+	}
 	console.log('collectPost: ', collectPost);
 
 	// 向后端发送收藏课程的请求
@@ -139,6 +150,10 @@ const collectCourse = async () => {
 
 // 显示评价表单
 const showReviewForm = () => {
+	if (!permission.includes(userInfo.role)) {
+		themeConfig.showLoginPanel = true;
+		return;
+	}
 	reviewFormVisible.value = true;
 };
 
