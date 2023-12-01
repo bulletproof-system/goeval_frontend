@@ -47,20 +47,20 @@ export const useMessage = defineStore('userMessage', {
 	},
 	actions: {
 		async getAnnouncements() {
-			await get<Announcement[]>('api/announcement').then((res) => {
+			await get<Announcement[]>('/api/announcement').then((res) => {
 				this.announcements = res.data;
 			})
 		},
 		async getNotifications() {
-			await get<Notification[]>('api/notification').then((res) => {
+			await get<Notification[]>('/api/notification').then((res) => {
 				this.notifications = res.data;
 			})
 		},
 		async readNotification(index: number) {
 			this.notifications[index].status = MessageStatus.read;
 			let nid = this.notifications[index].nid
-			await post('api/read', {"nid" : nid}).then((res) => {
-				console.log(`read notification ${nid} ${res.data == true ? 'success' : 'fail'}`)
+			await post<{ success: boolean }>('/api/read', {"nid" : nid}).then((res) => {
+				console.log(`read notification ${nid} ${res.data.success == true ? 'success' : 'fail'}`)
 			});
 		}
 	},

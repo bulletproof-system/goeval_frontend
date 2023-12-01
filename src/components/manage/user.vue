@@ -230,7 +230,7 @@ const getUserList = throttle(() => {
 		loading.value = false;
 		jump.value = pagination.page;
 	})
-}, 3000);
+});
 const handleCurrentChange = (page: number) => {
 	pagination.page = page;
 	getUserList();

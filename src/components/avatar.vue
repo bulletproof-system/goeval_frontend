@@ -19,7 +19,7 @@ const url = import.meta.env.VITE_API_URL + '/api/operate/upload'
 const header = reactive({
 	'Authorization' : `${Local.get('Bearer')?.Bearer ?? ''}`
 })
-const allowTypes = ['image/jpeg', 'image/png', 'image/gif'];
+const allowTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
 
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   if (!allowTypes.includes(rawFile.type)) {

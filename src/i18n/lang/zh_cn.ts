@@ -142,7 +142,7 @@ export default {
 			avatar: {
 				detail: '更新头像',
 				success: '头像修改成功',
-				type: '头像格式限制: jpeg, png, gif',
+				type: '头像格式限制: jpeg, jpg, png, gif',
 				size: '头像大小限制: 2M',
 			},
 			email: {

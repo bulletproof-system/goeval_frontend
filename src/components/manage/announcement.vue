@@ -72,7 +72,7 @@
 							<el-popconfirm :width="200" :title="t('manage.announcement.operate.delete.confirm')"
 								:cancel-button-text="t('manage.cancel')"
 								:confirm-button-text="t('manage.confirm')"
-								@confirm="handleDelete(scope.row.id)">
+								@confirm="handleDelete(scope.row.aid)">
 								<template #reference>
 									<el-button type="danger" size="small">
 										{{ t('manage.announcement.operate.delete.label') }}

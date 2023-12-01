@@ -1,5 +1,5 @@
 <template>
-	<el-tag v-for="(item, index) in list" style="margin-right: 5px; width: 50px;"
+	<el-tag v-for="(item, index) in list" style="margin-right: 5px; width: 50px;" 
 	closable @close="list.splice(index, 1)"> 
 		{{ item }} 
 	</el-tag>

@@ -158,7 +158,7 @@ const confirmEmail = (formEl: FormInstance | undefined) => {
 	if (!formEl) return;
 	formEl.validate((valid) => {
 		if (valid) {
-			post<EmailResponse>('/api/operate/email', emailForm.email).then(res => {
+			post<EmailResponse>('/api/operate/email', emailForm).then(res => {
 				const response = res.data;
 				if (response.success) {
 					userInfo.email = emailForm.email;

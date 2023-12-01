@@ -142,7 +142,7 @@ export default {
 			avatar: {
 				detail: 'Update avatar',
 				success: 'Update success',
-				type: 'Avatar picture must be jpeg, png, gif format!',
+				type: 'Avatar picture must be jpeg, jpg, png, gif format!',
 				size: 'Avatar picture size can not exceed 2MB!'
 			},
 			email: {

@@ -43,7 +43,7 @@
 					<el-row>
 						<el-col :span="23" :offset="1">
 							<el-collapse v-model="activeNames">
-								<el-collapse-item :title="t('reviewBlock.title')" name="1" @click="fetchComments">
+								<el-collapse-item :title="t('reviewBlock.title')" name="1">
 									<CommentBlock v-for="(comment, index) in comments" :key="index" :ref="(el) => { CommentRefs[comment.id] = el }" 
 										:commentData="comment" />
 								</el-collapse-item>
@@ -90,7 +90,7 @@ const themeConfig = useThemeConfig();
 const { t } = useI18n();
 
 interface commentPost {
-	reviewId: number;
+	id: number;
 }
 
 interface commentResponse {
@@ -109,7 +109,7 @@ const review = ref<ReviewExtended>();
 const reviewRef = ref();
 const comments = reactive<Comment[]>([]);
 const commentPost = reactive<commentPost>({
-	reviewId: 0,
+	id: 0,
 });
 const isActive = ref(false)
 const srcollTo = async (id?: number) => {
@@ -136,7 +136,7 @@ const likeCnt = ref(0);
 
 onMounted(async () => {
 	review.value = props.reviewData;
-	commentPost.reviewId = review.value.id;
+	commentPost.id = review.value.id;
 	liked.value = review.value.liked;
 	likeCnt.value = review.value.count;
 	replyPost.id = review.value.id;
@@ -178,12 +178,12 @@ async function addComment() {
 const handleClose = (done: () => void) => {
 	// 提醒是否确认
 	ElMessageBox.confirm(t('reviewBlock.confirmClose'))
-		.then(() => {
-			done()
-		})
-		.catch(() => {
-			// catch error
-		})
+	.then(() => {
+		done()
+	})
+	.catch(() => {
+		// catch error
+	})
 }
 
 // 提交评论

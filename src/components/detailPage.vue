@@ -56,7 +56,8 @@ watch(
 		// 控制台输出
 		console.log("route changed");
 		// 刷新页面
-		loadPage();
+		if (router.currentRoute.value.params.course_id)
+			loadPage();
 		// location.reload();
 	}
 );
