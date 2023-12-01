@@ -12,7 +12,7 @@
 		@blur="handleInputConfirm"
 	/> -->
 	<el-select v-if="input" v-model="inputValue" filterable @change="handleInputConfirm" @blur="inputValue=''; input=false">
-		<el-option v-for="item in allow" :value="item" />
+		<el-option v-for="item in allow.filter((value) => !list.includes(value))" :value="item" />
 	</el-select>
 	<el-button v-else size="small" @click="showInput">
 		{{ t('manage.taglist.new') }}
@@ -33,9 +33,9 @@ const input = ref(false)
 const InputRef = ref<InstanceType<typeof ElInput>>()
 	const showInput = () => {
 	input.value = true
-  nextTick(() => {
-    InputRef.value!.input!.focus()
-  })
+	nextTick(() => {
+		InputRef.value!.input!.focus()
+	})
 }
 const handleInputConfirm = () => {
   if (inputValue.value) {

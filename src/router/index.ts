@@ -67,10 +67,6 @@ const routes = [
 			permission: [UserRole.Visitor, UserRole.User, UserRole.Administrator]
 		}
 	},
-	{
-		path: '/temp123321',
-		component: () => import('@components/test.vue'),
-	}
 ];
 
 export const router = createRouter({

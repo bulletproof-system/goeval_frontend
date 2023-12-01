@@ -1,7 +1,7 @@
 <template>
 	<el-upload ref="uploadRef" :action="url" :headers="header" method="post" 
 	:show-file-list="false" :before-upload="beforeAvatarUpload"
-	accept="image/jpeg, image/png, image/gif" :on-success="handleAvatarSuccess">
+	accept="image/jpeg, image/jpg, image/png, image/gif" :on-success="handleAvatarSuccess">
 		<el-avatar :size="100" :src="userInfo.avatar" />
 	</el-upload>
 </template>

@@ -219,6 +219,8 @@ const request = reactive<QueryForm>({
 	tag: undefined
 })
 const getCourseList = throttle(() => {
+	getTeacherList();
+	getTagList();
 	loading.value = true;
 	request.page = pagination.page;
 	request.page_size = pagination.page_size;
@@ -293,8 +295,6 @@ const form = reactive<CourseInfo>({
 	description: ''
 });
 const handleEdit = throttle((info: CourseInfo) => {
-	getTeacherList();
-	getTagList();
 	edit.value = info.id;
 	form.id = info.id;
 	form.name = info.name;
