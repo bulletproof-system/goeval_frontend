@@ -4,7 +4,7 @@
 			<el-col>
 				<el-row>
 					<el-col :span="4" class="avatar">
-						<el-avatar :size="20" :src=comment.avatar />
+						<el-avatar :size="40" :src=comment.avatar />
 					</el-col>
 					<el-col :span="20" class="user-info">
 						<p><strong>{{ comment.username }}</strong></p>
