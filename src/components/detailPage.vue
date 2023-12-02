@@ -2,8 +2,8 @@
 	<div class="detail" v-loading="loading">
 		<el-row>
 			<el-col :span="18" :offset="3" v-if="courseInfo">
-				<infoBlock class="animate" :_courseInfo="courseInfo" 
-				:_courseStar="courseStar" :_collected="collected" />
+				<infoBlock class="animate" :courseInfo="courseInfo" 
+				:courseStar="courseStar" v-model:collected="collected" />
 			</el-col>
 		</el-row>
 		<el-row :gutter="20">
@@ -50,13 +50,13 @@ onUnmounted(() => {
 })
 
 watch(
-	// 检测路由两个参数的变化
-	() => [router.currentRoute.value.params.course_id, router.currentRoute.value.params.review_id],
+	// 检测路由的变化
+	router.currentRoute,
 	() => {
 		// 控制台输出
 		console.log("route changed");
 		// 刷新页面
-		if (router.currentRoute.value.params.course_id)
+		if (router.currentRoute.value.name === "course")
 			loadPage();
 		// location.reload();
 	}

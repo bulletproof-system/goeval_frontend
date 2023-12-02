@@ -24,7 +24,7 @@ const themeConfig = useThemeConfig();
 get<UserInfo>('/api/getInfo').then(res => {
 	userInfo.login(res.data);
 	// @ts-ignore
-	if (router.currentRoute.value.meta.permission.includes(userInfo.role))
+	if (router.currentRoute.value.meta.permission?.includes(userInfo.role))
 		themeConfig.showLoginPanel = false;
 });
 

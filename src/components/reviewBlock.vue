@@ -117,6 +117,7 @@ const srcollTo = async (id?: number) => {
 		reviewRef.value?.scrollIntoView({ behavior: 'smooth' });
 		setTimeout(() => {
 			isActive.value = true;
+			setTimeout(() => isActive.value = false, 1000);
 		}, 1500);
 	} else {
 		await fetchComments();
@@ -124,7 +125,7 @@ const srcollTo = async (id?: number) => {
 		setTimeout(() => {
 			const commentRef = CommentRefs[id];
 			commentRef?.scrollTo();
-		}, 1000);
+		}, 500);
 	}
 	
 }
@@ -142,6 +143,14 @@ onMounted(async () => {
 	replyPost.id = review.value.id;
 });
 
+watch(() => props.reviewData, (val) => {
+	review.value = val
+	console.log(review.value)
+	commentPost.id = review.value.id;
+	liked.value = review.value.liked;
+	likeCnt.value = review.value.count;
+	replyPost.id = review.value.id;
+});
 
 // 获取评论区
 async function fetchComments() {

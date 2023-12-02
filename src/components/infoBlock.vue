@@ -101,25 +101,25 @@ const reviewPost = reactive<ReviewPost>({
 })
 
 onMounted(async () => {
-	collectPost.id = courseInfo.value.id;
-	reviewPost.id = courseInfo.value.id;
+	// collectPost.id = courseInfo.value.id;
+	// reviewPost.id = courseInfo.value.id;
 })
 
 // 定义组件接受的属性
-const props = defineProps<{
-	_courseInfo: CourseInfo;
-	_courseStar: number;
-	_collected: boolean;
+const props =  defineProps<{
+	courseInfo: CourseInfo;
+	courseStar: number;
+	collected: boolean;
 }>();
+const emit = defineEmits(['update:collected']);
 
 // 使用传递的课程数据作为组件内部的课程数据
-const courseInfo = ref<CourseInfo>(props._courseInfo);
-const courseStar = ref<number>(props._courseStar);
-
+// const courseInfo = ref<CourseInfo>(props._courseInfo);
+const courseStar = ref<number>(props.courseStar);
+// const collected = ref<boolean>(props._collected);
+watch(() => props.courseStar, (val) => courseStar.value = val);
 const reviewFormVisible = ref(false);
 
-
-const collected = ref<boolean>(props._collected);
 // 处理收藏课程
 const collectCourse = async () => {
 	if (!permission.includes(userInfo.role)) {
@@ -133,13 +133,13 @@ const collectCourse = async () => {
 
 	// 根据后端返回的数据，弹出不同的提示
 	if (response.data.ret == 1) {
-		collected.value = false;
+		emit('update:collected', false);
 		ElMessage({
 			message: t('infoBlock.starSuccess'),
 			type: 'success',
 		});
 	} else {
-		collected.value = true;
+		emit('update:collected', true);
 		ElMessage({
 			message: t('infoBlock.starCancel'),
 			type: 'warning',

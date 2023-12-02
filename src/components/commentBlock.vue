@@ -32,7 +32,12 @@ const isActive = ref(false);
 
 const scrollTo = () => {
 	commentRef.value?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-	setTimeout(() => { isActive.value = true; }, 1500);
+	setTimeout(() => { 
+		isActive.value = true; 
+		setTimeout(() => {
+			isActive.value = false;
+		}, 1000);
+	}, 500);
 }
 
 defineExpose({
