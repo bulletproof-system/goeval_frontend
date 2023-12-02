@@ -27,7 +27,7 @@
 					</el-row>
 					<el-row class="bottom" :span="2">
 						<el-col :span="6" :offset="6" class="center-flex">
-							<el-button v-if="collected" type="warning" size="large" primary @click="collectCourse">{{ t('infoBlock.starCourse') }}</el-button>
+							<el-button v-if="!collected" type="warning" size="large" primary @click="collectCourse">{{ t('infoBlock.starCourse') }}</el-button>
 							<el-button v-else type="info" size="large" primary @click="collectCourse">{{ t('infoBlock.cancelStar') }}</el-button>
 						</el-col>
 						<el-col :span="6" class="center-flex">
@@ -126,6 +126,7 @@ const collectCourse = async () => {
 		themeConfig.showLoginPanel = true;
 		return;
 	}
+	collectPost.id = props.courseInfo.id;
 	console.log('collectPost: ', collectPost);
 
 	// 向后端发送收藏课程的请求
@@ -133,13 +134,13 @@ const collectCourse = async () => {
 
 	// 根据后端返回的数据，弹出不同的提示
 	if (response.data.ret == 1) {
-		emit('update:collected', false);
+		emit('update:collected', true);
 		ElMessage({
 			message: t('infoBlock.starSuccess'),
 			type: 'success',
 		});
 	} else {
-		emit('update:collected', true);
+		emit('update:collected', false);
 		ElMessage({
 			message: t('infoBlock.starCancel'),
 			type: 'warning',

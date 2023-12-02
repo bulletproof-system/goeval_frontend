@@ -62,7 +62,7 @@
 				</el-table-column>
 				<el-table-column :label="t('manage.announcement.datetime')" prop="datetime">
 					<template #default="scope">
-						<div v-if="scope.row.aid != 0"> {{ scope.row.datetime }} </div>
+						<div v-if="scope.row.aid != 0"> {{ scope.row.datetime.toLocaleString() }} </div>
 						<div v-else></div>
 					</template>
 				</el-table-column>
@@ -172,7 +172,15 @@ const getAnnouncementList = throttle(() => {
 	request.page = pagination.page;
 	request.page_size = pagination.page_size;
 	post<QueryResponse>('api/manage/announcement/list', request).then(res => {
-		const data = res.data;
+		const data = {
+			...res.data,
+			announcementlist: res.data.announcementlist.map(item => {
+				return {
+					...item,
+					datetime: new Date(item.datetime)
+				}
+			})
+		};
 		data.announcementlist.push({
 			aid: 0,
 			title: '',

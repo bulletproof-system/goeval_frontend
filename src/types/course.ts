@@ -29,7 +29,7 @@ export interface Review {
 	id: number;
 	username: string;
 	avatar: string;
-	datetime: string;
+	datetime: Date;
 	content: string;
 	rating: number;
 }
@@ -38,7 +38,7 @@ export interface ReviewExtended {
 	id: number;
 	username: string;
 	avatar: string;
-	datetime: string;
+	datetime: Date;
 	content: string;
 	rating: number;
 	count: number;
@@ -60,6 +60,6 @@ export interface Comment {
 	id: number;
 	username: string;
 	avatar: string;
-	datetime: string;
+	datetime: Date;
 	content: string;
 }

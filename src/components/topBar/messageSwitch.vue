@@ -27,7 +27,7 @@
 								<el-space direction="vertical" alignment="normal">
 									<el-text tag="b">{{ item.title }} <br/> </el-text>
 									<el-text truncated > {{ item.content }} </el-text>
-									<el-text> {{ item.datetime }} </el-text>
+									<el-text> {{ item.datetime.toLocaleString() }} </el-text>
 								</el-space>
 								<el-divider />
 							</div>
@@ -51,7 +51,7 @@
 									</el-tag>
 									{{ t(`message.notification.${NotificationType[item.ntype]}.message`, [item.course_name]) }} <br/> 
 								</el-text>
-								<el-text> {{ item.datetime }} </el-text>
+								<el-text> {{ item.datetime.toLocaleString() }} </el-text>
 								<el-divider />
 							</div>
 						</el-scrollbar>

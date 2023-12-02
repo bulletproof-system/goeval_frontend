@@ -8,7 +8,7 @@
 					</el-col>
 					<el-col :span="20" class="user-info">
 						<p><strong>{{ comment.username }}</strong></p>
-						<p>{{ comment.datetime }}</p>
+						<p>{{ comment.datetime.toLocaleString() }}</p>
 					</el-col>
 				</el-row>
 				<el-row>
@@ -21,6 +21,9 @@
   
 <script setup lang="ts">
 import { Comment } from '@/types/course.ts';
+// import { useI18n } from 'vue-i18n';
+
+// const { d } = useI18n();
 
 const props = defineProps<{
 	commentData: Comment;

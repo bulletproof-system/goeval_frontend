@@ -48,12 +48,25 @@ export const useMessage = defineStore('userMessage', {
 	actions: {
 		async getAnnouncements() {
 			await get<Announcement[]>('/api/announcement').then((res) => {
-				this.announcements = res.data;
+				this.announcements = res.data.map((x) => {
+					return {
+						...x,
+						datetime: new Date(x.datetime),
+					};
+				}).sort((a, b) => a.datetime > b.datetime ? -1 : 1);
 			})
 		},
 		async getNotifications() {
 			await get<Notification[]>('/api/notification').then((res) => {
-				this.notifications = res.data;
+				this.notifications = res.data.map((x) => {
+					return {
+						...x,
+						datetime: new Date(x.datetime),
+					};
+				}).sort((a, b) => {
+					if (a.status !== b.status) return a.status === MessageStatus.read ? 1 : -1;
+					return a.datetime.getTime() > b.datetime.getTime() ? -1 : 1;
+				});
 			})
 		},
 		async readNotification(index: number) {

@@ -9,7 +9,7 @@
 						</el-col>
 						<el-col :span="20" class="user-info">
 							<p><strong>{{ review.username }}</strong></p>
-							<p>{{ review.datetime }}</p>
+							<p>{{ review.datetime.toLocaleString() }}</p>
 						</el-col>
 					</el-row>
 					<el-row>
@@ -146,7 +146,6 @@ onMounted(async () => {
 watch(() => props.reviewData, (val) => {
 	activeNames.splice(0, activeNames.length);
 	review.value = val
-	console.log(review.value)
 	commentPost.id = review.value.id;
 	liked.value = review.value.liked;
 	likeCnt.value = review.value.count;
@@ -157,7 +156,12 @@ watch(() => props.reviewData, (val) => {
 // 获取评论区
 async function fetchComments() {
 	const response = await post<commentResponse>('/api/comments', commentPost);
-	comments.splice(0, comments.length, ...response.data.comments);
+	comments.splice(0, comments.length, ...response.data.comments.map(comment => {
+		return {
+			...comment,
+			datetime: new Date(comment.datetime)
+		}
+	}));
 }
 
 
@@ -219,10 +223,16 @@ async function submitReply() {
 			message: t('reviewBlock.replySuccess'),
 			type: 'success',
 		});
-		// 清空commments
-		comments.splice(0, comments.length);
-		const response = await post<commentResponse>('/api/comments', commentPost);
-		comments.push(...response.data.comments);
+		// // 清空commments
+		// comments.splice(0, comments.length);
+		// const response = await post<commentResponse>('/api/comments', commentPost);
+		// comments.push(...response.data.comments.map(comment => {
+		// 	return {
+		// 		...comment,
+		// 		datetime: new Date(comment.datetime)
+		// 	}
+		// }));
+		await fetchComments();
 		replyFormVisible.value = false;
 	} else {
 		ElMessage({

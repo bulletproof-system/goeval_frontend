@@ -7,10 +7,35 @@ const messages = {
 	zh_cn
 };
 
+const dateTimeFormats = {
+	'en': {
+		long: {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+		weekday: 'long',
+		hour: 'numeric',
+		minute: 'numeric'
+		}
+	},
+	'zh_cn': {
+		long: {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+			weekday: 'long',
+			hour: 'numeric',
+			minute: 'numeric',
+			hour12: true
+		}
+	}
+  }
+
 export const i18n = createI18n({
 	locale: 'en',
 	fallbackLocale: 'en',
 	messages,
+	dateTimeFormats,
 	legacy: false
 });
 

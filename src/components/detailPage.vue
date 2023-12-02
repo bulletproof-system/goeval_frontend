@@ -83,7 +83,12 @@ const loadPage = async () => {
 			description: response.data.description,
 		}
 		collected.value = response.data.collected;
-		reviews.value = response.data.reviews;
+		reviews.value = response.data.reviews.map(review => {
+			return {
+				...review,
+				datetime: new Date(review.datetime)
+			}
+		});
 
 		// 接受路由参数reviewId以便定位
 		const reviewId = Number(router.currentRoute.value.params.review_id);
