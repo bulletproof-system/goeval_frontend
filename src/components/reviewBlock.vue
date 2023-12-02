@@ -144,12 +144,14 @@ onMounted(async () => {
 });
 
 watch(() => props.reviewData, (val) => {
+	activeNames.splice(0, activeNames.length);
 	review.value = val
 	console.log(review.value)
 	commentPost.id = review.value.id;
 	liked.value = review.value.liked;
 	likeCnt.value = review.value.count;
 	replyPost.id = review.value.id;
+	comments.splice(0, comments.length);
 });
 
 // 获取评论区
@@ -268,6 +270,10 @@ async function toggleLike() {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.el-collapse :deep(button) {
+	background-color: rgba(255, 4, 4, 0);
 }
 
 .user-info {
