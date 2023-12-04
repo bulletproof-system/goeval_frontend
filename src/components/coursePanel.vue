@@ -54,6 +54,7 @@ const handleClick = () => {
 <style lang="scss" scoped>
 .box-card {
   width: 480px;
+  height: 300px;
 }
 
 .card-header {
