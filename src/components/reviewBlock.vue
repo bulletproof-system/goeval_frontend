@@ -43,7 +43,7 @@
 					<el-row>
 						<el-col :span="23" :offset="1">
 							<el-collapse v-model="activeNames">
-								<el-collapse-item :title="t('reviewBlock.title')" name="1">
+								<el-collapse-item :title="t('reviewBlock.title')" name="1" @click="fetchComments();">
 									<CommentBlock v-for="(comment, index) in comments" :key="index" :ref="(el) => { CommentRefs[comment.id] = el }" 
 										:commentData="comment" />
 								</el-collapse-item>
@@ -111,6 +111,7 @@ const comments = reactive<Comment[]>([]);
 const commentPost = reactive<commentPost>({
 	id: 0,
 });
+
 const isActive = ref(false)
 const srcollTo = async (id?: number) => {
 	if (!id) {

@@ -111,7 +111,7 @@ const props =  defineProps<{
 	courseStar: number;
 	collected: boolean;
 }>();
-const emit = defineEmits(['update:collected']);
+const emit = defineEmits(['update:collected', 'reload']);
 
 // 使用传递的课程数据作为组件内部的课程数据
 // const courseInfo = ref<CourseInfo>(props._courseInfo);
@@ -119,6 +119,7 @@ const courseStar = ref<number>(props.courseStar);
 // const collected = ref<boolean>(props._collected);
 watch(() => props.courseStar, (val) => courseStar.value = val);
 const reviewFormVisible = ref(false);
+const responseStatus = ref(false);
 
 // 处理收藏课程
 const collectCourse = async () => {
@@ -156,22 +157,25 @@ const showReviewForm = () => {
 		return;
 	}
 	reviewFormVisible.value = true;
+	responseStatus.value = false;
 };
 
 // 关闭评价表单
 const handleClose = (done: () => void) => {
 	// 提醒是否确认
-	ElMessageBox.confirm(t('infoBlock.confirmClose'))
-		.then(() => {
-			done()
-		})
-		.catch(() => {
-			// catch error
-		})
+	if (responseStatus.value == false)
+		ElMessageBox.confirm(t('infoBlock.confirmClose'))
+			.then(() => {
+				done()
+			})
+			.catch(() => {
+				// catch error
+			})
 }
 
 // 提交评价
 const submitReview = async () => {
+	reviewPost.id = props.courseInfo.id;
 	console.log('reviewPost: ', reviewPost);
 
 	// 前端检查内容是否为空
@@ -199,8 +203,11 @@ const submitReview = async () => {
 			message: t('infoBlock.reviewSuccess'),
 			type: 'success',
 		});
+		reviewFormVisible.value = false;
+		responseStatus.value = true;
 		// 刷新页面
-		location.reload();
+		emit('reload');
+		// location.reload();
 	} else {
 		ElMessage({
 			message: t('infoBlock.reviewFail'),

@@ -3,7 +3,7 @@
 		<el-row>
 			<el-col :span="18" :offset="3" v-if="courseInfo">
 				<infoBlock class="animate" :courseInfo="courseInfo" 
-				:courseStar="courseStar" v-model:collected="collected" />
+				:courseStar="courseStar" v-model:collected="collected" @reload="loadDetail"/>
 			</el-col>
 		</el-row>
 		<el-row :gutter="20">
@@ -62,6 +62,29 @@ watch(
 	}
 );
 
+const loadDetail = async () => {
+	const response = await post<CourseDetail>('/api/detail', {
+		id: courseId.value,
+	});
+
+	courseDetail.value = response.data;
+	courseInfo.value = {
+		id: response.data.id,
+		name: response.data.name,
+		school: response.data.school,
+		teacher: response.data.teacher,
+		tag: response.data.tag,
+		description: response.data.description,
+	}
+	collected.value = response.data.collected;
+	reviews.value = response.data.reviews.map(review => {
+		return {
+			...review,
+			datetime: new Date(review.datetime)
+		}
+	});
+}
+
 const loadPage = async () => {
 	loading.value = true;
 	try {
@@ -69,26 +92,7 @@ const loadPage = async () => {
 		courseId.value = Number(router.currentRoute.value.params.course_id);
 		console.log("courseId:", courseId.value);
 
-		const response = await post<CourseDetail>('/api/detail', {
-			id: courseId.value,
-		});
-
-		courseDetail.value = response.data;
-		courseInfo.value = {
-			id: response.data.id,
-			name: response.data.name,
-			school: response.data.school,
-			teacher: response.data.teacher,
-			tag: response.data.tag,
-			description: response.data.description,
-		}
-		collected.value = response.data.collected;
-		reviews.value = response.data.reviews.map(review => {
-			return {
-				...review,
-				datetime: new Date(review.datetime)
-			}
-		});
+		await loadDetail();
 
 		// 接受路由参数reviewId以便定位
 		const reviewId = Number(router.currentRoute.value.params.review_id);
