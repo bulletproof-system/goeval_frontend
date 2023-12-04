@@ -273,8 +273,47 @@ export default {
 					label: 'Edit',
 					success: 'Edit success',
 				},
-				detail: {
-					label: 'Detail',
+				add: {
+					label: 'Add',
+					success: 'Add success',
+				}
+			}
+		},
+		teacher: {
+			title: 'Teacher',
+			tid: 'Teacher ID',
+			name: 'Teacher Name',
+			operate: {
+				title: 'Operations',
+				delete: {
+					label: 'Delete',
+					confirm: 'Are you sure to delete this teacher?',
+					success: 'Delete success',
+				},
+				edit: {
+					label: 'Edit',
+					success: 'Edit success',
+				},
+				add: {
+					label: 'Add',
+					success: 'Add success',
+				}
+			}
+		},
+		tag: {
+			title: 'Tag',
+			tid: 'Tag ID',
+			name: 'Tag Name',
+			operate: {
+				title: 'Operations',
+				delete: {
+					label: 'Delete',
+					confirm: 'Are you sure to delete this teacher?',
+					success: 'Delete success',
+				},
+				edit: {
+					label: 'Edit',
+					success: 'Edit success',
 				},
 				add: {
 					label: 'Add',

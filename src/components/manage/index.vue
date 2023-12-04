@@ -14,6 +14,14 @@
 					<el-icon><Bell /></el-icon>
 					<template #title> {{ t('manage.announcement.title') }} </template>
 				</el-menu-item>
+				<el-menu-item index="/manage/teacher" route="/manage/teacher">
+					<el-icon><Avatar /></el-icon>
+					<template #title> {{ t('manage.teacher.title') }} </template>
+				</el-menu-item>
+				<el-menu-item index="/manage/tag" route="/manage/tag">
+					<el-icon><PriceTag /></el-icon>
+					<template #title> {{ t('manage.tag.title') }} </template>
+				</el-menu-item>
 			</el-menu>
 	  	</el-aside>
     	<el-main class="no-padding">
@@ -33,7 +41,7 @@ import { useI18n } from 'vue-i18n';
 import { useUserInfo } from '@/stores/userInfo';
 import { useThemeConfig } from '@/stores/themeConfig';
 import { UserRole } from '@/types/user.ts';
-import { User, Collection, Bell } from '@element-plus/icons-vue';
+import { User, Collection, Bell, Avatar, PriceTag } from '@element-plus/icons-vue';
 import { router } from '@/router';
 
 const permission = [UserRole.Administrator];

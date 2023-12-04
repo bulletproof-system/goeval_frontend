@@ -56,6 +56,20 @@ const routes = [
 				meta: {
 					permission: [UserRole.Administrator]
 				}
+			},
+			{
+				path: 'teacher',
+				component: () => import('@/components/manage/teacher.vue'),
+				meta: {
+					permission: [UserRole.Administrator]
+				}
+			},
+			{
+				path: 'tag',
+				component: () => import('@/components/manage/tag.vue'),
+				meta: {
+					permission: [UserRole.Administrator]
+				}
 			}
 		]
 	},

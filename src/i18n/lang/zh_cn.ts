@@ -278,6 +278,48 @@ export default {
 				}
 			}
 		},
+		teacher: {
+			title: '教师管理',
+			tid: '教师 ID',
+			name: '姓名',
+			operate: {
+				title: '操作',
+				delete: {
+					label: '删除',
+					confirm: '确定删除该教师?',
+					success: '删除成功',
+				},
+				edit: {
+					label: '编辑',
+					success: '编辑成功',
+				},
+				add: {
+					label: '添加',
+					success: '添加成功',
+				}
+			}
+		},
+		tag: {
+			title: '标签管理',
+			tid: '标签 ID',
+			name: '标签名称',
+			operate: {
+				title: '操作',
+				delete: {
+					label: '删除',
+					confirm: '确定删除该标签?',
+					success: '删除成功',
+				},
+				edit: {
+					label: '编辑',
+					success: '编辑成功',
+				},
+				add: {
+					label: '添加',
+					success: '添加成功',
+				}
+			}
+		},
 		cancel: '取消',
 		confirm: '确定',
 		reload: '刷新',

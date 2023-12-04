@@ -1,91 +1,62 @@
 <template>
 	<el-container class="panel">
 		<el-main class="no-padding">
-			<el-table :data="announcementlist" v-loading="loading" size="small" table-layout="auto" height="100%">
-				<el-table-column :label="t('manage.announcement.aid')">
-					<el-table-column prop="aid">
+			<el-table :data="teacherlist" v-loading="loading" size="small" table-layout="auto" height="100%">
+				<el-table-column :label="t('manage.teacher.tid')">
+					<el-table-column prop="tid">
 						<template #header>
-							<el-input v-model="request.aid" size="small" :suffix-icon="Search"
-									@keyup.enter="getAnnouncementList" />
+							<el-input v-model="request.tid" size="small" :suffix-icon="Search"
+									@keyup.enter="getTeacherList" />
 						</template>
 						<template #default="scope">
-							<div v-if="scope.row.aid != 0">
-								{{ scope.row.aid }}
+							<div v-if="scope.row.tid != 0">
+								{{ scope.row.tid }}
 							</div>
 							<div v-else> </div>
 						</template>
 					</el-table-column>
 				</el-table-column>
-				<el-table-column :label="t('manage.announcement.title_')">
-					<el-table-column prop="title">
+				<el-table-column :label="t('manage.teacher.name')">
+					<el-table-column prop="name">
 						<template #header>
-							<el-input v-model="request.title" size="small" :suffix-icon="Search"
-									@keyup.enter="getAnnouncementList" />
+							<el-input v-model="request.name" size="small" :suffix-icon="Search"
+									@keyup.enter="getTeacherList" />
 						</template>
 						<template #default="scope">
-							<div v-if="scope.row.aid != 0">
-								<div v-if="edit != scope.row.aid">
-									{{ scope.row.title }}
+							<div v-if="scope.row.tid != 0">
+								<div v-if="edit != scope.row.tid">
+									{{ scope.row.name }}
 								</div>
 								<div v-else>
-									<el-input v-model="form.title" size="small" />
+									<el-input v-model="form.name" size="small" />
 								</div>
 							</div>
 							<div v-else>
-								<el-input v-model="newForm.title" size="small" />
+								<el-input v-model="newForm.name" size="small" />
 							</div>
 						</template>
 					</el-table-column>
 				</el-table-column>
-				<el-table-column :label="t('manage.announcement.content')">
-					<el-table-column prop="content" :width="500">
-						<template #header>
-							<el-input v-model="request.content" size="small" :suffix-icon="Search"
-									@keyup.enter="getAnnouncementList" />
-						</template>
-						<template #default="scope">
-							<div v-if="scope.row.aid != 0">
-								<div v-if="edit != scope.row.aid">
-									<el-text line-clamp="2" style="width: 500px;" size="small">
-										{{ scope.row.content }}
-									</el-text>
-								</div>
-								<div v-else>
-									<el-input v-model="form.content" size="small" type="textarea" autosize/>
-								</div>
-							</div>
-							<div v-else>
-								<el-input v-model="newForm.content" size="small" type="textarea" autosize/>
-							</div>
-						</template>
-					</el-table-column>
-				</el-table-column>
-				<el-table-column :label="t('manage.announcement.datetime')" prop="datetime">
+				<el-table-column prop="operate" width="260px" :label="t('manage.teacher.operate.title')" fixed="right" >
 					<template #default="scope">
-						<div v-if="scope.row.aid != 0"> {{ scope.row.datetime.toLocaleString() }} </div>
-						<div v-else></div>
-					</template>
-				</el-table-column>
-				<el-table-column prop="operate" width="260px" :label="t('manage.announcement.operate.title')" fixed="right" >
-					<template #default="scope">
-						<el-button-group v-if="scope.row.aid != 0">
-							<el-popconfirm :width="200" :title="t('manage.announcement.operate.delete.confirm')"
+						<el-button-group v-if="scope.row.tid != 0">
+							<el-popconfirm :width="200" :title="t('manage.teacher.operate.delete.confirm')"
 								:cancel-button-text="t('manage.cancel')"
 								:confirm-button-text="t('manage.confirm')"
-								@confirm="handleDelete(scope.row.aid)">
+								@confirm="handleDelete(scope.row.tid)">
 								<template #reference>
 									<el-button type="danger" size="small">
 										{{ t('manage.announcement.operate.delete.label') }}
 									</el-button>
 								</template>
 							</el-popconfirm>
-							<el-button type="warning" size="small" v-if="edit != scope.row.aid" @click="handleEdit(scope.row)">
+							<el-button type="warning" size="small" v-if="edit != scope.row.tid" @click="handleEdit(scope.row)">
 								{{ t('manage.announcement.operate.edit.label') }}
 							</el-button>
-							<el-button type="info" size="small" v-if="edit == scope.row.aid" @click="edit=-1">
+							<el-button type="info" size="small" v-if="edit == scope.row.tid" @click="edit=-1">
 								{{ t('manage.cancel') }}
 							</el-button>
-							<el-button type="warning" size="small" v-if="edit == scope.row.aid" @click="handleEditConfim">
+							<el-button type="warning" size="small" v-if="edit == scope.row.tid" @click="handleEditConfim">
 								{{ t('manage.confirm') }}
 							</el-button>
 						</el-button-group>
@@ -100,7 +71,7 @@
 		</el-main>
 		<el-footer class="no-padding" style="margin-top: 10px;">
 			<div style="display: flex;">
-				<el-button type="primary" @click="getAnnouncementList"> {{ t('manage.reload') }}  </el-button>
+				<el-button type="primary" @click="getTeacherList"> {{ t('manage.reload') }}  </el-button>
 				<div style="flex: 1;"></div>
 				<div class="pagination">
 					<el-text>
@@ -132,26 +103,28 @@ import { useI18n } from 'vue-i18n';
 import { Search } from '@element-plus/icons-vue';
 import { throttle } from 'lodash';
 import { post } from '@/api/index';
-import { Announcement } from '@/types/user';
 
+interface Teacher {
+	tid: number;
+	name: string;
+}
 interface QueryForm {
 	page: number;
 	page_size: number;
-	aid?: number;
-	title?: string;
-	content?: string;
+	tid?: number;
+	name?: string;
 }
 interface QueryResponse {
 	all: number;
 	total: number;
 	page_total: number;
 	page: number;
-	announcementlist: Announcement[];
+	teacherlist: Teacher[];
 }
 
 const { t } = useI18n();
 const loading = ref(false);
-const announcementlist = reactive<Announcement[]>([])
+const teacherlist = reactive<Teacher[]>([])
 const jump = ref(1);
 const pagination = reactive({
 	all: 0,
@@ -163,31 +136,20 @@ const pagination = reactive({
 const request = reactive<QueryForm>({
 	page: pagination.page,
 	page_size: pagination.page_size,
-	aid: undefined,
-	title: undefined,
-	content: undefined,
+	tid: undefined,
+	name: undefined,
 });
-const getAnnouncementList = throttle(() => {
+const getTeacherList = throttle(() => {
 	loading.value = true;
 	request.page = pagination.page;
 	request.page_size = pagination.page_size;
-	post<QueryResponse>('/api/manage/announcement/list', request).then(res => {
-		const data = {
-			...res.data,
-			announcementlist: res.data.announcementlist.map(item => {
-				return {
-					...item,
-					datetime: new Date(item.datetime)
-				}
-			})
-		};
-		data.announcementlist.push({
-			aid: 0,
-			title: '',
-			content: '',
-			datetime: new Date()
+	post<QueryResponse>('/api/manage/teacher/list', request).then(res => {
+		const data = res.data;
+		data.teacherlist.push({
+			tid: 0,
+			name: '',
 		})
-		announcementlist.splice(0, announcementlist.length, ...data.announcementlist)
+		teacherlist.splice(0, teacherlist.length, ...data.teacherlist)
 		pagination.all = data.all;
 		pagination.total = data.total;
 		pagination.page_total = data.page_total;
@@ -198,77 +160,73 @@ const getAnnouncementList = throttle(() => {
 });
 const handleCurrentChange = (page: number) => {
 	pagination.page = page;
-	getAnnouncementList();
+	getTeacherList();
 }
 const handleJump = (force: boolean) => {
 	if (pagination.page != jump.value || force) {
 		pagination.page = jump.value;
-		getAnnouncementList();
+		getTeacherList();
 	}
 }
 
 interface DeleteForm {
-	aid: number;
+	tid: number;
 }
 interface Response {
 	success: boolean;
 	reason?: string;
 }
 const handleDelete = throttle((id: number) => {
-	const request: DeleteForm = { aid: id }
-	post<Response>('/api/manage/announcement/delete', request).then(res => {
+	const request: DeleteForm = { tid: id }
+	post<Response>('/api/manage/teacher/delete', request).then(res => {
 		const response = res.data;
-		getAnnouncementList();
+		getTeacherList();
 		if (response.success) {
-			ElMessage.success(t('manage.announcement.operate.delete.success'));
+			ElMessage.success(t('manage.teacher.operate.delete.success'));
 		} else ElMessage.error(t('manage.invaild'));
 	});
 }, 500);
 
 const edit = ref(-1);
 const form = reactive({
-	aid: -1,
-	title: '',
-	content: '',
+	tid: -1,
+	name: '',
 })
-const handleEdit = throttle((info: Announcement) => {
-	edit.value = info.aid;
-	form.aid = info.aid;
-	form.title = info.title;
-	form.content = info.content;
+const handleEdit = throttle((info: Teacher) => {
+	edit.value = info.tid;
+	form.tid = info.tid;
+	form.name = info.name;
 }, 500);
 const handleEditConfim = throttle(() => {
-	post<Response>('/api/manage/announcement/edit', form).then(res => {
+	post<Response>('/api/manage/teacher/edit', form).then(res => {
 		const response = res.data;
 		if (response.success) {
-			ElMessage.success(t('manage.announcement.operate.edit.success'));
-			getAnnouncementList();
+			ElMessage.success(t('manage.teacher.operate.edit.success'));
+			getTeacherList();
 		} else ElMessage.error(t('manage.invaild'));
 	});
 	edit.value = -1;
 }, 500);
 
 const newForm = reactive({
-	title: '',
-	content: '',
+	name: '',
 })
 const handleAdd = throttle(() => {
-	post<Response>('/api/manage/announcement/add', newForm).then(res => {
+	post<Response>('/api/manage/teacher/add', newForm).then(res => {
 		const response = res.data;
 		if (response.success) {
-			ElMessage.success(t('manage.announcement.operate.add.success'));
-			newForm.title = '';
-			newForm.content = '';
-			getAnnouncementList();
+			ElMessage.success(t('manage.teacher.operate.add.success'));
+			newForm.name = '';
+			getTeacherList();
 		} else ElMessage.error(t('manage.invaild'));
 	});
 }, 5000);
 
 onMounted(() => {
-	getAnnouncementList();
+	getTeacherList();
 });
 onUnmounted(() => {
-	announcementlist.splice(0, announcementlist.length);
+	teacherlist.splice(0, teacherlist.length);
 })
 </script>
 
