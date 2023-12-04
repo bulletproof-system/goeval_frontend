@@ -6,7 +6,7 @@
       </el-header>
       <el-main class="no-padding">
         <router-view v-slot="{ Component }">
-          <transition name='fade'>
+          <transition :name="transition">
             <component :is="Component" />
           </transition>
         </router-view>
@@ -18,6 +18,9 @@
 
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue';
+import { useRoute  } from 'vue-router';
+
+const route = useRoute();
 // import Login from '@components/login.vue';
 // import TopBar from '@components/topBar/index.vue';
 
@@ -33,6 +36,11 @@ onMounted(() => {
   //   userInfo.login(res.data);
   // });
 })
+
+const transition = computed(() => {
+	return  route.meta?.transition as string || 'fade'
+})
+
 
 </script>
 
