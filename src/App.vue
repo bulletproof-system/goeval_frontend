@@ -6,7 +6,7 @@
       </el-header>
       <el-main class="no-padding">
         <router-view v-slot="{ Component }">
-          <transition name="fade">
+          <transition name='fade'>
             <component :is="Component" />
           </transition>
         </router-view>
@@ -20,7 +20,6 @@
 import { defineAsyncComponent } from 'vue';
 // import Login from '@components/login.vue';
 // import TopBar from '@components/topBar/index.vue';
-
 
 
 // 引入组件
@@ -51,8 +50,18 @@ onMounted(() => {
   transition: opacity 0.5s ease;
 }
 
-.fade-enter-from,
-.fade-leave-to {
+.notfound-enter-from,
+.notfound-leave-to {
+  opacity: 0;
+}
+
+.notfound-enter-active,
+.notfound-leave-active {
+  transition: opacity 5s ease;
+}
+
+.notfound-enter-from,
+.notfound-leave-to {
   opacity: 0;
 }
 </style>

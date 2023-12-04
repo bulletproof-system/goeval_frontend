@@ -81,6 +81,15 @@ const routes = [
 			permission: [UserRole.Visitor, UserRole.User, UserRole.Administrator]
 		}
 	},
+	{ 
+		path: '/:pathMatch(.*)*',
+		component: () => import('@components/notfound.vue'),
+		name: 'notfound', 
+		meta: {
+			permission: [UserRole.Visitor, UserRole.User, UserRole.Administrator],
+			transition: 'notfound'
+		}
+	},
 ];
 
 export const router = createRouter({

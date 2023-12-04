@@ -26,7 +26,7 @@
 	  	</el-aside>
     	<el-main class="no-padding">
 			<router-view v-slot="{ Component }">
-				<transition name="fade">
+				<transition :name="transition">
 					<component :is="Component" />
 				</transition>
 			</router-view>
@@ -42,18 +42,21 @@ import { useUserInfo } from '@/stores/userInfo';
 import { useThemeConfig } from '@/stores/themeConfig';
 import { UserRole } from '@/types/user.ts';
 import { User, Collection, Bell, Avatar, PriceTag } from '@element-plus/icons-vue';
-import { router } from '@/router';
+import { useRoute  } from 'vue-router';
 
 const permission = [UserRole.Administrator];
 const { t } = useI18n();
 const userInfo = useUserInfo();
 const themeConfig = useThemeConfig();
+const route = useRoute();
 
 onMounted(() => {
 	if (!permission.includes(userInfo.role)) themeConfig.showLoginPanel = true;
 })
 
-
+const transition = computed(() => {
+	return  route.meta?.transition as string || 'fade'
+})
 
 </script>
 
@@ -76,6 +79,16 @@ onMounted(() => {
 
 .fade-enter-from,
 .fade-leave-to {
+  opacity: 0;
+}
+
+.notfound-enter-active,
+.notfound-leave-active {
+  transition: opacity 5s ease;
+}
+
+.notfound-enter-from,
+.notfound-leave-to {
   opacity: 0;
 }
 
