@@ -74,6 +74,9 @@
 				<el-button type="primary" @click="getTagList"> {{ t('manage.reload') }}  </el-button>
 				<div style="flex: 1;"></div>
 				<div class="pagination">
+					<el-select v-model="pagination.page_size" style="width: 60px; margin-right: 5px;" @change="getTagList">
+						<el-option v-for="size in [10, 15, 20]" :value="size"/>
+					</el-select>
 					<el-text>
 						{{ t('manage.pagination.total', [pagination.all, pagination.total]) }}
 					</el-text>

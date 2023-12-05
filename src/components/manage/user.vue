@@ -101,6 +101,9 @@
 				<el-button type="primary" @click="getUserList"> {{ t('manage.reload') }}  </el-button>
 				<div style="flex: 1;"></div>
 				<div class="pagination">
+					<el-select v-model="pagination.page_size" style="width: 60px; margin-right: 5px;" @change="getUserList">
+						<el-option v-for="size in [10, 15, 20]" :value="size"/>
+					</el-select>
 					<el-text>
 						{{ t('manage.pagination.total', [pagination.all, pagination.total]) }}
 					</el-text>
@@ -182,7 +185,7 @@ interface QueryForm {
 }
 interface QueryResponse {
 	all: number;
-	total: number;
+	now: number;
 	page_total: number;
 	page: number;
 	userlist: UserDetail[];
@@ -224,7 +227,7 @@ const getUserList = throttle(() => {
 		const data = res.data;
 		userlist.splice(0, userlist.length, ...data.userlist);
 		pagination.all = data.all;
-		pagination.total = data.total;
+		pagination.total = data.now;
 		pagination.page_total = data.page_total;
 		pagination.page = data.page;
 		loading.value = false;
@@ -377,5 +380,9 @@ onUnmounted(() => {
 	display: flex; 
 	flex-direction: row;
 	margin-right: 10px;
+}
+
+.no-padding {
+  padding: 0px;
 }
 </style>
