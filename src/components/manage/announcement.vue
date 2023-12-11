@@ -46,7 +46,7 @@
 						<template #default="scope">
 							<div v-if="scope.row.aid != 0">
 								<div v-if="edit != scope.row.aid">
-									<el-text line-clamp="2" style="width: 500px;" size="small">
+									<el-text line-clamp="2" style="width: 500px; white-space: pre-wrap;word-break: break-all;" size="small">
 										{{ scope.row.content }}
 									</el-text>
 								</div>

@@ -90,7 +90,7 @@
 						<template #default="scope">
 							<div v-if="scope.row.id != 0">
 								<div v-if="edit != scope.row.id">
-									<el-text line-clamp="2" style="width: 400px;" size="small">
+									<el-text line-clamp="2" style="width: 400px;white-space: pre-wrap;word-break: break-all;" size="small">
 										{{ scope.row.description }}
 									</el-text>
 								</div>

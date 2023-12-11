@@ -22,7 +22,7 @@
 						</el-col>
 						<el-col class="right" :span="16">
 							<p class="center-flex"><strong>{{ t('infoBlock.description') }}</strong></p>
-							<p>{{ courseInfo.description }}</p>
+							<p style="white-space: pre-wrap;word-break: break-all;">{{ courseInfo.description }}</p>
 						</el-col>
 					</el-row>
 					<el-row class="bottom" :span="2">
