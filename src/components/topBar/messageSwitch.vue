@@ -26,7 +26,7 @@
 							<div v-for="(item) in message.announcements" @click.native="showAnnouncementDetail(item)">
 								<el-space direction="vertical" alignment="normal">
 									<el-text tag="b">{{ item.title }} <br/> </el-text>
-									<el-text truncated > {{ item.content }} </el-text>
+									<el-text line-clamp="2" style="white-space: pre-wrap; word-break: break-all;" > {{ item.content }} </el-text>
 									<el-text> {{ item.datetime.toLocaleString() }} </el-text>
 								</el-space>
 								<el-divider />
@@ -67,7 +67,7 @@
 		width="40vw"
 		align-center
 	>
-		<el-text> {{ announcement.content }} </el-text>
+		<el-text style="white-space: pre-wrap; word-break: break-all;"> {{ announcement.content }} </el-text>
 		<el-text> <br/> <br/> </el-text>
 		<el-text> {{ announcement.datetime }} </el-text>
 	</el-dialog>
