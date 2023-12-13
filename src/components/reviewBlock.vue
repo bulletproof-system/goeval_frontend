@@ -18,7 +18,9 @@
 						</el-col>
 					</el-row>
 					<el-row>
-						<el-col :span="23" :offset="1">{{ review.content }}</el-col>
+						<el-col :span="23" :offset="1" style="white-space: pre-wrap; word-break: break-all;">
+							{{ review.content }}
+						</el-col>
 					</el-row>
 					<p></p>
 					<!-- 增加col间距 -->

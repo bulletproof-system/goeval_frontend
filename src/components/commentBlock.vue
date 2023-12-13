@@ -12,7 +12,9 @@
 					</el-col>
 				</el-row>
 				<el-row>
-					<el-col :span="23" :offset="1">{{ comment.content }}</el-col>
+					<el-col :span="23" :offset="1" style="white-space: pre-wrap; word-break: break-all;">
+						{{ comment.content }}
+					</el-col>
 				</el-row>
 			</el-col>
 		</el-row>
