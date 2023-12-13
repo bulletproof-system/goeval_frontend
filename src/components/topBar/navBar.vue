@@ -1,7 +1,7 @@
 <template>
 	<div class="navBar">
 		<el-menu router style="height: inherit;"
-			:default-active="'/' + router.currentRoute.value.path.split('/')[0]"
+			:default-active="router.currentRoute.value.path"
 			mode="horizontal"
 			:ellipsis="false"
 		>
