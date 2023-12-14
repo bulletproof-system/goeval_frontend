@@ -69,7 +69,7 @@
 	>
 		<el-text style="white-space: pre-wrap; word-break: break-all;"> {{ announcement.content }} </el-text>
 		<el-text> <br/> <br/> </el-text>
-		<el-text> {{ announcement.datetime }} </el-text>
+		<el-text> {{ announcement.datetime.toLocaleString() }} </el-text>
 	</el-dialog>
 </template>
 
