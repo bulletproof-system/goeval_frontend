@@ -26,3 +26,13 @@ dist-ssr
 # yarn
 .yarn
 .pnp.*
+.yarnrc.yml 
+
+.VSCodeCounter
+
+# auto import
+src/auto-imports.d.ts
+src/components.d.ts
+
+# test files
+src/components/test.vue

@@ -1,40 +1,95 @@
-import { defineAsyncComponent } from 'vue';
-import { RouteLocationNormalized, createRouter, createWebHistory  } from 'vue-router';
-import { useUserInfo } from '@/stores/userInfo';
-import { useThemeConfig } from '@/stores/themeConfig';
-
-// const userInfo = useUserInfo();
-// const themeConfig = useThemeConfig();
-
-// function checkLoginState(to: RouteLocationNormalized, from: RouteLocationNormalized) {
-// 	if (userInfo.login) return true;
-// 	themeConfig.showLoginPanel = true;
-// 	return false;
-// }
+// import { defineAsyncComponent } from 'vue';
+import { createRouter, createWebHistory  } from 'vue-router';
+import { UserRole } from '@/types/user';
 
 const routes = [
 	{ path: '/', redirect: '/home' },
 	{ 	
 		path: '/home', 
-		component: defineAsyncComponent(() => import('@components/home.vue')),
+		component: () => import('@components/home.vue'),
 		name: 'home',
+		meta: {
+			permission: [UserRole.Visitor, UserRole.User, UserRole.Administrator]
+		}
 	}, 
 	{
-		path: '/user/:uid',
-		component: defineAsyncComponent(() => import('@components/user.vue')),
+		path: '/user',
+		component: () => import('@components/user.vue'),
 		name: 'user',
-	},
-	{
-		path: '/login',
-		component: defineAsyncComponent(() => import('@components/login.vue')),
-		name: 'login',
+		meta: {
+			permission: [UserRole.User, UserRole.Administrator]
+		}
 	},
 	{
 		path: '/star',
-		component: defineAsyncComponent(() => import('@components/star.vue')),
+		component: () => import('@components/star.vue'),
 		name: 'star',
+		meta: {
+			permission: [UserRole.User, UserRole.Administrator]
+		}
 		// beforeEnter: [checkLoginState]
-	}
+	},
+	{
+		path: '/manage',
+		component: () => import('@/components/manage/index.vue'),
+		children: [
+			{
+				path: '', redirect: '/manage/user'
+			},
+			{
+				path: 'user',
+				component: () => import('@/components/manage/user.vue'),
+				meta: {
+					permission: [UserRole.Administrator]
+				}
+			},
+			{
+				path: 'course',
+				component: () => import('@/components/manage/course.vue'),
+				meta: {
+					permission: [UserRole.Administrator]
+				}
+			},
+			{
+				path: 'announcement',
+				component: () => import('@/components/manage/announcement.vue'),
+				meta: {
+					permission: [UserRole.Administrator]
+				}
+			},
+			{
+				path: 'teacher',
+				component: () => import('@/components/manage/teacher.vue'),
+				meta: {
+					permission: [UserRole.Administrator]
+				}
+			},
+			{
+				path: 'tag',
+				component: () => import('@/components/manage/tag.vue'),
+				meta: {
+					permission: [UserRole.Administrator]
+				}
+			}
+		]
+	},
+	{
+		path: '/course/:course_id/:review_id?/:comment_id?',
+		component: () => import('@components/detailPage.vue'),
+		name: 'course',
+		meta: {
+			permission: [UserRole.Visitor, UserRole.User, UserRole.Administrator]
+		}
+	},
+	{ 
+		path: '/:pathMatch(.*)*',
+		component: () => import('@components/notfound.vue'),
+		name: 'notfound', 
+		meta: {
+			permission: [UserRole.Visitor, UserRole.User, UserRole.Administrator],
+			transition: 'notfound'
+		}
+	},
 ];
 
 export const router = createRouter({

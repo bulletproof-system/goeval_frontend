@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { useDark, useToggle } from '@vueuse/core'
+import { ThemeConfig } from '@/types/pinia'
 
 export const useThemeConfig = defineStore('themeConfig', {
 	state: (): ThemeConfig => ({
@@ -9,6 +10,9 @@ export const useThemeConfig = defineStore('themeConfig', {
 		setThemeConfig(data: ThemeConfig) {
 			this.$patch(data);
 		},
+		setShowLoginPanel(show: boolean) {
+			this.showLoginPanel = show;
+		}
 	},
 });
 

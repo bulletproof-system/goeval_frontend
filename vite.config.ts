@@ -5,6 +5,7 @@ import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
+import ElementPlus from 'unplugin-element-plus/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Inspect from 'vite-plugin-inspect'
 
@@ -12,6 +13,9 @@ import Inspect from 'vite-plugin-inspect'
 export default defineConfig({
   plugins: [
     vue(),
+    ElementPlus({
+      
+    }),
     AutoImport({
       // Auto import functions from Vue, e.g. ref, reactive, toRef...
       // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
@@ -42,7 +46,10 @@ export default defineConfig({
         // Auto register Element Plus components
         // 自动导入 Element Plus 组件
         ElementPlusResolver(),
+
       ],
+      // 允许子目录作为组件的命名空间前缀。
+      directoryAsNamespace: true,
 
       dts: resolve(__dirname, 'src', 'components.d.ts'),
     }),
